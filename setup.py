@@ -1,11 +1,11 @@
 from setuptools import setup
 
-from notebooks import NAME, VERSION, DESCRIPTION
+from notebooks_and_scripts import NAME, VERSION, DESCRIPTION
 
 setup(
     name=NAME,
     author="arash@kamangir.net",
     version=VERSION,
     description=DESCRIPTION,
-    packages=[NAME],
+    packages=[NAME.replace(" & ", "_and_")],
 )
