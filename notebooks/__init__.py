@@ -1,5 +1,5 @@
 NAME = "notebooks"
 
-VERSION = "3.1.1"
+VERSION = "4.2.1"
 
-from .functions import *
+DESCRIPTION = "📜 notebooks and scripts for experiments and aws batch jobs."
