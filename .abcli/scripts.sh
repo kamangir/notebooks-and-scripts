@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+function scripts() {
+    abcli_scripts "$@"
+}
+
 function abcli_scripts() {
     local task=$(abcli_unpack_keyword $1 code)
 
