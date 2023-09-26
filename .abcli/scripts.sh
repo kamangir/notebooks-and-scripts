@@ -8,6 +8,8 @@ function abcli_scripts() {
     local task=$(abcli_unpack_keyword $1 code)
 
     if [ "$task" == "help" ]; then
+        abcli_log "📜 $(python3 -m notebooks_and_scripts version --show_description 1)\n"
+
         abcli_show_usage "abcli scripts list" \
             "list scripts."
 
