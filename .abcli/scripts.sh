@@ -13,7 +13,7 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts list" \
             "list scripts."
 
-        abcli_show_usage "abcli scripts source$ABCUL[<script-name>]" \
+        abcli_show_usage "abcli scripts source$ABCUL[<script-name>]$ABCUL<args>" \
             "source <script-name>.sh"
         return
     fi

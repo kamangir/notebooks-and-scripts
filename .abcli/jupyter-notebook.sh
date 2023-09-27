@@ -10,15 +10,15 @@ function abcli_notebooks() {
     if [ "$task" == "help" ]; then
         abcli_log "📜 $(python3 -m notebooks_and_scripts version --show_description 1)\n"
 
-        abcli_show_usage "abcli notebooks build [<notebook>]" \
+        abcli_show_usage "abcli notebooks$ABCUL[open]$ABCUL[<notebook>]$ABCUL[<args>]" \
+            "open ./notebook.ipynb."
+        abcli_show_usage "abcli notebooks build$ABCUL[<notebook>]" \
             "build $abcli_object_name/notebook.ipynb."
-        abcli_show_usage "abcli notebooks connect 1-2-3-4 [setup]" \
+        abcli_show_usage "abcli notebooks connect$ABCUL<1-2-3-4> [setup]" \
             "[setup and] connect to jupyter notebook on ec2:1-2-3-4."
-        abcli_show_usage "abcli notebooks host [setup]" \
+        abcli_show_usage "abcli notebooks host$ABCUL[setup]" \
             "[setup and] host jupyter notebook on ec2."
-        abcli_show_usage "abcli notebooks [open] [<notebook>] [<args>]" \
-            "open ./notebook.ipynb [and pass args]."
-        abcli_show_usage "abcli notebooks touch [<notebook>]" \
+        abcli_show_usage "abcli notebooks touch$ABCUL[<notebook>]" \
             "touch ./<notebook>.ipynb."
         return
     fi
