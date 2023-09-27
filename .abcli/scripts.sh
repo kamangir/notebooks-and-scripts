@@ -24,9 +24,20 @@ function abcli_scripts() {
     fi
 
     if [[ ",ls,list," == *",$task,"* ]]; then
-        abcli_tag search \
-            script \
-            --item_name script
+        local path=$abcli_path_git/notebooks-and-scripts/scripts
+
+        local filename=$2
+        [[ ! -z "$filename" ]] &&
+            local path=$path/$filename
+
+        if [[ -f "$path" ]]; then
+            abcli_log_file $path
+        else
+            abcli_log "🔗 $path"
+            ls -1 $path \
+                "${@:3}"
+        fi
+
         return
     fi
 
