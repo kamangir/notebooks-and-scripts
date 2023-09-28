@@ -45,4 +45,10 @@ abcli scripts source \
  . source <script-name>.sh
 ```
 
-- [Vancouver Watching 🌈](./scripts/vanwatch/), [repo](https://github.com/kamangir/Vancouver-Watching).
+## [vanwatch](./scripts/vanwatch/), [Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching).
+
+TBA
+
+## [paint-a-cat](./scripts/paint-a-cat.sh)
+
+TBA
