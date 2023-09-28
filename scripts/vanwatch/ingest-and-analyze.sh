@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function vanwatch_analyze() {
+function vanwatch_ingest_and_analyze() {
     rm -v *.jpg
     rm -v *.geojson
 
@@ -8,4 +8,4 @@ function vanwatch_analyze() {
         --count 5
 }
 
-vanwatch_analyze "$@"
+vanwatch_ingest_and_analyze "$@"
