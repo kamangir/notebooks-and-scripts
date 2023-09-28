@@ -1,20 +1,30 @@
 #! /usr/bin/env bash
 
+export abcli_path_scripts=$abcli_path_git/notebooks-and-scripts/scripts
+
 function scripts() {
     abcli_scripts "$@"
 }
 
+export abcli_scripts_options=cat
+
 function abcli_scripts() {
-    local task=$(abcli_unpack_keyword $1 code)
+    local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
-        abcli_log "📜 $(python3 -m notebooks_and_scripts version --show_description 1)\n"
+        notebooks_and_scripts version \\n
+
+        abcli_show_usage "abcli scripts cat$ABCUL[<script-name>]" \
+            "cat <script-name>."
+
+        abcli_show_usage "abcli scripts help$ABCUL[<script-name>]" \
+            "help <script-name>."
 
         abcli_show_usage "abcli scripts list" \
             "list scripts."
 
-        abcli_show_usage "abcli scripts source$ABCUL[<script-name>]$ABCUL<args>" \
-            "source <script-name>.sh"
+        abcli_show_usage "abcli scripts source$ABCUL<script-name>$ABCUL[$abcli_scripts_options]$ABCUL<args>" \
+            "source <script-name>."
         return
     fi
 
@@ -23,29 +33,51 @@ function abcli_scripts() {
         $function_name ${@:2}
     fi
 
-    if [[ ",ls,list," == *",$task,"* ]]; then
-        local path=$abcli_path_git/notebooks-and-scripts/scripts
-
+    if [[ ",cat,help,source,ls,list," == *",$task,"* ]]; then
+        local script_path=$abcli_path_scripts
         local suffix=$2
-        [[ ! -z "$suffix" ]] && local path=$path/$suffix
-        [[ -f "$path.sh" ]] && local path=$path.sh
+        [[ ! -z "$suffix" ]] && local path=$script_path/$suffix
+        [[ -f "$script_path.sh" ]] && local path=$script_path.sh
+    fi
 
-        if [[ -f "$path" ]]; then
-            abcli_log_file $path
+    if [ "$task" == "cat" ]; then
+        abcli_log_file $script_path
+        return
+    fi
+
+    if [[ ",ls,list," == *",$task,"* ]]; then
+        if [[ -f "$script_path" ]]; then
+            abcli_log_file $script_path
         else
-            abcli_log "🔗 $path"
-            ls -1lh $path \
+            abcli_log "🔗 $script_path"
+            ls -1lh $script_path \
                 "${@:3}"
         fi
 
         return
     fi
 
-    if [ "$task" == "source" ]; then
-        local script_name=$(abcli_clarify_input $2 script)
+    if [ "$task" == "help" ]; then
+        abcli_scripts source \
+            $script_path \
+            help
+        return
+    fi
 
-        chmod +x $script_name.sh
-        source $script_name.sh
+    if [ "$task" == "source" ]; then
+        local options=$3
+
+        if [[ ! -f "$script_path" ]]; then
+            abcli_log_error "-abcli: scripts: $task: $script_path: script not found."
+            return 1
+        fi
+
+        do_cat=$(abcli_option "$options" cat 0)
+
+        [[ "$do_cat" == 1 ]] && abcli_log_file $script_path
+
+        chmod +x $script_path
+        source $script_path "${@:3}"
         return
     fi
 

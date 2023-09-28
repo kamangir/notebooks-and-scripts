@@ -8,7 +8,7 @@ function abcli_notebooks() {
     local task=$(abcli_unpack_keyword "$1" open)
 
     if [ "$task" == "help" ]; then
-        abcli_log "📜 $(python3 -m notebooks_and_scripts version --show_description 1)\n"
+        notebooks_and_scripts version \\n
 
         abcli_show_usage "abcli notebooks$ABCUL[open]$ABCUL[<notebook>]$ABCUL[<args>]" \
             "open ./notebook.ipynb."
