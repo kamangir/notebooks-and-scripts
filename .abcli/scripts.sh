@@ -26,15 +26,15 @@ function abcli_scripts() {
     if [[ ",ls,list," == *",$task,"* ]]; then
         local path=$abcli_path_git/notebooks-and-scripts/scripts
 
-        local filename=$2
-        [[ ! -z "$filename" ]] &&
-            local path=$path/$filename
+        local suffix=$2
+        [[ ! -z "$suffix" ]] && local path=$path/$suffix
+        [[ -f "$path.sh" ]] && local path=$path.sh
 
         if [[ -f "$path" ]]; then
             abcli_log_file $path
         else
             abcli_log "🔗 $path"
-            ls -1 $path \
+            ls -1lh $path \
                 "${@:3}"
         fi
 
@@ -49,5 +49,5 @@ function abcli_scripts() {
         return
     fi
 
-    abcli_log_error "-abcli: script: $task: command not found."
+    abcli_log_error "-abcli: scripts: $task: command not found."
 }
