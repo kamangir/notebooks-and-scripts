@@ -47,7 +47,7 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts list$ABCUL[<prefix>]" \
             "list scripts."
 
-        abcli_show_usage "abcli scripts mv$ABCUL<script-name-1>$ABCUL<script-name-2>" \
+        abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1>$ABCUL<script-name-2>" \
             "<script-name-1> -> <script-name-2>"
 
         abcli_show_usage "abcli scripts source$ABCUL<script-name>$ABCUL[$abcli_scripts_options,<options>]$ABCUL<args>" \
@@ -76,7 +76,7 @@ function abcli_scripts() {
         return
     fi
 
-    if [ "$task" == mv ]; then
+    if [[ ",mv,move," == *",$task,"* ]]; then
         local script_name_2=$3
 
         pushd $abcli_path_scripts >/dev/null
