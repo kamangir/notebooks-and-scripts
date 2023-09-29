@@ -7,17 +7,27 @@ function vanwatch_ingest_and_analyze() {
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="$abcli_scripts_options,count=<-1>"
-        abcli_show_usage "abcli scripts source $script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[\"$sentence\"]$ABCUL[$args]" \
+        local options="$abcli_scripts_options,count=<-1>,dryrun,upload"
+        abcli_show_usage "abcli scripts source $script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
             "ingest from traffic cameras and analyze."
         return
     fi
 
+    local count=$(abcli_option "$options" count 10)
+    local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+    local do_upload=$(abcli_option_int "$options" upload 0)
+
+    local object_name=$(abcli_clarify_object $2 .)
+    abcli_select $object_name
+
     rm -v *.jpg
     rm -v *.geojson
 
-    vanwatch ingest vancouver - \
-        --count 5
+    abcli_eval dryrun=$do_dryrun \
+        vancouver_watching ingest vancouver \
+        upload=$do_upload \
+        --count $count \
+        "${@:3}"
 }
 
 vanwatch_ingest_and_analyze "$@"

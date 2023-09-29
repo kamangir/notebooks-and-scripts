@@ -93,6 +93,11 @@ function abcli_scripts() {
     if [ "$task" == source ]; then
         local options=$3
 
+        if [[ "$script_name" == help ]]; then
+            abcli_scripts help "${@:3}"
+            return
+        fi
+
         if [[ ! -f "$script_path" ]]; then
             abcli_log_error "-abcli: scripts: $task: $script_path: script not found."
             return 1
