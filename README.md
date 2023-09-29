@@ -6,7 +6,7 @@ Repository of research [notebooks](#notebooks) and [scripts](#scripts).
 
 ```bash
  > notebooks help
-📜 notebooks & scripts-4.4.1
+📜 notebooks & scripts-4.10.1
 📜 notebooks & scripts for experiments and aws batch jobs.
 
 abcli notebooks \
@@ -16,7 +16,7 @@ abcli notebooks \
  . open ./notebook.ipynb.
 abcli notebooks build \
 	[<notebook>]
- . build vancouver-watching-test-v1/notebook.ipynb.
+ . build 2023-09-28-18-08-29-25262/notebook.ipynb.
 abcli notebooks connect \
 	<1-2-3-4> [setup]
  . [setup and] connect to jupyter notebook on ec2:1-2-3-4.
@@ -34,15 +34,27 @@ abcli notebooks touch \
 
 ```bash
  > scripts help
-📜 notebooks & scripts-4.4.1
+📜 notebooks & scripts-4.10.1
 📜 notebooks & scripts for experiments and aws batch jobs.
 
-abcli scripts list
+abcli scripts cat \
+	<script-name>
+ . cat <script-name>.
+abcli scripts help \
+	[<script-name>]
+ . help <script-name>.
+abcli scripts list \
+	[<prefix>]
  . list scripts.
+abcli scripts move|mv \
+	<script-name-1> \
+	<script-name-2>
+ . <script-name-1> -> <script-name-2>
 abcli scripts source \
-	[<script-name>] \
+	<script-name> \
+	[cat,<options>] \
 	<args>
- . source <script-name>.sh
+ . source <script-name>.
 ```
 
 ## [vanwatch](./scripts/vanwatch/)
