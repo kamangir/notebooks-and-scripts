@@ -49,10 +49,28 @@ abcli scripts source \
 
 uses [Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching).
 
-TBA
+```bash
+ > scripts help vanwatch/ingest-and-analyze.sh
 
-## [paint-a-cat](./scripts/paint-a-cat.sh)
+abcli scripts source ingest-and-analyze \
+	[cat,count=<-1>,dryrun,upload] \
+	[<object-name>] \
+	[<args>]
+ . ingest from traffic cameras and analyze.
+ ```
+
+## [paint-a-sentence](./scripts/paint-a-sentence.sh)
 
 uses [blue stability](https://github.com/kamangir/blue-stability).
 
-TBA
+```bash
+ > scripts help paint-a-sentence
+
+abcli scripts source paint-a-sentence \
+	[cat,count=<-1>] \
+	[<object-name>] \
+	["a cat walking under apple trees"] \
+	[]
+ . paint a sentence by different artists.
+21 artists(s): Andy-Warhol,Caravaggio,Claude-Monet,Diego-Velázquez,Edgar-Degas,Edvard-Munch,Frida-Kahlo,Gustav-Klimt,Henri-Matisse,J.-M.-W.-Turner,Jackson-Pollock,Johannes-Vermeer,Leonardo-da-Vinci,Michelangelo,Pablo-Picasso,Paul-Cézanne,Paul-Gauguin,Rembrandt,Salvador-Dali,Vincent-van-Gogh,Wassily-Kandinsky
+```
