@@ -105,7 +105,7 @@ function abcli_docker() {
         local do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
         if [[ "$do_compose" = 1 ]]; then
-            local command_line="docker-compose run -it abcli"
+            local command_line="docker-compose run abcli bash"
         else
             # https://gist.github.com/mitchwongho/11266726
             local command_line="docker run -it $tag /bin/bash"
