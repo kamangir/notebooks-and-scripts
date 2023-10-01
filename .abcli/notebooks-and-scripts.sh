@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+export abcli_path_nbs=$abcli_path_git/notebooks-and-scripts
+
 function nbs() {
     notebooks_and_scripts "$@"
 }

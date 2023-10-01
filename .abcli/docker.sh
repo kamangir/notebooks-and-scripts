@@ -4,19 +4,20 @@ function abcli_docker() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
-        abcli_show_usage "abcli docker build$ABCUL[~push,run]" \
-            "build [and run] abcli image."
+        abcli_show_usage "abcli docker browse [~public]" \
+            "browse docker-hub"
 
-        abcli_show_usage "abcli docker clear$ABCUL[-]" \
+        abcli_show_usage "abcli docker build [~compose,dryrun,~push,run]" \
+            "build abcli docker image."
+
+        abcli_show_usage "abcli docker clear" \
             "clear docker."
 
-        abcli_docker compose help
-
         abcli_show_usage "abcli docker push" \
-            "push abcli image."
+            "push abcli docker image."
 
-        abcli_show_usage "abcli docker run" \
-            "run abcli image."
+        abcli_show_usage "abcli docker run [~compose,dryrun]" \
+            "run abcli docker image."
 
         abcli_show_usage "abcli docker seed" \
             "seed docker 🌱."
@@ -28,58 +29,48 @@ function abcli_docker() {
     local filename="Dockerfile"
     local tag="kamangir/abcli"
 
-    if [ "$task" == compose ]; then
-        local sub_task=$2
+    if [ "$task" == "browse" ]; then
+        local options=$2
 
-        local options=$3
-        local do_push=$(abcli_option_int "$options" push 1)
+        local show_public=$(abcli_option_int "$options" public 1)
 
-        if [[ "$sub_task" == help ]]; then
-            abcli_show_usage "abcli docker compose build$ABCUL[~push,run]" \
-                "build [and run] abcli image using docker-compose."
-            abcli_show_usage "abcli docker compose run" \
-                "run abcli image using docker-compose."
-            return 1
-        fi
+        local url=https://hub.docker.com/repository/docker/kamangir/abcli/general
+        [[ "$show_public" == 1 ]] &&
+            local url=https://hub.docker.com/r/kamangir/abcli/tags
 
-        local command_line=""
-        [[ "$sub_task" == "build" ]] && local command_line="docker-compose up"
-        [[ "$sub_task" == "run" ]] && local command_line="docker-compose run -it abcli"
-
-        if [[ -z "$command_line" ]]; then
-            abcli_log_error "-abcli: docker: $task: $sub_task: command not found."
-            return 1
-        fi
-
-        abcli_eval \
-            path=$abcli_path_abcli \
-            "$command_line"
-
-        [[ "$do_push" == "1" ]] &&
-            abcli_eval - \
-                "docker push $tag:latest"
-
+        abcli_browse_url $url
         return
     fi
 
     if [ "$task" == "build" ]; then
-        local do_push=$(abcli_option_int "$options" push 1)
+        abcli_log "docker: building $filename: $tag: $options"
+
+        local do_compose=$(abcli_option_int "$options" compose 1)
+        local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+        local do_push=$(abcli_option_int "$options" push $(abcli_not $do_dryrun))
         local do_run=$(abcli_option_int "$options" run 0)
 
-        pushd $abcli_path_abcli >/dev/null
+        if [ "$do_compose" == 1 ]; then
+            abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
+                docker-compose build abcli
+        else
+            abcli_log_warning "not supported."
+            return 1
 
-        mkdir -p temp
-        cp -v ~/.kaggle/kaggle.json temp/
+            pushd $abcli_path_abcli >/dev/null
 
-        abcli_log "docker: building $filename: $tag"
+            mkdir -p temp
+            cp -v ~/.kaggle/kaggle.json temp/
 
-        docker build \
-            --build-arg HOME=$HOME \
-            -t $tag \
-            -f $filename \
-            .
+            [[ "$do_dryrun" == 0 ]] &&
+                docker build \
+                    --build-arg HOME=$HOME \
+                    -t $tag \
+                    -f $filename \
+                    .
 
-        rm -rf temp
+            rm -rfv temp
+        fi
 
         [[ "$do_push" == "1" ]] &&
             abcli_eval - \
@@ -88,7 +79,7 @@ function abcli_docker() {
         [[ "$do_run" == "1" ]] &&
             abcli_docker run $options
 
-        popd >/dev/null
+        [[ "$do_compose" == 0 ]] && popd >/dev/null
 
         return
     fi
@@ -110,10 +101,17 @@ function abcli_docker() {
     if [ "$task" == "run" ]; then
         abcli_log "docker: running $filename: $tag: $options"
 
-        pushd $abcli_path_abcli >/dev/null
-        # https://gist.github.com/mitchwongho/11266726
-        docker run -it $tag /bin/bash
-        popd >/dev/null
+        local do_compose=$(abcli_option_int "$options" compose 1)
+        local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+
+        if [[ "$do_compose" = 1 ]]; then
+            local command_line="docker-compose run -it abcli"
+        else
+            # https://gist.github.com/mitchwongho/11266726
+            local command_line="docker run -it $tag /bin/bash"
+        fi
+        abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
+            "$command_line"
 
         return
     fi
