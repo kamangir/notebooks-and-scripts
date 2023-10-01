@@ -11,8 +11,8 @@ function cat_under_trees() {
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="$abcli_scripts_options,count=<-1>"
-        abcli_show_usage "abcli scripts source $script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[\"$sentence\"]$ABCUL[$args]" \
+        local options="count=<-1>,dryrun"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[\"$sentence\"]$ABCUL[$args]" \
             "paint a sentence by different artists."
 
         abcli_log_list "$list_of_artists" , "artists(s)"

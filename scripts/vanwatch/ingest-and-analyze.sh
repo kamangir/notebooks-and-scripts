@@ -7,8 +7,8 @@ function vanwatch_ingest_and_analyze() {
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="$abcli_scripts_options,count=<-1>,dryrun,upload"
-        abcli_show_usage "abcli scripts source $script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
+        local options="count=<-1>,dryrun,upload"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
             "ingest from traffic cameras and analyze."
         return
     fi

@@ -2,7 +2,7 @@
 
 export abcli_path_scripts=$abcli_path_git/notebooks-and-scripts/scripts
 
-export abcli_scripts_options=cat
+export abcli_scripts_options=cat,dryrun
 
 function scripts() {
     abcli_scripts "$@"
@@ -12,6 +12,8 @@ function abcli_scripts() {
     local task=$(abcli_unpack_keyword $1 help)
 
     local script_name=$2
+    [[ "$task" == source ]] && local script_name=$3
+
     [[ -f "$abcli_path_scripts/$script_name.sh" ]] && local script_name=$script_name.sh
     local script_path=$abcli_path_scripts/$script_name
 
@@ -19,9 +21,8 @@ function abcli_scripts() {
         if [[ ! -z "$script_name" ]]; then
             abcli_log "🔗 $script_path"
             if [[ -f "$script_path" ]]; then
-                abcli_scripts source \
-                    $script_name \
-                    cat,help
+                abcli_scripts source - \
+                    $script_name help
                 return
             fi
 
@@ -29,8 +30,7 @@ function abcli_scripts() {
             local script_name_
             for script_name_ in $(ls $script_name/*); do
                 abcli_scripts help \
-                    $script_name_ \
-                    cat,help
+                    $script_name_
             done
             popd >/dev/null
             return
@@ -47,17 +47,17 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts list$ABCUL[<prefix>]" \
             "list scripts."
 
-        abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1>$ABCUL<script-name-2>" \
+        abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1> <script-name-2>" \
             "<script-name-1> -> <script-name-2>"
 
-        abcli_show_usage "abcli scripts source$ABCUL<script-name>$ABCUL[$abcli_scripts_options,<options>]$ABCUL<args>" \
+        abcli_show_usage "abcli scripts source [$abcli_scripts_options]$ABCUL<script-name> [<args>]" \
             "source <script-name>."
         return
     fi
 
     local function_name=abcli_scripts_$task
     if [[ $(type -t $function_name) == "function" ]]; then
-        $function_name ${@:2}
+        $function_name "${@:2}"
     fi
 
     if [ "$task" == cat ]; then
@@ -91,10 +91,11 @@ function abcli_scripts() {
     fi
 
     if [ "$task" == source ]; then
-        local options=$3
+        local options=$2
 
-        if [[ "$script_name" == help ]]; then
-            abcli_scripts help "${@:3}"
+        if [ $(abcli_option_int "$options" help 0) == 1 ]; then
+            abcli_scripts help \
+                "$script_name" "${@:4}"
             return
         fi
 
@@ -104,13 +105,21 @@ function abcli_scripts() {
         fi
 
         do_cat=$(abcli_option "$options" cat 0)
+        do_dryrun=$(abcli_option "$options" dryrun 0)
 
         [[ "$do_cat" == 1 ]] && abcli_log_file $script_path
 
-        chmod +x $script_path
-        source $script_path "${@:3}"
+        abcli_eval dryrun=$do_dryrun,~log \
+            chmod +x $script_path
+        abcli_eval dryrun=$do_dryrun \
+            source $script_path "${@:4}"
         return
     fi
 
     abcli_log_error "-abcli: scripts: $task: command not found."
+}
+
+function abcli_script_show_usage() {
+    abcli_show_usage "abcli scripts source $abcli_scripts_options$ABCUL$1" \
+        "$2"
 }
