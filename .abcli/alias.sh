@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+alias @docker=abcli_docker
+
 alias @notebooks=abcli_notebooks
 
 alias @list="abcli_scripts list"
