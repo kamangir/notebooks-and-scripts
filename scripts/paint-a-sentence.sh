@@ -3,6 +3,8 @@
 function cat_under_trees() {
     local options=$1
 
+    local version="1.1.1"
+
     local list_of_artists="Leonardo-da-Vinci,Vincent-van-Gogh,Michelangelo,Gustav-Klimt,Claude-Monet,Paul-Cézanne,Frida-Kahlo,Salvador-Dali,Jackson-Pollock,Johannes-Vermeer,Wassily-Kandinsky,Edvard-Munch,Paul-Gauguin,Pablo-Picasso,Rembrandt,Diego-Velázquez,Henri-Matisse,Andy-Warhol,Edgar-Degas,J.-M.-W.-Turner,Caravaggio"
 
     local sentence="a cat walking under apple trees"
@@ -13,7 +15,7 @@ function cat_under_trees() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="count=<-1>,dryrun"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[\"$sentence\"]$ABCUL[$args]" \
-            "paint a sentence by different artists."
+            "paint a sentence by different artists, version $version."
 
         abcli_log_list "$list_of_artists" , "artists(s)"
         return

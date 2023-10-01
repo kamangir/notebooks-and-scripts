@@ -3,13 +3,15 @@
 function vanwatch_ingest_and_analyze() {
     local options=$1
 
+    local version="1.1.1"
+
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="count=<-1>,dryrun,upload"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
-            "ingest from traffic cameras and analyze."
+            "ingest from traffic cameras and analyze, version $version."
         return
     fi
 
