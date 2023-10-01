@@ -104,8 +104,8 @@ function abcli_scripts() {
             return 1
         fi
 
-        do_cat=$(abcli_option "$options" cat 0)
-        do_dryrun=$(abcli_option "$options" dryrun 0)
+        do_cat=$(abcli_option_int "$options" cat 0)
+        do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
         [[ "$do_cat" == 1 ]] && abcli_log_file $script_path
 
