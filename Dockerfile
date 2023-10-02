@@ -14,4 +14,12 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3-opencv
 RUN pip install opencv-python
 
-ADD /root/git/awesome-bash-cli/
+RUN mkdir -p /root/git/notebooks-and-scripts
+ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
+WORKDIR /root/git/notebooks-and-scripts
+RUN pip install -e .
+
+RUN mkdir -p /root/git/awesome-bash-cli
+ADD ./awesome-bash-cli /root/git/awesome-bash-cli
+WORKDIR /root/git/awesome-bash-cli
+RUN pip install -e .
