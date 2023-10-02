@@ -7,7 +7,7 @@ function abcli_docker() {
         abcli_show_usage "abcli docker browse [~public]" \
             "browse docker-hub"
 
-        abcli_show_usage "abcli docker build [dryrun,~push,run,~seed]" \
+        abcli_show_usage "abcli docker build [dryrun,~push,run]" \
             "build abcli docker image."
 
         abcli_show_usage "abcli docker clear" \
@@ -16,7 +16,7 @@ function abcli_docker() {
         abcli_show_usage "abcli docker push" \
             "push abcli docker image."
 
-        abcli_show_usage "abcli docker run [dryrun,~seed]" \
+        abcli_show_usage "abcli docker run [dryrun]" \
             "run abcli docker image."
 
         abcli_show_usage "abcli docker seed" \
@@ -93,13 +93,10 @@ function abcli_docker() {
         abcli_log "docker: running $filename: $tag: $options"
 
         local do_dryrun=$(abcli_option_int "$options" dryrun 0)
-        local do_seed=$(abcli_option_int "$options" seed 1)
-
-        [[ "$do_seed" == 1 ]] &&
-            abcli_seed docker
 
         abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
-            "docker-compose run abcli bash"
+            docker-compose run abcli bash \
+            --init-file /root/git/awesome-bash-cli/bash/abcli.sh
 
         return
     fi
