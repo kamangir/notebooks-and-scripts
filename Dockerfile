@@ -19,6 +19,11 @@ ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
 WORKDIR /root/git/notebooks-and-scripts
 RUN pip install -e .
 
+RUN mkdir -p /root/git/Vancouver-Watching
+ADD ./Vancouver-Watching /root/git/Vancouver-Watching
+WORKDIR /root/git/Vancouver-Watching
+RUN pip install -e .
+
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
