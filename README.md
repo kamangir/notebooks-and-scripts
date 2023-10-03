@@ -28,7 +28,7 @@ abcli notebooks touch \
  . touch ./<notebook>.ipynb.
 ```
 
-- [Semantic segmentation](./semseg).
+- [Semantic segmentation](./notebooks/semseg).
 
 ## [scripts](./scripts/)
 
