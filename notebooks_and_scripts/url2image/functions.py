@@ -46,6 +46,7 @@ def read_url(
 
 def render_url(
     url: str,
+    prompt: str,
     object_name: str,
     count: int,
     height: int = 1024,
@@ -53,8 +54,8 @@ def render_url(
     verbose: bool = False,
 ) -> bool:
     logger.info(
-        "url2image.render_url: {} -> {}: {}x{}x{}".format(
-            url, object_name, count, height, width
+        "url2image.render_url: {} {} -> {}: {}x{}x{}".format(
+            prompt, url, object_name, count, height, width
         )
     )
 
@@ -62,15 +63,10 @@ def render_url(
     if not success:
         return False
 
-    prompt = "Generate a mission patch for the launch of the constellation described as follows. {}".format(
-        description
-    )
-    logger.info(f"prompt: {prompt}")
-
     error_count = 0
     for index in trange(count):
         if not render_prompt(
-            prompt=prompt,
+            prompt=prompt.replace("description", description),
             object_name=object_name,
             filename="{:05d}.png".format(index),
             height=height,
@@ -78,11 +74,10 @@ def render_url(
             verbose=verbose,
         ):
             error_count += 1
-
     if error_count:
         logger.error(f"{error_count} error(s)")
 
-    return True
+    return error_count == 0
 
 
 def render_prompt(

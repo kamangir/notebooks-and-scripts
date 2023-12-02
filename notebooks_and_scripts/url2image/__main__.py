@@ -17,6 +17,11 @@ parser.add_argument(
     type=str,
 )
 parser.add_argument(
+    "--prompt",
+    type=str,
+    help="generate a mission patch for description.",
+)
+parser.add_argument(
     "--object_name",
     type=str,
 )
@@ -52,6 +57,7 @@ if args.task == "read_url":
 elif args.task == "render_url":
     success = render_url(
         url=args.url,
+        prompt=args.prompt,
         object_name=args.object_name,
         count=args.count,
         height=args.height,
