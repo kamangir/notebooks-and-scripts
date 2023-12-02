@@ -11,7 +11,12 @@ def read_url(
     url: str,
     verbose: bool = False,
 ) -> Tuple[bool, str]:
-    response = requests.get(url)
+    # https://www.zenrows.com/blog/403-web-scraping#set-fake-user-agent
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+    }
+
+    response = requests.get(url, headers=headers)
     logger.info(f"response: {response}")
 
     # https://chat.openai.com/c/6deb94d0-826a-48de-b5ef-f7d8da416c82
