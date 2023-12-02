@@ -3,7 +3,7 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.5.1"
+    local version="2.6.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -24,11 +24,13 @@ function mission_patch() {
 
     local object_name=$(abcli_clarify_object $2 $(abcli_string_timestamp))
 
-    local prompt=$(aiart_html ingest_url $url \
+    local description=$(aiart html ingest_url $url \
         --fake_agent 1)
-    abcli_log "📜 $prompt"
+    abcli_log "📜 $description"
 
-    # openai cleanup of prompt
+    local prompt=$(openai complete "describe the following in three sentences: $description")
+    local prompt=$(echo "$prompt" | tr "'" " ")
+    abcli_log "📜 $prompt"
 
     # necessary because of assumptions in openai and aiart :(
     abcli_select $object_name ~trail
@@ -40,11 +42,14 @@ function mission_patch() {
                 "$options" \
                 ~dryrun,height=1024,width=1024) \
             mission-patch-$(python3 -c "print('{:05d}'.format($index))") - \
-            "$prompt"
+            "generate a mission patch for the satellite constellation described as follows: $prompt"
     done
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload object $object_name
+
+    abcli_tag set \
+        $object_name mission-patch
 }
 
 mission_patch "$@"
