@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 import requests
 from tqdm import trange
 from typing import List, Tuple
@@ -32,13 +33,12 @@ def read_url(
         return False, ""
 
     # Check if the content type is text-based (e.g., HTML, plain text)
-    if "text" in response.headers.get("content-type", "").lower():
-        content = response.text
-    else:
+    if "text" not in response.headers.get("content-type", "").lower():
         logger.error(f"read_url({read_url}): url does not contain text-based content.")
         return False, ""
 
-    description = content
+    soup = BeautifulSoup(response.text, "html.parser")
+    description = " ".join([p.get_text() for p in soup.find_all("p")])
 
     logger.info("url2image.read_url({}): {}".format(url, description))
     return True, description
