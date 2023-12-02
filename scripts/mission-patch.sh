@@ -23,7 +23,7 @@ function runme() {
 
     abcli_eval dryrun=$do_dryrun \
         python3 -m notebooks_and_scripts.url2image \
-        render \
+        render_url \
         --url "$2" \
         --object_name $object_name \
         "${@:4}"
