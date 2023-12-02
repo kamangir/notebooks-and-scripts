@@ -3,7 +3,7 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.7.1"
+    local version="2.8.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -20,6 +20,7 @@ function mission_patch() {
     local url=$(abcli_option "$options" url https://earthdaily.com/constellation/)
     local count=$(abcli_option_int "$options" count 1)
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+    local do_open=$(abcli_option_int "$options" open 0)
     local do_upload=$(abcli_option_int "$options" upload $(abcli_not $do_dryrun))
 
     local object_name=$(abcli_clarify_object $2 $(abcli_string_timestamp))
