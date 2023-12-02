@@ -22,8 +22,8 @@ function runme() {
     local object_name=$(abcli_clarify_object $3 $(abcli_string_timestamp))
 
     abcli_eval dryrun=$do_dryrun \
-        python3 -m notebooks_and_scripts.mission_patch \
-        generate \
+        python3 -m notebooks_and_scripts.url2image \
+        render \
         --url "$2" \
         --object_name $object_name \
         "${@:4}"

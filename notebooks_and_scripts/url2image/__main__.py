@@ -1,6 +1,6 @@
 import argparse
-from notebooks_and_scripts.mission_patch import NAME
-from notebooks_and_scripts.mission_patch.functions import generate_mission_patches
+from notebooks_and_scripts.url2image import NAME
+from notebooks_and_scripts.url2image.functions import render_url
 from notebooks_and_scripts import VERSION
 from abcli import logging
 import logging
@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="generate",
+    help="render",
 )
 parser.add_argument(
     "--url",
@@ -45,8 +45,8 @@ parser.add_argument(
 args = parser.parse_args()
 
 success = False
-if args.task == "generate":
-    success = generate_mission_patches(
+if args.task == "render":
+    success = render_url(
         url=args.url,
         object_name=args.object_name,
         count=args.count,

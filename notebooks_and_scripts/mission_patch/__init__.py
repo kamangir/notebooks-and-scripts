@@ -1,1 +1,0 @@
-NAME = "mission-patch"
