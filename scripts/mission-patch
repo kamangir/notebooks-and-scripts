@@ -3,7 +3,7 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.9.1"
+    local version="2.10.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -43,7 +43,7 @@ function mission_patch() {
             $(abcli_option_subset \
                 "$options" \
                 ~dryrun,height=1024,width=1024) \
-            mission-patch-$(python3 -c "print('{:05d}'.format($index))") - \
+            $object_name-$(python3 -c "print('{:05d}'.format($index))") - \
             "generate a mission patch for the following: $prompt"
     done
 
