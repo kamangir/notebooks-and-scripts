@@ -41,6 +41,9 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts cat$ABCUL<script-name>" \
             "cat <script-name>."
 
+        abcli_show_usage "abcli scripts code$ABCUL<script-name>" \
+            "code <script-name>."
+
         abcli_show_usage "abcli scripts help$ABCUL[<script-name>]" \
             "help <script-name>."
 
@@ -62,6 +65,16 @@ function abcli_scripts() {
 
     if [ "$task" == cat ]; then
         abcli_log_file $script_path
+        return
+    fi
+
+    if [ "$task" == code ]; then
+        abcli_log "📜 $script_path"
+        [[ ! -f "$$script_path" ]] &&
+            cp -v \
+                $abcli_path_scripts/template.sh \
+                $script_path
+        code $script_path
         return
     fi
 
