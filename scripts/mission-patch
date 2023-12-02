@@ -3,7 +3,7 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.6.1"
+    local version="2.7.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -28,15 +28,15 @@ function mission_patch() {
         --fake_agent 1)
     abcli_log "📜 $description"
 
-    local prompt=$(openai complete "describe the following in three sentences: $description")
-    local prompt=$(echo "$prompt" | tr "'" " ")
-    abcli_log "📜 $prompt"
-
     # necessary because of assumptions in openai and aiart :(
     abcli_select $object_name ~trail
 
     local index
     for ((index = 1; index <= count; index++)); do
+        local prompt=$(openai complete "describe the following in three sentences: $description")
+        local prompt=$(echo "$prompt" | tr "'" " ")
+        abcli_log "📜 $prompt"
+
         openai generate image \
             $(abcli_option_subset \
                 "$options" \
