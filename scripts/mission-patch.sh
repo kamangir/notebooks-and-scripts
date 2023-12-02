@@ -3,7 +3,7 @@
 function runme() {
     local options=$1
 
-    local version="1.2.1"
+    local version="1.3.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -11,8 +11,8 @@ function runme() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="dryrun,~upload"
         local args="[--count <10>]$ABCUL[--height <1024>]$ABCUL[--width <1024>]"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL<url>$ABCUL[-|<object-name>]$ABCUL[$args]" \
-            "generate a mission patch for <url>."
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL<url>$ABCUL[-|<object-name>]$ABCUL$args" \
+            "generate mission patches for <url>."
         return
     fi
 
