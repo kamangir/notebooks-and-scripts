@@ -1,3 +1,4 @@
+import requests
 from tqdm import trange
 from typing import List, Tuple
 from abcli import logging
@@ -10,7 +11,29 @@ def read_url(
     url: str,
     verbose: bool = False,
 ) -> Tuple[bool, str]:
-    description = ""
+    response = requests.get(url)
+    logger.info(f"response: {response}")
+
+    # https://chat.openai.com/c/6deb94d0-826a-48de-b5ef-f7d8da416c82
+    # response.raise_for_status()
+    if response.status_code // 100 != 2:  # Check if status code is not in the 2xx range
+        logger.info(
+            "read_url({}) failed, status_code: {}, reason: {}.".format(
+                url,
+                response.status_code,
+                response.reason,
+            )
+        )
+        return False, ""
+
+    # Check if the content type is text-based (e.g., HTML, plain text)
+    if "text" in response.headers.get("content-type", "").lower():
+        content = response.text
+    else:
+        logger.error(f"read_url({read_url}): url does not contain text-based content.")
+        return False, ""
+
+    description = content
 
     logger.info("url2image.read_url({}): {}".format(url, description))
     return True, description
