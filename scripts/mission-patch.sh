@@ -3,7 +3,7 @@
 function runme() {
     local options=$1
 
-    local version="1.3.1"
+    local version="1.4.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -19,11 +19,12 @@ function runme() {
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
     local do_upload=$(abcli_option_int "$options" upload $(abcli_not $do_dryrun))
 
-    local object_name=$(abcli_clarify_object $2 -)
+    local object_name=$(abcli_clarify_object $3 $(abcli_string_timestamp))
 
     abcli_eval dryrun=$do_dryrun \
-        python3 notebooks_and_scripts.mission_patch generate \
-        --url "$3" \
+        python3 -m notebooks_and_scripts.mission_patch \
+        generate \
+        --url "$2" \
         --object_name $object_name \
         "${@:4}"
 
