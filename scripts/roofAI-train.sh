@@ -3,7 +3,7 @@
 function roofAI_train() {
     local options=$1
 
-    local version="2.6.1"
+    local version="2.7.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -16,6 +16,8 @@ function roofAI_train() {
             "[$extra_options]"
         return
     fi
+
+    roofAI init
 
     local model_order=$(abcli_option_int "$options" order 0)
 
