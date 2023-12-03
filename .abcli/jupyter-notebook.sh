@@ -8,8 +8,6 @@ function abcli_notebooks() {
     local task=$(abcli_unpack_keyword "$1" open)
 
     if [ "$task" == "help" ]; then
-        notebooks_and_scripts version \\n
-
         abcli_show_usage "abcli notebooks$ABCUL[open]$ABCUL[<notebook>]$ABCUL[<args>]" \
             "open ./notebook.ipynb."
         abcli_show_usage "abcli notebooks build$ABCUL[<notebook>]" \

@@ -36,8 +36,6 @@ function abcli_scripts() {
             return
         fi
 
-        notebooks_and_scripts version \\n
-
         abcli_show_usage "abcli scripts cat$ABCUL<script-name>" \
             "cat <script-name>."
 
