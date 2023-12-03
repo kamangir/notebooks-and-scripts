@@ -3,7 +3,7 @@
 function roofAI_train() {
     local options=$1
 
-    local version="2.4.1"
+    local version="2.6.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -19,9 +19,8 @@ function roofAI_train() {
 
     local model_order=$(abcli_option_int "$options" order 0)
 
-    local $model_order_zeros=$(python3 -c "print(''.join($model_order*['0']))")
-
     local dataset_object_name=dataset-$(@timestamp)
+    local model_order_zeros=$(python3 -c "print(''.join($model_order*['0']))")
     roofAI_dataset_ingest \
         source=AIRS \
         $dataset_object_name \
@@ -34,7 +33,7 @@ function roofAI_train() {
         $(
             abcli_option_subset \
                 "$options" \
-                profile=FULL,register,suffix=$model_order_zeros
+                profile=FULL,register,suffix=o$model_order
         ) \
         $dataset_object_name \
         $model_object_name \
