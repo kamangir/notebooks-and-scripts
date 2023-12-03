@@ -6,9 +6,6 @@ Repository of research [notebooks](#notebooks) and [scripts](#scripts).
 
 ```bash
  > notebooks help
-📜 notebooks & scripts-4.10.1
-📜 notebooks & scripts for experiments and aws batch jobs.
-
 abcli notebooks \
 	[open] \
 	[<notebook>] \
@@ -16,7 +13,7 @@ abcli notebooks \
  . open ./notebook.ipynb.
 abcli notebooks build \
 	[<notebook>]
- . build 2023-09-28-18-08-29-25262/notebook.ipynb.
+ . build model-2023-12-02-20-01-08-54634/notebook.ipynb.
 abcli notebooks connect \
 	<1-2-3-4> [setup]
  . [setup and] connect to jupyter notebook on ec2:1-2-3-4.
@@ -34,12 +31,12 @@ abcli notebooks touch \
 
 ```bash
  > scripts help
-📜 notebooks & scripts-4.10.1
-📜 notebooks & scripts for experiments and aws batch jobs.
-
 abcli scripts cat \
 	<script-name>
  . cat <script-name>.
+abcli scripts code \
+	<script-name>
+ . code <script-name>.
 abcli scripts help \
 	[<script-name>]
  . help <script-name>.
@@ -47,13 +44,10 @@ abcli scripts list \
 	[<prefix>]
  . list scripts.
 abcli scripts move|mv \
-	<script-name-1> \
-	<script-name-2>
+	<script-name-1> <script-name-2>
  . <script-name-1> -> <script-name-2>
-abcli scripts source \
-	<script-name> \
-	[cat,<options>] \
-	<args>
+abcli scripts source [cat,dryrun] \
+	<script-name> [<args>]
  . source <script-name>.
 ```
 
@@ -69,7 +63,7 @@ abcli scripts source ingest-and-analyze \
 	[<object-name>] \
 	[<args>]
  . ingest from traffic cameras and analyze.
- ```
+```
 
 ## [paint-a-sentence](./scripts/paint-a-sentence.sh)
 
@@ -86,3 +80,38 @@ abcli scripts source paint-a-sentence \
  . paint a sentence by different artists.
 21 artists(s): Andy-Warhol,Caravaggio,Claude-Monet,Diego-Velázquez,Edgar-Degas,Edvard-Munch,Frida-Kahlo,Gustav-Klimt,Henri-Matisse,J.-M.-W.-Turner,Jackson-Pollock,Johannes-Vermeer,Leonardo-da-Vinci,Michelangelo,Pablo-Picasso,Paul-Cézanne,Paul-Gauguin,Rembrandt,Salvador-Dali,Vincent-van-Gogh,Wassily-Kandinsky
 ```
+
+## [mission-patch](./scripts/mission-patch.sh)
+
+uses 🛠️ [openai](https://github.com/kamangir/openai) and 🎨 [aiart](https://github.com/kamangir/aiart)
+
+```bash
+ > scripts help mission-patch
+abcli scripts source cat,dryrun \
+	mission-patch \
+	[count=<1>,dryrun,height=<1024>,open,width=<1024>,dryrun,~upload,url=<url>] \
+	[<object-name>] \
+	[<args>]
+ . generate mission patches for <url>.
+```
+
+## [roofAI-train](./scripts/roofAI-train.sh)
+
+uses 🏛️ [roofAI](https://github.com/kamangir/roofAI)
+
+```bash
+ > scripts help roofAI-train
+abcli scripts source cat,dryrun \
+	roofAI-train \
+	[order=<2>,*] \
+	[<args>]
+ . train a roofAI semseg model at the <order>
+ * [profile=FULL|DECENT|QUICK|DEBUG|VALIDATION,~register,suffix=<suffix>]
+```
+
+---
+
+| ![image]()                                        | ![image]()                                  | ![image](https://github.com/kamangir/assets/blob/main/nbs/train-summary.png?raw=true) ![image](https://github.com/kamangir/assets/blob/main/nbs/predict-00000.png?raw=true) |
+| ------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [paint-a-sentence](./scripts/paint-a-sentence.sh) | [mission-patch](./scripts/mission-patch.sh) | [roofAI-train](./scripts/roofAI-train.sh)                                                                                                                                   |
+| xxx                                               | xxx                                         | https://arash-kamangir.medium.com/roofai-%EF%B8%8F-on-gpu-6-b02f8f67ed3f                                                                                                    |
