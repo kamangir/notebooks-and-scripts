@@ -142,5 +142,5 @@ function abcli_scripts() {
 
 function abcli_script_show_usage() {
     abcli_show_usage "abcli scripts source $abcli_scripts_options$ABCUL$1" \
-        "$2"
+        "${@:2}"
 }
