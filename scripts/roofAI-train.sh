@@ -3,7 +3,7 @@
 function roofAI_train() {
     local options=$1
 
-    local version="2.7.1"
+    local version="2.8.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
@@ -42,9 +42,8 @@ function roofAI_train() {
         --classes roof \
         "${@:2}"
 
-    abcli_tag set \
-        $model_object_name \
-        order=$model_order,script_name=$script_name
+    abcli_cache write \
+        $model_object_name.order $model_order
 }
 
 roofAI_train "$@"
