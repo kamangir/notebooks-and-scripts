@@ -10,8 +10,6 @@ function notebooks_and_scripts() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
-        notebooks_and_scripts version \\n
-
         abcli_show_usage "notebooks_and_scripts init [clear]" \
             "init notebooks_and_scripts."
         return
@@ -23,7 +21,7 @@ function notebooks_and_scripts() {
     fi
 
     if [ "$task" == "version" ]; then
-        abcli_log "📜 $(python3 -m notebooks_and_scripts version --show_description 1)${@:2}"
+        python3 -m notebooks_and_scripts version
         return
     fi
 
