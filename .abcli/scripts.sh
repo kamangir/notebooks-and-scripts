@@ -41,8 +41,7 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts cat$ABCUL<script-name>" \
             "cat <script-name>."
 
-        abcli_show_usage "abcli scripts code$ABCUL<script-name>" \
-            "code <script-name>."
+        abcli_scripts code "$@"
 
         abcli_show_usage "abcli scripts help$ABCUL[<script-name>]" \
             "help <script-name>."
@@ -69,6 +68,15 @@ function abcli_scripts() {
     fi
 
     if [ "$task" == code ]; then
+        if [[ "$script_name" == help ]]; then
+            abcli_show_usage "abcli scripts code$ABCUL<script-name>" \
+                "code <script-name>."
+            return
+        fi
+
+        # $script_path += .sh
+        local script_path=$(python3 -c "print((lambda path: f'{path}.sh' if not path.endswith('.sh') else path)('$script_path'))")
+
         abcli_log "📜 $script_path"
         [[ ! -f "$$script_path" ]] &&
             cp -v \
