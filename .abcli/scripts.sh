@@ -76,7 +76,7 @@ function abcli_scripts() {
         local script_path=$(python3 -c "print((lambda path: f'{path}.sh' if not path.endswith('.sh') else path)('$script_path'))")
 
         abcli_log "📜 $script_path"
-        [[ ! -f "$$script_path" ]] &&
+        [[ ! -f "$script_path" ]] &&
             cp -v \
                 $abcli_path_scripts/template.sh \
                 $script_path
