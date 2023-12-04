@@ -3,13 +3,13 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.10.1"
+    local version="2.11.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="count=<1>,dryrun,height=<1024>,open,width=<1024>,dryrun,~upload,url=<url>"
+        local options="app=openai|blue_stability,count=<1>,dryrun,height=<1024>,open,width=<1024>,dryrun,~upload,url=<url>"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
             "generate mission patches for <url>."
         return
@@ -39,10 +39,10 @@ function mission_patch() {
         local prompt=$(echo "$prompt" | tr "'" " ")
         abcli_log "📜 $prompt"
 
-        openai generate image \
+        aiart generate image \
             $(abcli_option_subset \
                 "$options" \
-                ~dryrun,height=1024,width=1024) \
+                app=openai,~dryrun,height=1024,width=1024) \
             $object_name-$(python3 -c "print('{:05d}'.format($index))") - \
             "generate a mission patch for the following: $prompt"
     done
