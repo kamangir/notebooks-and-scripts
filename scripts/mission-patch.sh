@@ -9,9 +9,11 @@ function mission_patch() {
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="app=openai|blue_stability,count=<1>,dryrun,height=<1024>,open,width=<1024>,dryrun,~upload,url=<url>"
+        local options="app=openai|blue_stability,count=<1>,open,$ABCEP"
+        local extra_options="dryrun,height=<1024>,~upload,url=<url>,width=<1024>"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
-            "generate mission patches for <url>."
+            "generate mission patches for <url>." \
+            "[$extra_options]"
         return
     fi
 
