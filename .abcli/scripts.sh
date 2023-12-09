@@ -50,7 +50,7 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1> <script-name-2>" \
             "<script-name-1> -> <script-name-2>"
 
-        abcli_show_usage "abcli scripts source [$abcli_scripts_options]$ABCUL<script-name> [<args>]" \
+        abcli_show_usage "abcli scripts source $ABCXOP[$abcli_scripts_options]$ABCXOPE$ABCUL<script-name> [<args>]" \
             "source <script-name>."
         return
     fi
@@ -139,6 +139,6 @@ function abcli_scripts() {
 }
 
 function abcli_script_show_usage() {
-    abcli_show_usage "abcli scripts source $abcli_scripts_options$ABCUL$1" \
+    abcli_show_usage "abcli_scripts source $ABCXOP[$abcli_scripts_options]$ABCXOPE$ABCUL$1" \
         "${@:2}"
 }

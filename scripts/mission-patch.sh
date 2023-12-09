@@ -3,17 +3,17 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.11.1"
+    local version="2.12.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="app=openai|blue_stability,count=<1>,open,$ABCEP"
         local extra_options="dryrun,height=<1024>,~upload,url=<url>,width=<1024>"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[<args>]" \
-            "generate mission patches for <url>." \
-            "[$extra_options]"
+        extra_options="${ABCXOP}$extra_options${ABCXOPE}"
+        local options="app=openai|blue_stability,count=<1>,open,$extra_options"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCARGS" \
+            "generate mission patches for <url>."
         return
     fi
 

@@ -9,11 +9,11 @@ function roofAI_train() {
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="order=<2>$ABCEP"
         local extra_options="profile=$semseg_profiles,~register,suffix=<suffix>"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<args>]" \
-            "train a roofAI semseg model at the <order>" \
-            "[$extra_options]"
+        extra_options="${ABCXOP}$extra_options${ABCXOPE}"
+        local options="order=<2>,$extra_options"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCARGS" \
+            "train a roofAI semseg model at the <order>"
         return
     fi
 
