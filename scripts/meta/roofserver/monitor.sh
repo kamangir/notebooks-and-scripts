@@ -16,7 +16,7 @@ function runme() {
     abcli_log "🔗 suffix: $suffix"
 
     local endpoint_name=$(abcli_cache read roofserver-endpoint-$suffix.endpoint_name)
-    abcli_log "🔗 endpoint name: $endpoint_name"
+    abcli_log "🔗 endpoint: $endpoint_name"
 
     [[ $(abcli_option_int "$options" cloudwatch 0) == 1 ]] &&
         roofAI_cloudwatch browse \
