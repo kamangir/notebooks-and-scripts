@@ -15,4 +15,4 @@ alias @scripts=abcli_scripts
 alias @source="abcli_scripts source"
 
 # meta scripts
-alias roofAI-server="abcli_meta_scripts roofAI-server"
+alias roofserver="abcli_meta_scripts roofserver"
