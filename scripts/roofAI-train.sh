@@ -3,17 +3,15 @@
 function roofAI_train() {
     local options=$1
 
-    local version="2.8.1"
+    local version="2.9.1"
 
     local script_name=$(basename "${BASH_SOURCE[0]}")
     local script_name=${script_name%.*}
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local extra_options="profile=$semseg_profiles,~register,suffix=<suffix>"
-        extra_options="${ABCXOP}$extra_options${ABCXOPE}"
-        local options="order=<2>,$extra_options"
+        local options="order=<2>$ABCXOP,profile=$semseg_profiles,~register,suffix=<suffix>$ABCXOPE"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCARGS" \
-            "train a roofAI semseg model at the <order>"
+            "train a roofAI semseg model at the <order>."
         return
     fi
 

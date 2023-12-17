@@ -44,8 +44,8 @@ function abcli_scripts() {
         abcli_show_usage "abcli scripts help$ABCUL[<script-name>]" \
             "help <script-name>."
 
-        abcli_show_usage "abcli scripts list$ABCUL[<prefix>]" \
-            "list scripts."
+        abcli_show_usage "abcli scripts list|ls$ABCUL[meta|<prefix>]" \
+            "list [meta] scripts."
 
         abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1> <script-name-2>" \
             "<script-name-1> -> <script-name-2>"
@@ -85,6 +85,37 @@ function abcli_scripts() {
     fi
 
     if [[ ",ls,list," == *",$task,"* ]]; then
+        if [[ "$script_name" == meta ]]; then
+            local script_name=$3
+
+            if [[ -z "$script_name" ]]; then
+                abcli_log_list \
+                    $(abcli_metadata get \
+                        $abcli_path_scripts/meta.yaml \
+                        dict_keys,delim=+) \
+                    "before=📜,after=meta script(s)"
+                return
+            fi
+
+            local script_path_prefix=$(abcli_metadata get \
+                $abcli_path_scripts/meta.yaml \
+                key=$script_name.prefix,type=file)
+
+            if [ ! -d "$abcli_path_scripts/meta/$script_path_prefix" ]; then
+                abcli_log_error "-notebooks-and-scripts: meta scripts: $script_name: script not found."
+                return 1
+            fi
+
+            pushd $abcli_path_scripts/meta/$script_path_prefix >/dev/null
+            local filename
+            for filename in $(ls *.sh); do
+                abcli_scripts help meta/$script_path_prefix/$filename
+            done
+            popd >/dev/null
+
+            return
+        fi
+
         if [[ -f "$script_path" ]]; then
             abcli_log_file $script_path
         else

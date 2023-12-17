@@ -8,20 +8,20 @@ function abcli_notebooks() {
     local task=$(abcli_unpack_keyword "$1" open)
 
     if [ "$task" == "help" ]; then
-        abcli_show_usage "abcli notebooks$ABCUL[open]$ABCUL[<notebook>]$ABCUL[<args>]" \
-            "open ./notebook.ipynb."
-        abcli_show_usage "abcli notebooks build$ABCUL[<notebook>]" \
-            "build $abcli_object_name/notebook.ipynb."
+        abcli_show_usage "abcli notebooks [open]$ABCUL[<notebook-name>]$ABCUL[<args>]" \
+            "open ./<notebook-name>.ipynb."
+        abcli_show_usage "abcli notebooks build$ABCUL[<notebook-name>]" \
+            "build $abcli_object_name/<notebook-name>.ipynb."
         abcli_show_usage "abcli notebooks connect$ABCUL<1-2-3-4> [setup]" \
-            "[setup and] connect to jupyter notebook on ec2:1-2-3-4."
+            "connect to jupyter notebook on ec2:<1-2-3-4>."
+        abcli_show_usage "abcli notebooks create|touch$ABCUL[<notebook-name>]" \
+            "create ./<notebook-name>.ipynb."
         abcli_show_usage "abcli notebooks host$ABCUL[setup]" \
-            "[setup and] host jupyter notebook on ec2."
-        abcli_show_usage "abcli notebooks touch$ABCUL[<notebook>]" \
-            "touch ./<notebook>.ipynb."
+            "host jupyter notebook on ec2."
         return
     fi
 
-    if [[ ",build,open,touch," == *",$task,"* ]]; then
+    if [[ ",build,create,open,touch," == *",$task,"* ]]; then
         local notebook_name=$(abcli_clarify_input $2 notebook)
         export abcli_notebooks_input="${@:3}"
     fi
@@ -79,7 +79,7 @@ function abcli_notebooks() {
         return
     fi
 
-    if [[ ",open,touch," == *",$task,"* ]]; then
+    if [[ ",create,open,touch," == *",$task,"* ]]; then
         if [ -f $notebook_name.ipynb ]; then
             touch ./$notebook_name.ipynb
         else

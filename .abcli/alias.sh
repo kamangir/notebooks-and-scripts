@@ -13,3 +13,6 @@ alias @mv="abcli_scripts move"
 
 alias @scripts=abcli_scripts
 alias @source="abcli_scripts source"
+
+# meta scripts
+alias roofAI-server="abcli_meta_scripts roofAI-server"
