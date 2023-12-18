@@ -36,16 +36,8 @@ function abcli_scripts() {
             return
         fi
 
-        abcli_show_usage "abcli scripts cat$ABCUL<script-name>" \
-            "cat <script-name>."
-
+        abcli_scripts cat "$@"
         abcli_scripts code "$@"
-
-        abcli_show_usage "abcli scripts help$ABCUL[<script-name>]" \
-            "help <script-name>."
-
-        abcli_show_usage "abcli scripts list|ls$ABCUL[meta|<prefix>]" \
-            "list [meta] scripts."
 
         abcli_show_usage "abcli scripts move|mv$ABCUL<script-name-1> <script-name-2>" \
             "<script-name-1> -> <script-name-2>"
@@ -60,18 +52,30 @@ function abcli_scripts() {
         $function_name "${@:2}"
     fi
 
+    if [[ "$script_name" == help ]]; then
+        case $task in
+        cat)
+            abcli_show_usage "abcli scripts cat$ABCUL<script-name>" \
+                "cat <script-name>."
+            ;;
+        code)
+            abcli_show_usage "abcli scripts code$ABCUL<script-name>" \
+                "code <script-name>."
+            ;;
+        list | ls)
+            abcli_show_usage "abcli scripts list|ls$ABCUL[meta|<prefix>]" \
+                "list [meta] scripts."
+            ;;
+        esac
+        return
+    fi
+
     if [ "$task" == cat ]; then
         abcli_log_file $script_path
         return
     fi
 
     if [ "$task" == code ]; then
-        if [[ "$script_name" == help ]]; then
-            abcli_show_usage "abcli scripts code$ABCUL<script-name>" \
-                "code <script-name>."
-            return
-        fi
-
         # $script_path += .sh
         local script_path=$(python3 -c "print((lambda path: f'{path}.sh' if not path.endswith('.sh') else path)('$script_path'))")
 
