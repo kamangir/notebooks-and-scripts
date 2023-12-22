@@ -177,3 +177,10 @@ function abcli_script_show_usage() {
     abcli_show_usage "abcli_scripts source $ABCXOP[$abcli_scripts_options]$ABCXOPE$ABCUL$1" \
         "${@:2}"
 }
+
+function abcli_name_of_script() {
+    local script_name=$1
+    local prefix=$abcli_path_scripts
+
+    python3 -c "print('$script_name'.split('$prefix',1)[1] if '$script_name'.startswith('$prefix') else '')"
+}

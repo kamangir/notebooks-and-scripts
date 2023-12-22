@@ -3,10 +3,10 @@
 function roofAI_train() {
     local options=$1
 
-    local version="2.9.1"
+    local version="2.10.1"
 
-    local script_name=$(basename "${BASH_SOURCE[0]}")
-    local script_name=${script_name%.*}
+    local script_name=$(abcli_name_of_script "${BASH_SOURCE[0]}")
+    local script_path=$(dirname "${BASH_SOURCE[0]}")
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="order=<2>$ABCXOP,profile=$semseg_profiles,~register,suffix=<suffix>$ABCXOPE"
