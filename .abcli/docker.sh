@@ -21,6 +21,8 @@ function abcli_docker() {
 
         abcli_show_usage "abcli docker seed" \
             "seed docker 🌱."
+
+        abcli_docker source "$@"
         return
     fi
 
@@ -103,6 +105,25 @@ function abcli_docker() {
 
     if [ "$task" == "seed" ]; then
         abcli_seed docker "${@:2}"
+        return
+    fi
+
+    if [ "$task" == "source" ]; then
+        if [ $(abcli_option_int "$options" help 0) == 1 ]; then
+            abcli_show_usage "abcli docker source $ABCXOP[$abcli_scripts_options]$ABCXOPE$ABCUL<script-name> [<args>]" \
+                "docker source <script-name>."
+            return
+        fi
+
+        local command_line="source \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal \
+            abcli_scripts source $options \
+            ${@:3}"
+
+        abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
+            docker-compose run abcli \
+            bash -c \"$command_line\"
+
         return
     fi
 
