@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+alias @batch=abcli_aws_batch
+
 alias @docker=abcli_docker
 
 alias @notebooks=abcli_notebooks
