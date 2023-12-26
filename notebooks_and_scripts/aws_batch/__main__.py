@@ -3,6 +3,7 @@ from abcli.plugins import aws
 from notebooks_and_scripts import VERSION
 from abcli import logging
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +13,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="submit",
+    help="show_count|submit",
 )
 parser.add_argument(
     "--command_line",
@@ -42,7 +43,15 @@ parser.add_argument(
 args = parser.parse_args()
 
 success = False
-if args.task == "submit":
+if args.task == "show_count":
+    success = True
+    input_string = sys.stdin.read().strip()
+    if not input_string.isdigit():
+        print(input_string)
+    else:
+        input_int = int(input_string)
+        print("{} {}".format(input_int, input_int * "🌀") if input_int else "-")
+elif args.task == "submit":
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
         "bash",

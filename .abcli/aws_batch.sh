@@ -79,13 +79,14 @@ function abcli_aws_batch() {
 
         local pipes=""
         [[ ! -z "$prefix" ]] && local pipes="| grep $prefix"
-        [[ "$show_count" == 1 ]] && local pipes="$pipes | wc -l | python3 -m abcli.plugins.aws_batch show_count"
+        [[ "$show_count" == 1 ]] && local pipes="$pipes | wc -l | python3 -m notebooks_and_scripts.aws_batch show_count"
 
         [[ -z "$status" ]] && local status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST | tr \| " ")
 
+        abcli_log "queue: $queue"
         local status_
         for status_ in $status; do
-            [[ "$show_count" == 1 ]] && abcli_log "$status_"
+            [[ "$show_count" == 1 ]] && abcli_log "status: $status_"
             abcli_eval dryrun=$do_dryrun,log=$(abcli_not $show_count) \
                 "aws batch list-jobs \
                 --job-status $status_ \
