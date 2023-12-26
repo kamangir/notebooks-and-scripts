@@ -3,15 +3,15 @@
 function vanwatch_ingest_and_analyze() {
     local options=$1
 
-    local version="1.4.1"
+    local version="1.5.1"
 
     local script_name=$(abcli_name_of_script "${BASH_SOURCE[0]}")
     local script_path=$(dirname "${BASH_SOURCE[0]}")
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="${ABCXOP}dryrun${ABCXOPE}"
-        local ingest_options="count=<-1>$ABCXOP,dryrun$ABCXOPE"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[$ingest_options]$ABCUL[<object-name>]$ABCARGS" \
+        local options="${EOP}dryrun$EOPE"
+        local ingest_options="count=<-1>$EOP,dryrun$EOPE"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[$ingest_options]$ABCUL[-|<object-name>]$EARGS" \
             "ingest from traffic cameras and analyze, version $version."
         return
     fi
@@ -20,7 +20,7 @@ function vanwatch_ingest_and_analyze() {
 
     local ingest_options=$2
 
-    local object_name=$(abcli_clarify_object $3 .)
+    local object_name=$(abcli_clarify_object $3 $(abcli_string_timestamp))
     local object_path=$abcli_object_root/$object_name
     mkdir -p $object_path
     rm -v $object_path/*.jpg

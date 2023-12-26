@@ -9,8 +9,8 @@ function roofAI_train() {
     local script_path=$(dirname "${BASH_SOURCE[0]}")
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="order=<2>$ABCXOP,profile=$semseg_profiles,~register,suffix=<suffix>$ABCXOPE"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCARGS" \
+        local options="order=<2>$EOP,profile=$semseg_profiles,~register,suffix=<suffix>$EOPE"
+        abcli_script_show_usage "$script_name$ABCUL[$options]$EARGS" \
             "train a roofAI semseg model at the <order>."
         return
     fi

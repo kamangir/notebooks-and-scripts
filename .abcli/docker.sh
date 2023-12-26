@@ -110,13 +110,13 @@ function abcli_docker() {
 
     if [ "$task" == "source" ]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-            abcli_show_usage "abcli docker source $ABCXOP[$abcli_scripts_options]$ABCXOPE$ABCUL<script-name> [<args>]" \
+            abcli_show_usage "abcli docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
                 "docker source <script-name>."
             return
         fi
 
         local command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
             abcli_scripts source $options \
             ${@:3}"
 

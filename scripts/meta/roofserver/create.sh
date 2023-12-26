@@ -9,7 +9,7 @@ function runme() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="suffix=<suffix>"
-        abcli_meta_script_show_usage $script_full_name "[$options]$ABCUL$ABCXOP[<model-object-name>*]$ABCXOPE" \
+        abcli_meta_script_show_usage $script_full_name "[$options]$ABCUL$EOP[<model-object-name>*]$EOPE" \
             "create model, endpoint_config, and endpoint and serve <model-object-name> under <suffix>." \
             "default: $default_object_name"
         return
