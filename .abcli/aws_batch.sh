@@ -20,13 +20,13 @@ function abcli_aws_batch() {
         options="$EOP,dryrun$EOPE"
         case "$task" in
         browse)
-            abcli_show_usage "abcli aws_batch browse$ABCUL[id=<job-id>$options]" \
+            abcli_show_usage "abcli aws_batch browse$ABCUL[id=<job-id>]" \
                 "browse <job-id>."
 
-            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST$options]" \
+            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST]" \
                 "browse <queue-name>."
 
-            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=list$options]" \
+            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=list]" \
                 "browse list of queues."
             ;;
         list | ls)
@@ -48,7 +48,7 @@ function abcli_aws_batch() {
     fi
 
     if [[ "|browse|list|ls|" == *"|$task|"* ]]; then
-        local queue=$(abcli_option "$options" queue abcli)
+        local queue=$(abcli_option "$options" queue abcli-v3)
     fi
 
     if [ "$task" == "browse" ]; then
