@@ -74,11 +74,6 @@ function abcli_aws_batch() {
     fi
 
     if [[ "|list|ls|" == *"|$task|"* ]]; then
-        if [ "$abcli_is_docker" == false ]; then
-            abcli_warn "-abcli: aws_batch: $task: abcli command."
-            return 1
-        fi
-
         local prefix=$(abcli_option "$options" prefix)
         local show_count=$(abcli_option_int "$options" count 1)
 
