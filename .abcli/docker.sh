@@ -116,7 +116,7 @@ function abcli_docker() {
         fi
 
         local command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
             abcli_scripts source $options \
             ${@:3}"
 
