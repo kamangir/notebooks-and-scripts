@@ -3,14 +3,14 @@
 function cat_under_trees() {
     local options=$1
 
-    local version="1.2.1"
+    local version="1.3.1"
 
     local list_of_artists="Leonardo-da-Vinci,Vincent-van-Gogh,Michelangelo,Gustav-Klimt,Claude-Monet,Paul-Cézanne,Frida-Kahlo,Salvador-Dali,Jackson-Pollock,Johannes-Vermeer,Wassily-Kandinsky,Edvard-Munch,Paul-Gauguin,Pablo-Picasso,Rembrandt,Diego-Velázquez,Henri-Matisse,Andy-Warhol,Edgar-Degas,J.-M.-W.-Turner,Caravaggio"
 
     local sentence="a cat walking under apple trees"
 
-    local script_name=$(abcli_name_of_script "${BASH_SOURCE[0]}")
-    local script_path=$(dirname "${BASH_SOURCE[0]}")
+    local script_name=$(abcli_script_get name)
+    local script_path=$(abcli_script_get path)
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="count=<-1>,dryrun"

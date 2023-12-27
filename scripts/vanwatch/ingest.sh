@@ -3,10 +3,10 @@
 function runme() {
     local options=$1
 
-    local version="1.6.1"
+    local version="1.7.1"
 
-    local script_name=$(abcli_name_of_script "${BASH_SOURCE[0]}")
-    local script_path=$(dirname "${BASH_SOURCE[0]}")
+    local script_name=$(abcli_script_get name)
+    local script_path=$(abcli_script_get path)
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="${EOP}dryrun$EOPE"

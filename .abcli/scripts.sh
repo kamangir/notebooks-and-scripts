@@ -178,9 +178,24 @@ function abcli_script_show_usage() {
         "${@:2}"
 }
 
-function abcli_name_of_script() {
-    local script_name=$1
-    local prefix=$abcli_path_scripts
+function abcli_script_get() {
+    local what=${1:-name}
+    local script_full_path=${2:-"${BASH_SOURCE[1]}"}
 
-    python3 -c "print('$script_name'.split('$prefix',1)[1] if '$script_name'.startswith('$prefix') else '')"
+    local prefix=$abcli_path_scripts
+    local script_name=$(python3 -c "print('$script_full_path'.split('$prefix',1)[1] if '$script_full_path'.startswith('$prefix') else '')")
+
+    local script_path=$(dirname "$script_full_path")
+
+    case $what in
+    "name")
+        echo $script_name
+        ;;
+    "path")
+        echo $script_path
+        ;;
+    *)
+        echo "unknown-$what"
+        ;;
+    esac
 }
