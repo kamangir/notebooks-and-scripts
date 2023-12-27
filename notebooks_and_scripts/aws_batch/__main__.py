@@ -1,4 +1,5 @@
 import argparse
+import boto3
 from abcli.plugins import aws
 from notebooks_and_scripts import VERSION
 from abcli import logging
@@ -21,24 +22,9 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
-    "--vcpus",
-    type=int,
-    default=8,
-)
-parser.add_argument(
     "--job_name",
     type=str,
     default="",
-)
-parser.add_argument(
-    "--memory",
-    type=int,
-    default=32000,
-)
-parser.add_argument(
-    "--retries",
-    type=int,
-    default=3,
 )
 args = parser.parse_args()
 
@@ -58,22 +44,26 @@ elif args.task == "submit":
         "-c",
         f"source /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,aws_batch abcli_scripts source {args.command_line}",
     ]
-    logger.info("{}.submit -> {}: {}".format(NAME, args.job_name, " ".join(command)))
+    logger.info("{}.submit -> {}: {}".format(NAME, args.job_name, "\n".join(command)))
 
-    # request = BatchRequest(
-    #    command=command,
-    #    vcpus=args.vcpus,
-    #    mem=args.memory,
-    #    retries=args.retries,
-    #    job_name=args.job_name,
-    # )
-    # request.image = "image-name"
-    # job_id = request.submit_job_request()
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch.html
+    client = boto3.client("batch")
 
-    job_id = None
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/submit_job.html
+    response = client.submit_job(
+        jobName=args.job_name,
+        jobQueue="abcli-v3",
+        jobDefinition="abcli-custom-v1",
+        containerOverrides={
+            "command": command,
+        },
+    )
+    logger.info(f"response: {response}")
+
+    job_id = response["jobId"]
+    logger.info(f"job_id: {job_id}")
 
     aws_region = aws.get_from_json("region", "")
-    logger.info(f"job_id: {job_id}")
     logger.info(
         "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
             aws_region,

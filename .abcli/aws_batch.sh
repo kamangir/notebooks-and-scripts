@@ -100,7 +100,7 @@ function abcli_aws_batch() {
 
     if [[ "|source|submit|" == *"|$task|"* ]]; then
         local job_name=$(echo $3 | tr . - | tr / -)-$(abcli_string_timestamp)
-        job_name=abcli-$(abcli_option "$options" name $job_name)
+        job_name=$(abcli_option "$options" name $job_name)
 
         abcli_eval dryrun=$do_dryrun \
             python3 -m notebooks_and_scripts.aws_batch \
