@@ -1,9 +1,9 @@
 #! /usr/bin/env bash
 
-function vanwatch_ingest_and_analyze() {
+function runme() {
     local options=$1
 
-    local version="1.5.1"
+    local version="1.6.1"
 
     local script_name=$(abcli_name_of_script "${BASH_SOURCE[0]}")
     local script_path=$(dirname "${BASH_SOURCE[0]}")
@@ -12,7 +12,7 @@ function vanwatch_ingest_and_analyze() {
         local options="${EOP}dryrun$EOPE"
         local ingest_options="count=<-1>$EOP,dryrun$EOPE"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[$ingest_options]$ABCUL[-|<object-name>]$EARGS" \
-            "ingest from traffic cameras and analyze, version $version."
+            "vanwatch ingest, defaults to Vancouver."
         return
     fi
 
@@ -33,4 +33,4 @@ function vanwatch_ingest_and_analyze() {
         "${@:4}"
 }
 
-vanwatch_ingest_and_analyze "$@"
+runme "$@"
