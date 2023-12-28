@@ -3,7 +3,7 @@
 function mission_patch() {
     local options=$1
 
-    local version="2.15.1"
+    local version="2.16.1"
 
     local script_name=$(abcli_script_get name)
     local script_path=$(abcli_script_get path)
@@ -50,7 +50,7 @@ function mission_patch() {
     done
 
     [[ "$do_upload" == 1 ]] &&
-        abcli_upload object $object_name
+        abcli_upload - $object_name
 
     abcli_tag set \
         $object_name mission-patch

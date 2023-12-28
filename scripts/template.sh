@@ -3,7 +3,7 @@
 function runme() {
     local options=$1
 
-    local version="1.3.1"
+    local version="1.4.1"
 
     local script_name=$(abcli_script_get name)
     local script_path=$(abcli_script_get path)
@@ -29,7 +29,7 @@ function runme() {
         "${@:3}"
 
     [[ "$do_upload" == 1 ]] &&
-        abcli_upload object $object_name
+        abcli_upload - $object_name
 }
 
 runme "$@"
