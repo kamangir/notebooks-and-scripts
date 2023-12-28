@@ -21,7 +21,7 @@ function runme() {
 
     local object_name=$(abcli_clarify_object $2 .)
     [[ "$do_download" == 1 ]] &&
-        abcli_download object $object_name
+        abcli_download - $object_name
 
     abcli_eval dryrun=$do_dryrun \
         abcli_list cloud \
