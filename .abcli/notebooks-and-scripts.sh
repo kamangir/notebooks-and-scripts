@@ -21,7 +21,7 @@ function notebooks_and_scripts() {
     fi
 
     if [ "$task" == "version" ]; then
-        python3 -m notebooks_and_scripts version
+        python3 -m notebooks_and_scripts version "${@:2}"
         return
     fi
 
