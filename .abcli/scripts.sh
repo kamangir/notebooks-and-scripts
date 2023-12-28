@@ -105,15 +105,15 @@ function abcli_scripts() {
                 $abcli_path_scripts/meta.yaml \
                 key=$script_name.prefix,type=file)
 
-            if [ ! -d "$abcli_path_scripts/meta/$script_path_prefix" ]; then
+            if [ ! -d "$abcli_path_scripts/$script_path_prefix" ]; then
                 abcli_log_error "-notebooks-and-scripts: meta scripts: $script_name: script not found."
                 return 1
             fi
 
-            pushd $abcli_path_scripts/meta/$script_path_prefix >/dev/null
+            pushd $abcli_path_scripts/$script_path_prefix >/dev/null
             local filename
             for filename in $(ls *.sh); do
-                abcli_scripts help meta/$script_path_prefix/$filename
+                abcli_scripts help $script_path_prefix/$filename
             done
             popd >/dev/null
 

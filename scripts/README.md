@@ -81,3 +81,7 @@ abcli scripts source cat,dryrun \
  . train a roofAI semseg model at the <order>
  * [profile=FULL|DECENT|QUICK|DEBUG|VALIDATION,~register,suffix=<suffix>]
 ```
+
+# meta scripts
+
+- [roofserver](./roofserver/): `create`s model, endpoint config, and config to serve a model on SageMaker. 🔥 `invoke`, `wipe`.

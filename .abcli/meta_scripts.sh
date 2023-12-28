@@ -21,7 +21,7 @@ function abcli_meta_scripts() {
 
     abcli_eval - \
         abcli_scripts source - \
-        meta/$script_prefix/$task \
+        $script_prefix/$task \
         "${@:3}"
 }
 
