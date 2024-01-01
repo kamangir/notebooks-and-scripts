@@ -32,11 +32,13 @@ success = False
 if args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()
+
     if not input_string.isdigit():
         print(input_string)
     else:
         input_int = int(input_string)
-        print("{} {}".format(input_int, input_int * "🌀") if input_int else "-")
+        if input_int:
+            print("{} {}".format(input_int, input_int * "🌀"))
 elif args.task == "submit":
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
