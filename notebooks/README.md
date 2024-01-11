@@ -20,5 +20,6 @@ abcli notebooks host \
  . host jupyter notebook on ec2.
 ```
 
+- [SageMaker](./sagemaker/)
 - [Semantic segmentation](./semseg).
 - [Image-Based 3D Modeling](./im3d) on SageMaker.
