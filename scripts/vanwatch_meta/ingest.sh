@@ -6,10 +6,9 @@ function runme() {
     local script_full_name="${BASH_SOURCE[0]}"
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="${EOP}dryrun$EOPE"
-        local ingest_options="count=<-1>,publish$EOP,dryrun$EOPE"
-        abcli_meta_script_show_usage $script_full_name "[$options]$ABCUL[$ingest_options]$ABCUL[-|<object-name>]$EARGS" \
-            "vanwatch ingest, defaults to Vancouver."
+        local options="dryrun"
+        abcli_meta_script_show_usage $script_full_name "$EOP$options$ABCUL$vancouver_watching_ingest_options$EOP$ABCUL-|<object-name>$EARGS" \
+            "vanwatch ingest, defaults to vancouver x 10."
         return
     fi
 
