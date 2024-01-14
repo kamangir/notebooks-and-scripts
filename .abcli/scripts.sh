@@ -95,7 +95,7 @@ function abcli_scripts() {
             if [[ -z "$script_name" ]]; then
                 abcli_log_list \
                     $(abcli_metadata get \
-                        dict_keys,delim=+,filename \
+                        dict.keys,delim=+,filename \
                         $abcli_path_scripts/meta.yaml) \
                     "before=📜,after=meta script(s)"
                 return
