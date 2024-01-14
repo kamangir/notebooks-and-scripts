@@ -27,7 +27,7 @@ function runme() {
     rm -v $object_path/*.geojson
 
     abcli_eval dryrun=$do_dryrun \
-        vanwatch ingest \
+        vancouver_watching_ingest \
         area=vancouver,count=10,$ingest_options \
         $object_name \
         "${@:4}"
