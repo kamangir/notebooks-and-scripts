@@ -3,13 +3,12 @@
 function runme() {
     local options=$1
 
-    local version="3.4.1"
-
+    local script_full_name="${BASH_SOURCE[0]}"
     local script_name=$(abcli_script_get name)
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="${EOP}dryrun$EOPE"
-        abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[$EOP$vancouver_watching_process_options$EOPE]$ABCUL[.|all|<object-name>]$EARGS" \
+        abcli_meta_script_show_usage $script_full_name "[$options]$ABCUL[$EOP$vancouver_watching_process_options$EOPE]$ABCUL[.|all|<object-name>]$EARGS" \
             "process <object-name>."
         return
     fi
@@ -26,7 +25,7 @@ function runme() {
             --delim space); do
             abcli_aws_batch source \
                 name=vanwatch-process-$(abcli_string_timestamp)-$published_object_name,$options \
-                vanwatch/process \
+                $script_name \
                 "$process_options" \
                 $published_object_name \
                 "${@:4}"

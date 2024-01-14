@@ -1,3 +1,7 @@
 roofserver:
   description: creates sagemaker infrastructure to serve a roofAI model.
   prefix: roofserver
+vanwatch_meta:
+  alias: "@vanwatch"
+  description: vanwatch + aws batch.
+  prefix: vanwatch_meta
