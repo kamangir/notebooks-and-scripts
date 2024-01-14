@@ -95,15 +95,15 @@ function abcli_scripts() {
             if [[ -z "$script_name" ]]; then
                 abcli_log_list \
                     $(abcli_metadata get \
-                        $abcli_path_scripts/meta.yaml \
-                        dict_keys,delim=+) \
+                        dict_keys,delim=+,filename \
+                        $abcli_path_scripts/meta.yaml) \
                     "before=📜,after=meta script(s)"
                 return
             fi
 
             local script_path_prefix=$(abcli_metadata get \
-                $abcli_path_scripts/meta.yaml \
-                key=$script_name.prefix,type=file)
+                key=$script_name.prefix,filename \
+                $abcli_path_scripts/meta.yaml)
 
             if [ ! -d "$abcli_path_scripts/$script_path_prefix" ]; then
                 abcli_log_error "-notebooks-and-scripts: meta scripts: $script_name: script not found."

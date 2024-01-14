@@ -16,8 +16,8 @@ function abcli_meta_scripts() {
     fi
 
     local script_prefix=$(abcli_metadata get \
-        $abcli_path_scripts/meta.yaml \
-        key=$script_name.prefix,type=file)
+        key=$script_name.prefix,filename \
+        $abcli_path_scripts/meta.yaml)
 
     abcli_eval - \
         abcli_scripts source - \
