@@ -21,10 +21,6 @@ function runme() {
     local ingest_options=$2
 
     local object_name=$(abcli_clarify_object $3 $(abcli_string_timestamp))
-    local object_path=$abcli_object_root/$object_name
-    mkdir -p $object_path
-    rm -v $object_path/*.jpg
-    rm -v $object_path/*.geojson
 
     abcli_eval dryrun=$do_dryrun \
         vancouver_watching_ingest \

@@ -14,9 +14,15 @@ function runme() {
         return
     fi
 
+    local process_options=$2
+
+    local object_name=$(abcli_clarify_object $3 .)
+
     abcli_eval "$options" \
         vancouver_watching_process \
-        "${@:2}"
+        "$process_options" \
+        $object_name \
+        "${@:4}"
 }
 
 runme "$@"
