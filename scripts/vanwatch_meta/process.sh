@@ -24,13 +24,12 @@ function runme() {
             --log 0 \
             --delim space); do
             abcli_aws_batch source \
-                name=vanwatch-process-$(abcli_string_timestamp)-$published_object_name,$options \
+                name=$published_object_name-vanwatch-process-$(abcli_string_timestamp),$options \
                 $script_name \
-                "$process_options" \
+                $process_options, \
                 $published_object_name \
                 "${@:4}"
         done
-
         return
     fi
 
