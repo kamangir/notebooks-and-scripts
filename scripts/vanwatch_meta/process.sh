@@ -37,7 +37,7 @@ function runme() {
 
     if [[ "$on_batch" == 1 ]]; then
         abcli_aws_batch source \
-            name=$object_name-vanwatch-ingest-$(abcli_string_timestamp),dryrun=$do_dryrun \
+            name=$object_name-vanwatch-process-$(abcli_string_timestamp),dryrun=$do_dryrun \
             $script_name \
             - \
             $process_options, \
