@@ -8,7 +8,7 @@ function runme() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="batch$EOP,dryrun"
         abcli_meta_script_show_usage $script_full_name "$options$ABCUL$vancouver_watching_ingest_options$EOP$ABCUL-|<object-name>$EARGS" \
-            "vanwatch ingest, defaults to vancouver x 10."
+            "vanwatch ingest, defaults to vancouver."
         return
     fi
 
@@ -32,7 +32,7 @@ function runme() {
 
     abcli_eval dryrun=$do_dryrun \
         vancouver_watching_ingest \
-        area=vancouver,count=10,$ingest_options \
+        $ingest_options, \
         $object_name \
         "${@:4}"
 }
