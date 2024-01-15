@@ -16,8 +16,8 @@ function abcli_meta_scripts() {
     fi
 
     local script_prefix=$(abcli_metadata get \
-        $abcli_path_scripts/meta.yaml \
-        key=$script_name.prefix,type=file)
+        key=$script_name.prefix,filename \
+        $abcli_path_scripts/meta.yaml)
 
     abcli_eval - \
         abcli_scripts source - \
@@ -30,6 +30,10 @@ function abcli_meta_script_show_usage() {
 
     local task=$(python3 -c "print('$script_fullname'.split('/')[-1].split('.')[0])")
     local meta_script_name=$(python3 -c "print('$script_fullname'.split('/')[-2])")
+
+    meta_script_name=$(abcli_metadata get \
+        key=$meta_script_name.alias,default=$meta_script_name,filename \
+        $abcli_path_scripts/meta.yaml)
 
     abcli_show_usage "$meta_script_name $task$ABCUL$2" \
         "${@:3}"

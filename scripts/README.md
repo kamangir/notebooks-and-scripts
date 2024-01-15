@@ -24,18 +24,23 @@ abcli scripts source [cat,dryrun] \
  . source <script-name>.
 ```
 
-## [vanwatch](./scripts/vanwatch/)
+## [@vanwatch](./scripts/vanwatch_meta/)
 
-uses [Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching).
+[Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching) + AWS Batch.
 
 ```bash
- > scripts help vanwatch/ingest-and-analyze.sh
-
-abcli scripts source ingest-and-analyze \
-	[cat,count=<-1>,dryrun,upload] \
-	[<object-name>] \
+@vanwatch ingest \
+	batch,dryrun \
+	area=<area>,count=<-1>,dryrun,gif,model=<model-id>,~process,publish,~upload \
+	-|<object-name> \
 	[<args>]
- . ingest from traffic cameras and analyze.
+ . vanwatch ingest, defaults to vancouver x 10.
+@vanwatch process \
+	batch,dryrun \
+	count=<count>,~download,gif,model=<model-id>,publish,~upload \
+	.|all|<object-name> \
+	[<args>]
+ . vanwatch process <object-name>.
 ```
 
 ## [paint-a-sentence](./scripts/paint-a-sentence.sh)
