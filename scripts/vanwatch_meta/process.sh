@@ -29,6 +29,7 @@ function runme() {
             abcli_aws_batch source \
                 name=$published_object_name-vanwatch-process-$(abcli_string_timestamp),dryrun=$do_dryrun \
                 $script_name \
+                - \
                 $process_options, \
                 $published_object_name \
                 "${@:4}"
