@@ -33,6 +33,7 @@ function runme() {
                 $published_object_name \
                 "${@:4}"
         done
+        return
     fi
 
     if [[ "$on_batch" == 1 ]]; then
