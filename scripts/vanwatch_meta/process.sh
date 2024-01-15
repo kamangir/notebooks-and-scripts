@@ -27,7 +27,7 @@ function runme() {
             --log 0 \
             --delim space); do
             abcli_aws_batch source \
-                name=$published_object_name-vanwatch-process-$(abcli_string_timestamp),dryrun=$do_dryrun \
+                name=vanwatch-process-$published_object_name-$(abcli_string_random --length 5),dryrun=$do_dryrun \
                 $script_name \
                 - \
                 $process_options, \
@@ -39,7 +39,7 @@ function runme() {
 
     if [[ "$on_batch" == 1 ]]; then
         abcli_aws_batch source \
-            name=$object_name-vanwatch-process-$(abcli_string_timestamp),dryrun=$do_dryrun \
+            name=vanwatch-process-$object_name-$(abcli_string_random --length 5),dryrun=$do_dryrun \
             $script_name \
             - \
             $process_options, \
