@@ -8,7 +8,7 @@ function runme() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="${EOP}dryrun$EOPE"
-        abcli_meta_script_show_usage $script_full_name "[$options]$ABCUL[$EOP$vancouver_watching_process_options$EOPE]$ABCUL[.|all|<object-name>]$EARGS" \
+        abcli_meta_script_show_usage $script_full_name "$options$ABCUL$EOP$vancouver_watching_process_options$EOPE$ABCUL.|all|<object-name>$EARGS" \
             "process <object-name>."
         return
     fi
