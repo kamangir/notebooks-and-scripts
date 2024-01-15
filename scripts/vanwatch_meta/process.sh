@@ -13,6 +13,8 @@ function runme() {
         return
     fi
 
+    local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+
     local process_options=$2
 
     local object_name=$(abcli_clarify_object $3 .)
@@ -24,7 +26,7 @@ function runme() {
             --log 0 \
             --delim space); do
             abcli_aws_batch source \
-                name=$published_object_name-vanwatch-process-$(abcli_string_timestamp),$options \
+                name=$published_object_name-vanwatch-process-$(abcli_string_timestamp),dryrun=$do_dryrun \
                 $script_name \
                 $process_options, \
                 $published_object_name \
