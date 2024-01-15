@@ -29,19 +29,18 @@ abcli scripts source [cat,dryrun] \
 [Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching) + AWS Batch.
 
 ```bash
- > @vanwatch help
 @vanwatch ingest \
-	[dryrun] \
-	[count=<-1>,publish,dryrun] \
-	[-|<object-name>] \
+	batch,dryrun \
+	area=<area>,count=<-1>,dryrun,gif,model=<model-id>,~process,publish,~upload \
+	-|<object-name> \
 	[<args>]
- . vanwatch ingest, defaults to Vancouver.
+ . vanwatch ingest, defaults to vancouver x 10.
 @vanwatch process \
-	[dryrun] \
-	[count=<count>,~download,gif,model=<model-id>,publish,~upload] \
-	[.|all|<object-name>] \
+	batch,dryrun \
+	count=<count>,~download,gif,model=<model-id>,publish,~upload \
+	.|all|<object-name> \
 	[<args>]
- . process <object-name>.
+ . vanwatch process <object-name>.
 ```
 
 ## [paint-a-sentence](./scripts/paint-a-sentence.sh)
