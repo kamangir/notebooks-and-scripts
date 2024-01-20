@@ -13,7 +13,7 @@ function runme() {
     fi
 
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
-    local on_batch=$(abcli_option_int "$options" batch 0)
+    local on_batch=$(abcli_option_int "$options" batch 1)
     local do_publish=$(abcli_option_int "$options" publish 1)
 
     local ingest_options=$2,publish=$do_publish
