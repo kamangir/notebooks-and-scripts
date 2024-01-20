@@ -25,7 +25,7 @@ function runme() {
         abcli_aws_batch source \
             name=vanwatch-ingest-$object_name-$(abcli_string_random --length 5),dryrun=$do_dryrun \
             $script_name \
-            - \
+            ~batch \
             $ingest_options \
             $object_name \
             "${@:4}"
