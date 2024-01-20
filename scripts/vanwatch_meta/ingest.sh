@@ -4,6 +4,7 @@ function runme() {
     local options=$1
 
     local script_full_name="${BASH_SOURCE[0]}"
+    local script_name=$(abcli_script_get name)
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="$EOP~batch,dryrun,~publish"
@@ -25,7 +26,7 @@ function runme() {
             name=vanwatch-ingest-$object_name-$(abcli_string_random --length 5),dryrun=$do_dryrun \
             $script_name \
             - \
-            $ingest_options, \
+            $ingest_options \
             $object_name \
             "${@:4}"
         return
@@ -33,7 +34,7 @@ function runme() {
 
     abcli_eval dryrun=$do_dryrun \
         vancouver_watching_ingest \
-        $ingest_options, \
+        $ingest_options \
         $object_name \
         "${@:4}"
 }
