@@ -163,10 +163,13 @@ function abcli_scripts() {
 
         [[ "$do_cat" == 1 ]] && abcli_log_file $script_path
 
+        local args="${@:4}"
+        [[ -z "$args" ]] && args="-"
+
         abcli_eval dryrun=$do_dryrun,~log \
             chmod +x $script_path
         abcli_eval dryrun=$do_dryrun \
-            source $script_path "${@:4}"
+            source $script_path "$args"
         return
     fi
 
