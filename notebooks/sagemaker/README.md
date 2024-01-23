@@ -1,1 +1,2 @@
 - [PyTorch CNN CIFAR10](./pytorch_cnn_cifar10/)
+- [Introduction to JumpStart - Semantic Segmentation](./jumpstart_semantic_segmentation/)
