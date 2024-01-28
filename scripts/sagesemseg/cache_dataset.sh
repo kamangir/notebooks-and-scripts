@@ -21,6 +21,7 @@ function runme() {
     abcli_log "caching $dataset_object_name"
 
     local dataset_object_path=$abcli_object_root/$dataset_object_name
+    mkdir -pv $dataset_object_path
     pushd $dataset_object_path >/dev/null
 
     if [[ ! -f "$dataset_name.tgz" ]]; then
