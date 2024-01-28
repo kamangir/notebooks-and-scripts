@@ -25,8 +25,7 @@ function runme() {
     pushd $dataset_object_path >/dev/null
 
     if [[ ! -f "$dataset_name.tgz" ]]; then
-        wget -P ./ \
-            https://fast-ai-imagelocal.s3.amazonaws.com/pascal-voc.tgz
+        curl -O https://fast-ai-imagelocal.s3.amazonaws.com/pascal-voc.tgz
     else
         abcli_log "✅ $dataset_name.tgz"
     fi
