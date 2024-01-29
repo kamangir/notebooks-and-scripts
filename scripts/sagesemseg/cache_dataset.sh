@@ -6,8 +6,10 @@ function runme() {
     local script_full_name="${BASH_SOURCE[0]}"
     local script_name=$(abcli_script_get name)
 
+    abcli_scripts source - sagesemseg/consts
+
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="dataset=pascal-voc,rm,suffix=<v1>"
+        local options="$sagesemseg_cache_dataset_options,rm"
         abcli_meta_script_show_usage $script_full_name "$EOP[$options]$EOPE" \
             "cache dataset."
         return
