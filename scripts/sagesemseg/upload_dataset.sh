@@ -21,6 +21,8 @@ function runme() {
     local cache_suffix=$(abcli_option "$cache_options" suffix v1)
     local dataset_object_name=$dataset_name-$cache_suffix
 
+    abcli_scripts source - sagesemseg/consts "$cache_options"
+
     local options=$2
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
     local suffix=$(abcli_option "$options" suffix v1)
