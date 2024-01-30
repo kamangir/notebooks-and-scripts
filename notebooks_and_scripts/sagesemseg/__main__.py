@@ -24,6 +24,11 @@ parser.add_argument(
     type=str,
     default="",
 )
+parser.add_argument(
+    "--count",
+    type=int,
+    default=-1,
+)
 args = parser.parse_args()
 
 success = False
@@ -31,6 +36,7 @@ if args.task == "upload_dataset":
     success = upload_dataset(
         dataset_object_name=args.dataset_object_name,
         object_name=args.object_name,
+        count=args.count,
     )
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
