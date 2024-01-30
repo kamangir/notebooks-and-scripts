@@ -33,6 +33,9 @@ function notebooks_and_scripts_conda() {
         pip3 install matplotlib
         pip3 install boto3
 
+        # https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb
+        pip3 install 'sagemaker>=2,<3'
+
         [[ "$abcli_is_mac" == true ]] &&
             pip3 install folium
 
