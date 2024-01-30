@@ -11,7 +11,8 @@ function runme() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local cache_options=$sagesemseg_cache_dataset_options
         local options="dryrun,suffix=<v1>"
-        abcli_meta_script_show_usage $script_full_name "$EOP[$cache_options]$ABCUL[$options]$EARGS" \
+        local args="[--count <count>]"
+        abcli_meta_script_show_usage $script_full_name "$EOP[$cache_options]$ABCUL[$options]$ABCUL$args" \
             "upload dataset to SageMaker for training."
         return
     fi

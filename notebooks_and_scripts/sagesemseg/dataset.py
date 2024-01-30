@@ -1,6 +1,9 @@
 import os
 import glob
+import json
 from tqdm import tqdm
+import sagemaker
+from sagemaker import get_execution_role
 import shutil
 from abcli import file
 from abcli.modules import objects
@@ -9,16 +12,26 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# https://github.com/aws/sagemaker-python-sdk/issues/300#issuecomment-1431539831
+sagemaker_role = "arn:aws:iam::120429650996:role/service-role/AmazonSageMaker-ExecutionRole-20231022T170206"
+
 
 # https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb
 def upload(
     dataset_object_name: str,
     object_name,
+    count: int = -1,
 ):
     dataset_object_path = objects.object_path(dataset_object_name)
     object_path = objects.object_path(object_name, create=True)
 
-    logger.info(f"reorg: {dataset_object_path} -> {object_path}")
+    logger.info(
+        "uploading: {} -{}> {}".format(
+            dataset_object_path,
+            f"{count}-" if count != -1 else "",
+            object_path,
+        )
+    )
 
     """
     Move the images into appropriate directory structure as described in the 
@@ -39,9 +52,15 @@ def upload(
     with open(VOC2012 + "/ImageSets/Segmentation/train.txt") as f:
         train_list = f.read().splitlines()
 
+    if count != -1:
+        train_list = train_list[:count]
+
     # Create a list of all validation images.
     with open(VOC2012 + "/ImageSets/Segmentation/val.txt") as f:
         val_list = f.read().splitlines()
+
+    if count != -1:
+        val_list = val_list[:count]
 
     # Move the jpg images in training list to train directory and png images to train_annotation directory.
     for i in tqdm(train_list):
@@ -79,32 +98,116 @@ def upload(
     same, and so in validation as well.
     """
 
-    num_training_samples = len(
+    metadata = {}
+    metadata["num"]["train"] = len(
         glob.glob1(
             os.path.join(object_path, "data/train"),
             "*.jpg",
         )
     )
-    num_validation_samples = len(
+    metadata["num"]["val"] = len(
         glob.glob1(
             os.path.join(object_path, "data/validation"),
             "*.jpg",
         )
     )
-    logger.info("Num Train Images = " + str(num_training_samples))
-    assert num_training_samples == len(
+    logger.info("{} train image(s)".format(metadata["num"]["train"]))
+    assert metadata["num"]["train"] == len(
         glob.glob1(
             os.path.join(object_path, "data/train_annotation"),
             "*.png",
         )
     )
-    logger.info("Num Validation Images = " + str(num_validation_samples))
-    assert num_validation_samples == len(
+    logger.info("{} validation image(s)".format(metadata["num"]["val"]))
+    assert metadata["num"]["val"] == len(
         glob.glob1(
             os.path.join(object_path, "data/validation_annotation"),
             "*.png",
         )
     )
 
-    logger.info("wip 🪄")
+    """
+    Let us now upload our prepared datset to the S3 bucket that we decided to use in this notebook 
+    earlier. Notice the following directory structure that is used.
+
+    ```bash
+    root 
+    |-train/
+    |-train_annotation/
+    |-validation/
+    |-validation_annotation/
+
+    ```
+
+    Notice also that all the images in the `_annotation` directory are all indexed PNG files. This 
+    implies that the metadata (color mapping modes) of the files contain information on how to map 
+    the indices to colors and vice versa. Having an indexed PNG is an advantage as the images will 
+    be rendered by image viewers as color images, but the image themsevels only contain integers. 
+    The integers are also within `[0, 1 ... c-1, 255]`  for a `c` class segmentation problem, with 
+    `255` as 'hole' or 'ignore' class. We allow any mode that is a 
+    [recognized standard](https://pillow.readthedocs.io/en/3.0.x/handbook/concepts.html#concept-modes) 
+    as long as they are read as integers.
+
+    While we recommend the format with default color mapping modes such as PASCAL, the algorithm also 
+    allows users to specify their own label maps. Refer to the 
+    [documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/semantic-segmentation.html#semantic-segmentation-inputoutput) 
+    for more details. The label map for the PASCAL VOC dataset is the default, which is equivalent to:
+
+    ```json
+    {
+        "scale": 1
+    }
+    ```
+
+    This essentially tells the algorithm to directly use the image pixel value integers as labels. 
+    Since we are using PASCAL dataset, let us create (recreate the default just for demonstration) a 
+    label map for training channel and let the algorithm use the default (which is exactly the same)
+    for the validation channel. If `label_map` is used, please pass it to the label_map channel.
+    """
+
+    label_map = {"scale": 1}
+    with open(os.path.join(object_path, "data/train_label_map.json"), "w") as lmfile:
+        json.dump(label_map, lmfile)
+
+    try:
+        role = get_execution_role()
+    except:
+        role = sagemaker_role
+    logger.info(f"sagemaker role: {role}")
+    sess = sagemaker.Session()
+
+    abcli_s3_object_prefix = os.getenv(
+        "$abcli_s3_object_prefix",
+        "s3://kamangir/bolt",
+    )
+    bucket = abcli_s3_object_prefix.split("s3://", 1)[1].split("/")[0]
+    prefix = "{}/{}".format(
+        abcli_s3_object_prefix.split("s3://", 1)[1].split("/", 1)[1],
+        dataset_object_name,
+    )
+
+    # Let us now upload our dataset, including our optional label map.
+    metadata["bucket"] = bucket
+    metadata["prefix"] = prefix
+    logger.info(f"-> s3: bucket={bucket}, prefix={prefix}")
+
+    for channel in ["train", "train_annotation", "validation", "validation_annotation"]:
+        metadata["channel"][channel] = sess.upload_data(
+            path="data/{}".format(channel),
+            bucket=bucket,
+            key_prefix=prefix + "/{}".format(channel),
+        )
+        logger.info("train channel: {}".format(metadata["channel"][channel]))
+
+    file.save_yaml(os.path.join(dataset_object_path, "metadata.yaml"), metadata)
+    logger.info(
+        "-> {}".format(
+            sess.upload_data(
+                path="metadata.yaml",
+                bucket=bucket,
+                key_prefix=prefix + "/metadata.yaml",
+            )
+        )
+    )
+
     return True
