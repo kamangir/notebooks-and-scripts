@@ -183,7 +183,7 @@ def upload(
     bucket = abcli_s3_object_prefix.split("s3://", 1)[1].split("/")[0]
     prefix = "{}/{}".format(
         abcli_s3_object_prefix.split("s3://", 1)[1].split("/", 1)[1],
-        dataset_object_name,
+        object_name,
     )
 
     # Let us now upload our dataset, including our optional label map.
@@ -194,19 +194,19 @@ def upload(
     metadata["channel"] = {}
     for channel in ["train", "train_annotation", "validation", "validation_annotation"]:
         metadata["channel"][channel] = sess.upload_data(
-            path="data/{}".format(channel),
+            path=os.path.join(object_path, "data/{}".format(channel)),
             bucket=bucket,
             key_prefix=prefix + "/{}".format(channel),
         )
         logger.info("train channel: {}".format(metadata["channel"][channel]))
 
-    file.save_yaml(os.path.join(dataset_object_path, "metadata.yaml"), metadata)
+    file.save_yaml(os.path.join(object_path, "metadata.yaml"), metadata)
     logger.info(
         "-> {}".format(
             sess.upload_data(
-                path="metadata.yaml",
+                path=os.path.join(object_path, "metadata.yaml"),
                 bucket=bucket,
-                key_prefix=prefix + "/metadata.yaml",
+                key_prefix=prefix,
             )
         )
     )
