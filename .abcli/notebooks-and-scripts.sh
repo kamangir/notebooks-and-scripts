@@ -12,11 +12,20 @@ function notebooks_and_scripts() {
     if [ "$task" == "help" ]; then
         abcli_show_usage "notebooks_and_scripts init [clear]" \
             "init notebooks_and_scripts."
+
+        notebooks_and_scripts_conda "$@"
+        return
+    fi
+
+    local function_name="notebooks_and_scripts_$task"
+    if [[ $(type -t $function_name) == "function" ]]; then
+        $function_name "${@:2}"
         return
     fi
 
     if [ "$task" == "init" ]; then
         abcli_init notebooks_and_scripts "${@:2}"
+        conda activate notebooks_and_scripts
         return
     fi
 
