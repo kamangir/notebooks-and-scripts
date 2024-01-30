@@ -98,7 +98,7 @@ def upload(
     same, and so in validation as well.
     """
 
-    metadata = {}
+    metadata = {"num": {}}
     metadata["num"]["train"] = len(
         glob.glob1(
             os.path.join(object_path, "data/train"),
@@ -191,6 +191,7 @@ def upload(
     metadata["prefix"] = prefix
     logger.info(f"-> s3: bucket={bucket}, prefix={prefix}")
 
+    metadata["channel"] = {}
     for channel in ["train", "train_annotation", "validation", "validation_annotation"]:
         metadata["channel"][channel] = sess.upload_data(
             path="data/{}".format(channel),
