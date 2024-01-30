@@ -2,6 +2,7 @@ import os
 import glob
 from tqdm import tqdm
 import shutil
+from abcli import file
 from abcli.modules import objects
 from abcli import logging
 import logging
@@ -44,24 +45,32 @@ def upload(
 
     # Move the jpg images in training list to train directory and png images to train_annotation directory.
     for i in tqdm(train_list):
-        shutil.copy2(
+        file.copy(
             VOC2012 + "/JPEGImages/" + i + ".jpg",
             os.path.join(object_path, "data/train/"),
+            log=False,
+            overwrite=False,
         )
-        shutil.copy2(
+        file.copy(
             VOC2012 + "/SegmentationClass/" + i + ".png",
             os.path.join(object_path, "data/train_annotation/"),
+            log=False,
+            overwrite=False,
         )
 
     # Move the jpg images in validation list to validation directory and png images to validation_annotation directory.
     for i in tqdm(val_list):
-        shutil.copy2(
+        file.copy(
             VOC2012 + "/JPEGImages/" + i + ".jpg",
             os.path.join(object_path, "data/validation/"),
+            log=False,
+            overwrite=False,
         )
-        shutil.copy2(
+        file.copy(
             VOC2012 + "/SegmentationClass/" + i + ".png",
             os.path.join(object_path, "data/validation_annotation/"),
+            log=False,
+            overwrite=False,
         )
 
     """
