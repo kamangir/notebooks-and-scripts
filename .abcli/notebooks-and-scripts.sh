@@ -25,7 +25,7 @@ function notebooks_and_scripts() {
 
     if [ "$task" == "init" ]; then
         abcli_init notebooks_and_scripts "${@:2}"
-        conda activate notebooks_and_scripts
+        conda activate notebooks-and-scripts
         return
     fi
 
