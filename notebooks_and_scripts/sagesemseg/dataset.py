@@ -47,13 +47,13 @@ def upload(
     for i in tqdm(train_list):
         file.copy(
             VOC2012 + "/JPEGImages/" + i + ".jpg",
-            os.path.join(object_path, "data/train/"),
+            os.path.join(object_path, "data/train/", i + ".jpg"),
             log=False,
             overwrite=False,
         )
         file.copy(
             VOC2012 + "/SegmentationClass/" + i + ".png",
-            os.path.join(object_path, "data/train_annotation/"),
+            os.path.join(object_path, "data/train_annotation/", i + ".png"),
             log=False,
             overwrite=False,
         )
@@ -62,13 +62,13 @@ def upload(
     for i in tqdm(val_list):
         file.copy(
             VOC2012 + "/JPEGImages/" + i + ".jpg",
-            os.path.join(object_path, "data/validation/"),
+            os.path.join(object_path, "data/validation/", i + ".jpg"),
             log=False,
             overwrite=False,
         )
         file.copy(
             VOC2012 + "/SegmentationClass/" + i + ".png",
-            os.path.join(object_path, "data/validation_annotation/"),
+            os.path.join(object_path, "data/validation_annotation/", i + ".png"),
             log=False,
             overwrite=False,
         )
