@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+alias today="date +%Y-%m-%d"
+
 alias @batch=abcli_aws_batch
 
 alias @docker=abcli_docker
