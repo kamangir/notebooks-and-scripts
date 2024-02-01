@@ -200,6 +200,13 @@ def upload(
         )
         logger.info("train channel: {}".format(metadata["channel"][channel]))
 
+    metadata["channel"]["label_map"] = sess.upload_data(
+        path=os.path.join(object_path, "data/train_label_map.json"),
+        bucket=bucket,
+        key_prefix=prefix + "/label_map",
+    )
+    logger.info("label_map channel: {}".format(metadata["channel"]["label_map"]))
+
     file.save_yaml(os.path.join(object_path, "metadata.yaml"), metadata)
     logger.info(
         "-> {}".format(
@@ -211,4 +218,4 @@ def upload(
         )
     )
 
-    return True
+    return metadata

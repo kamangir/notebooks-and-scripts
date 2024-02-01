@@ -33,11 +33,12 @@ args = parser.parse_args()
 
 success = False
 if args.task == "upload_dataset":
-    success = upload_dataset(
+    upload_dataset(
         dataset_object_name=args.dataset_object_name,
         object_name=args.object_name,
         count=args.count,
     )
+    success = True
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 
