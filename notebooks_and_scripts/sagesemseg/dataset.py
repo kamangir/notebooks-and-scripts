@@ -3,7 +3,6 @@ import glob
 import json
 from tqdm import tqdm
 import sagemaker
-from sagemaker import get_execution_role
 import shutil
 from abcli import file
 from abcli.modules import objects
@@ -11,9 +10,6 @@ from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
-
-# https://github.com/aws/sagemaker-python-sdk/issues/300#issuecomment-1431539831
-sagemaker_role = "arn:aws:iam::120429650996:role/service-role/AmazonSageMaker-ExecutionRole-20231022T170206"
 
 
 # https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb
@@ -169,11 +165,6 @@ def upload(
     with open(os.path.join(object_path, "data/train_label_map.json"), "w") as lmfile:
         json.dump(label_map, lmfile)
 
-    try:
-        role = get_execution_role()
-    except:
-        role = sagemaker_role
-    logger.info(f"sagemaker role: {role}")
     sess = sagemaker.Session()
 
     abcli_s3_object_prefix = os.getenv(
