@@ -30,7 +30,7 @@ function abcli_aws_batch() {
                 "browse list of queues."
             ;;
         list | ls)
-            options="~count,prefix=<prefix>$options"
+            options="~count,prefix=<prefix>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST$options"
             abcli_show_usage "abcli aws_batch list$ABCUL[$options]" \
                 "list aws_batch jobs."
             ;;
