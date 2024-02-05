@@ -10,8 +10,26 @@ function abcli_meta_scripts() {
     fi
 
     local task=${2:-help}
+
     if [[ "$task" == help ]]; then
         abcli_scripts list meta $script_name
+        return
+    fi
+
+    if [[ "$task" == tasks ]]; then
+        pushd $abcli_path_scripts/$script_name >/dev/null
+        local output=$(ls *.sh)
+        popd >/dev/null
+
+        output=$(echo "$output" | tr -d '\n')
+
+        output=$(python3 -c "print('$output'.replace('.sh',' '))")
+        output=$(abcli_list_nonempty "$output" --delim space)
+
+        abcli_log_list \
+            "$output" \
+            space \
+            "task(s)"
         return
     fi
 
