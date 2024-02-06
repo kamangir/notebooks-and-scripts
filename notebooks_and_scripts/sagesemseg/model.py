@@ -29,7 +29,7 @@ class SageSemSegModel(object):
         )
 
         logger.info(
-            "{} init ({}), image: {}".format(
+            "{} init took {}, image: {}".format(
                 self.__class__.__name__,
                 timer.elapsed_pretty(include_ms=True),
                 self.training_image,
@@ -40,7 +40,6 @@ class SageSemSegModel(object):
         self,
         dataset_object_name: str,
         model_object_name: str,
-        verbose: bool = False,
     ) -> bool:
         self.dataset_object_name = dataset_object_name
         self.model_object_name = model_object_name
@@ -65,13 +64,12 @@ class SageSemSegModel(object):
                 self.model_object_name,
             )
         )
-        if verbose:
-            logger.info(
-                "{}.metadata: {}".format(
-                    self.dataset_object_name,
-                    json.dumps(self.dataset_metadata, indent=4),
-                )
+        logger.info(
+            "{}.metadata: {}".format(
+                self.dataset_object_name,
+                json.dumps(self.dataset_metadata, indent=4),
             )
+        )
 
         self.estimator = sagemaker.estimator.Estimator(
             self.training_image,  # Container image URI
