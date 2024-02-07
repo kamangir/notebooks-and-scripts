@@ -14,6 +14,8 @@ function notebooks_and_scripts() {
             "init notebooks_and_scripts."
 
         notebooks_and_scripts_conda "$@"
+
+        notebooks_and_scripts pytest "$@"
         return
     fi
 
@@ -26,6 +28,12 @@ function notebooks_and_scripts() {
     if [ "$task" == "init" ]; then
         abcli_init notebooks_and_scripts "${@:2}"
         conda activate notebooks-and-scripts
+        return
+    fi
+
+    if [ "$task" == "pytest" ]; then
+        abcli_pytest plugin=notebooks-and-scripts,$2 \
+            "${@:3}"
         return
     fi
 
