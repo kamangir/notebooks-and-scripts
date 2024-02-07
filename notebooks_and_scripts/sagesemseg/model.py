@@ -1,7 +1,15 @@
 import sagemaker
 import json
+import time
+from PIL import Image
+from matplotlib import pyplot as plt
+import PIL
+import numpy as np
 from abcli.elapsed_timer import ElapsedTimer
 from abcli.modules import objects
+from abcli.modules import host
+from abcli import string
+from abcli import path
 from abcli import file
 from abcli.plugins.storage import instance as storage
 from notebooks_and_scripts.sagemaker import role
@@ -9,6 +17,30 @@ from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+class ImageDeserializer(sagemaker.deserializers.BaseDeserializer):
+    """Deserialize a PIL-compatible stream of Image bytes into a numpy pixel array"""
+
+    def __init__(self, accept="image/png"):
+        self.accept = accept
+
+    @property
+    def ACCEPT(self):
+        return (self.accept,)
+
+    def deserialize(self, stream, content_type):
+        """Read a stream of bytes returned from an inference endpoint.
+        Args:
+            stream (botocore.response.StreamingBody): A stream of bytes.
+            content_type (str): The MIME type of the data.
+        Returns:
+            mask: The numpy array of class labels per pixel
+        """
+        try:
+            return np.array(Image.open(stream))
+        finally:
+            stream.close()
 
 
 class SageSemSegModel(object):
@@ -27,6 +59,8 @@ class SageSemSegModel(object):
         self.training_image = sagemaker.image_uris.retrieve(
             "semantic-segmentation", self.session.boto_region_name
         )
+
+        self.predictor = None
 
         logger.info(
             "{} init took {}, image: {}".format(
@@ -127,3 +161,70 @@ class SageSemSegModel(object):
         self.estimator.fit(self.data_channels, logs=True)
 
         return True
+
+    def deploy(self, **kwargs):
+        self.predictor = self.estimator.deploy(**kwargs)
+
+        path.create(
+            objects.path_of(
+                object_name=self.model_object_name,
+                filename="validation/",
+            )
+        )
+        filename_raw = objects.path_of(
+            object_name=self.model_object_name,
+            filename="validation/test.jpg",
+        )
+
+        host.shell(
+            f"wget -O {filename_raw} https://github.com/kamangir/blue-bracket/raw/main/images/helmet-1.jpg"
+        )
+
+        filename = objects.path_of(
+            object_name=self.model_object_name,
+            filename="validation/test_resized.jpg",
+        )
+        width = 800
+        im = PIL.Image.open(filename_raw)
+        aspect = im.size[0] / im.size[1]
+        # https://stackoverflow.com/a/14351890/17619982
+        im.thumbnail([width, int(width / aspect)], PIL.Image.LANCZOS)
+        im.save(filename, "JPEG")
+        plt.imshow(im)
+        plt.show()
+        plt.close()
+
+        self.predictor.deserializer = ImageDeserializer(accept="image/png")
+
+        self.predictor.serializer = sagemaker.serializers.IdentitySerializer(
+            "image/jpeg"
+        )
+
+        with open(filename, "rb") as imfile:
+            imbytes = imfile.read()
+
+        # Extension exercise: Could you write a custom serializer which takes a filename as input instead?
+
+        start_time = time.time()
+        cls_mask = self.predictor.predict(imbytes)
+        elapsed_time = time.time() - start_time
+
+        logger.info(
+            "{} -> {}: {}".format(
+                string.pretty_duration(elapsed_time),
+                string.pretty_shape_of_matrix(cls_mask),
+                np.unique(cls_mask),
+            )
+        )
+
+        plt.imshow(cls_mask, cmap="jet")
+        plt.savefig(
+            objects.path_of(
+                object_name=self.model_object_name,
+                filename="validation/output.jpg",
+            )
+        )
+        plt.show()
+
+    def delete_endpoint(self):
+        self.predictor.delete_endpoint()
