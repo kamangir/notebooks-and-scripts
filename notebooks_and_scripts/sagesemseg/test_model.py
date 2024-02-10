@@ -17,6 +17,7 @@ def test_SageSemSegModel(dataset_object_name):
     assert model.train(
         dataset_object_name=dataset_object_name,
         model_object_name=model_object_name,
+        instance_type="ml.g4dn.2xlarge",
     )
 
     model.deploy(

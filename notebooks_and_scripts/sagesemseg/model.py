@@ -75,6 +75,7 @@ class SageSemSegModel(object):
         dataset_object_name: str,
         model_object_name: str,
         epochs: int = 10,
+        instance_type: str = "ml.p3.2xlarge",
     ) -> bool:
         self.dataset_object_name = dataset_object_name
         self.model_object_name = model_object_name
@@ -110,7 +111,7 @@ class SageSemSegModel(object):
             self.training_image,  # Container image URI
             role,  # Training job execution role with permissions to access our S3 bucket
             instance_count=1,
-            instance_type="ml.p3.2xlarge",
+            instance_type=instance_type,
             volume_size=50,  # in GB
             max_run=360000,  # in seconds
             output_path=f"s3://kamangir/bolt/{model_object_name}",

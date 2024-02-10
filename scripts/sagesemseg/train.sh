@@ -10,7 +10,7 @@ function runme() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="dryrun,~upload"
-        local args="[--deploy 0]$ABCUL[--delete_endpoint 0]$ABCUL[--epochs 10]"
+        local args="[--deploy 0]$ABCUL[--delete_endpoint 0]$ABCUL[--epochs 10]$ABCUL[--instance_type ml.p3.2xlarge]"
         abcli_meta_script_show_usage $script_full_name "$EOP[$options]$ABCUL[test|<dataset-object-name>]$ABCUL[-|<model-object-name>]$ABCUL$args$EOPE" \
             "<dataset-object-name> -train-> <model-object-name>."
         return

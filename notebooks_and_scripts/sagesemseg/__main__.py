@@ -52,6 +52,11 @@ parser.add_argument(
     default=1,
     help="0|1",
 )
+parser.add_argument(
+    "--instance_type",
+    type=str,
+    default="ml.p3.2xlarge",
+)
 args = parser.parse_args()
 
 success = False
@@ -64,6 +69,7 @@ if args.task == "train_model":
         dataset_object_name=args.dataset_object_name,
         model_object_name=args.model_object_name,
         epochs=args.epochs,
+        instance_type=args.instance_type,
     ):
         success = False
     elif args.deploy:
