@@ -12,7 +12,7 @@ from abcli.modules.objects import unique_object
 def test_SageSemSegModel(dataset_object_name):
     model = SageSemSegModel()
 
-    model_object_name = unique_object("test_SageSemSegModel_model")
+    model_object_name = unique_object("test-SageSemSegModel-model")
 
     assert model.train(
         dataset_object_name=dataset_object_name,
