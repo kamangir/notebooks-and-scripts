@@ -12,13 +12,17 @@ from abcli.modules.objects import unique_object
 def test_SageSemSegModel(dataset_object_name):
     model = SageSemSegModel()
 
-    dataset_object_name = unique_object("test_SageSemSegModel")
+    model_object_name = unique_object("test_SageSemSegModel_model")
 
     assert model.train(
         dataset_object_name=dataset_object_name,
         model_object_name=model_object_name,
+        epochs=1,
     )
 
-    model.deploy(initial_instance_count=1, instance_type="ml.c5.xlarge")
+    model.deploy(
+        initial_instance_count=1,
+        instance_type="ml.c5.xlarge",
+    )
 
     model.delete_endpoint()

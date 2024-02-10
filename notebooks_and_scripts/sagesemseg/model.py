@@ -74,6 +74,7 @@ class SageSemSegModel(object):
         self,
         dataset_object_name: str,
         model_object_name: str,
+        epochs: int = 10,
     ) -> bool:
         self.dataset_object_name = dataset_object_name
         self.model_object_name = model_object_name
@@ -123,7 +124,7 @@ class SageSemSegModel(object):
             use_pretrained_model="True",  # Use the pre-trained model.
             crop_size=240,  # Size of image random crop.
             num_classes=21,  # Pascal has 21 classes. This is a mandatory parameter.
-            epochs=10,  # Number of epochs to run.
+            epochs=epochs,  # Number of epochs to run.
             learning_rate=0.0001,
             optimizer="rmsprop",  # Other options include 'adam', 'rmsprop', 'nag', 'adagrad'.
             lr_scheduler="poly",  # Other options include 'cosine' and 'step'.
