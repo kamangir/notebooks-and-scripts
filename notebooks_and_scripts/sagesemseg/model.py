@@ -193,7 +193,8 @@ class SageSemSegModel(object):
         im.thumbnail([width, int(width / aspect)], PIL.Image.LANCZOS)
         im.save(filename, "JPEG")
         plt.imshow(im)
-        plt.show()
+        if host.is_jupyter():
+            plt.show()
         plt.close()
 
         self.predictor.deserializer = ImageDeserializer(accept="image/png")
@@ -226,7 +227,8 @@ class SageSemSegModel(object):
                 filename="validation/output.jpg",
             )
         )
-        plt.show()
+        if host.is_jupyter():
+            plt.show()
 
     def delete_endpoint(self):
         self.predictor.delete_endpoint()
