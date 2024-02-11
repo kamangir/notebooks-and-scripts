@@ -24,7 +24,7 @@ abcli scripts source [cat,dryrun] \
  . source <script-name>.
 ```
 
-## [@vanwatch](./scripts/vanwatch_meta/)
+## [@vanwatch](./vanwatch_meta/)
 
 [Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching) + AWS Batch.
 
@@ -43,7 +43,11 @@ abcli scripts source [cat,dryrun] \
  . vanwatch process <object-name>.
 ```
 
-## [paint-a-sentence](./scripts/paint-a-sentence.sh)
+## [sagesemseg](./sagesemseg/)
+
+[Semantic Segmentation on AWS Sagemaker](https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb).
+
+## [paint-a-sentence](./paint-a-sentence.sh)
 
 uses [blue stability](https://github.com/kamangir/blue-stability).
 
@@ -59,7 +63,7 @@ abcli scripts source paint-a-sentence \
 21 artists(s): Andy-Warhol,Caravaggio,Claude-Monet,Diego-Velázquez,Edgar-Degas,Edvard-Munch,Frida-Kahlo,Gustav-Klimt,Henri-Matisse,J.-M.-W.-Turner,Jackson-Pollock,Johannes-Vermeer,Leonardo-da-Vinci,Michelangelo,Pablo-Picasso,Paul-Cézanne,Paul-Gauguin,Rembrandt,Salvador-Dali,Vincent-van-Gogh,Wassily-Kandinsky
 ```
 
-## [mission-patch](./scripts/mission-patch.sh)
+## [mission-patch](./mission-patch.sh)
 
 uses 🛠️ [openai](https://github.com/kamangir/openai) and 🎨 [aiart](https://github.com/kamangir/aiart)
 
@@ -73,7 +77,7 @@ abcli scripts source cat,dryrun \
  . generate mission patches for <url>.
 ```
 
-## [roofAI-train](./scripts/roofAI-train.sh)
+## [roofAI-train](./roofAI-train.sh)
 
 uses 🏛️ [roofAI](https://github.com/kamangir/roofAI)
 

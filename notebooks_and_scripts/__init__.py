@@ -1,5 +1,5 @@
 NAME = "notebooks & scripts"
 
-VERSION = "4.157.1"
+VERSION = "4.158.1"
 
 DESCRIPTION = "📜 notebooks for experiments & [meta] scripts for aws batch jobs and sagemaker serving."
