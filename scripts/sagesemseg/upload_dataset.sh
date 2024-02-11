@@ -20,7 +20,9 @@ function runme() {
     local cache_options=$1
     local dataset_name=$(abcli_option "$cache_options" dataset pascal-voc)
     local cache_suffix=$(abcli_option "$cache_options" suffix v1)
-    local dataset_object_name=$dataset_name-$cache_suffix
+
+    local dataset_object_name=$dataset_name
+    [[ ! -z "$cache_suffix" ]] && dataset_object_name=$dataset_name-$cache_suffix
 
     [[ "$dataset_name" == "pascal-voc" ]] &&
         abcli_scripts source dryrun=$do_dryrun \
