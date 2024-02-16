@@ -22,17 +22,3 @@ sagesemseg upload_dataset \
 	[--count <count>]
  . upload dataset to SageMaker for training.
 ```
-
-## dataset structure
-
-same reference,... directory structure...,
-
-```bash
-root
-|-train/
-|-train_annotation/
-|-validation/
-|-validation_annotation/
-```
-
-... images in the `_annotation` directory are ... indexed PNG files ... `[0, 1 ... c-1, 255]` for ... `c` class[es] ... `255` ... 'ignore' ... any mode that is a [recognized standard](https://pillow.readthedocs.io/en/3.0.x/handbook/concepts.html#concept-modes) [and] ... read as integers ...
