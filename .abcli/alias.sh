@@ -14,6 +14,8 @@ alias @list="abcli_scripts list"
 
 alias @mv="abcli_scripts move"
 
+alias @sagemaker=abcli_sagemaker
+
 alias @scripts=abcli_scripts
 alias @source="abcli_scripts source"
 
