@@ -37,7 +37,7 @@ function runme() {
         trained
 
     abcli_eval dryrun=$do_dryrun \
-        python3 -m notebooks_and_scripts.sagesemseg train_model \
+        python3 -m roofAI.semseg.sagemaker train_model \
         --dataset_object_name $dataset_object_name \
         --model_object_name $model_object_name \
         "${@:4}"

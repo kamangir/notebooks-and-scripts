@@ -38,7 +38,7 @@ function runme() {
     abcli_log "$script_name: $dataset_object_name -> ☁️ / $object_name"
 
     abcli_eval dryrun=$do_dryrun \
-        python3 -m notebooks_and_scripts.sagesemseg upload_dataset \
+        python3 -m roofAI.semseg.sagemaker upload_dataset \
         --dataset_object_name $dataset_object_name \
         --object_name $object_name \
         "${@:3}"
