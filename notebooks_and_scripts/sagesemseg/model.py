@@ -119,12 +119,19 @@ class SageSemSegModel(object):
             sagemaker_session=self.session,
         )
 
+        num_classes = (
+            21
+            if "classes" not in self.dataset_metadata
+            else len(self.dataset_metadata["classes"])
+        )
+        logger.info(f"num_classes: {num_classes}")
+
         self.estimator.set_hyperparameters(
             backbone="resnet-50",  # This is the encoder. Other option is resnet-101
             algorithm="fcn",  # This is the decoder. Other options are 'psp' and 'deeplab'
             use_pretrained_model="True",  # Use the pre-trained model.
             crop_size=240,  # Size of image random crop.
-            num_classes=21,  # Pascal has 21 classes. This is a mandatory parameter.
+            num_classes=num_classes,  # Pascal has 21 classes. This is a mandatory parameter.
             epochs=epochs,  # Number of epochs to run.
             learning_rate=0.0001,
             optimizer="rmsprop",  # Other options include 'adam', 'rmsprop', 'nag', 'adagrad'.
