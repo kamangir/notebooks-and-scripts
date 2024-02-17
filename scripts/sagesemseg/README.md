@@ -1,6 +1,6 @@
 # Semantic Segmentation on AWS Sagemaker
 
-Based on [Semantic Segmentation on AWS Sagemaker](https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb).
+Based on [Semantic Segmentation on AWS Sagemaker](https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb), uses [roofAI.semseg.sagemaker](https://github.com/kamangir/roofAI/tree/main/roofAI/semseg/sagemaker).
 
 ```bash
  > sagesemseg help
