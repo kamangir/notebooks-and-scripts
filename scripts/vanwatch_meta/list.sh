@@ -12,7 +12,8 @@ function runme() {
         return
     fi
 
-    vancouver_watching_list \
+    abcli_eval - \
+        vancouver_watching list \
         area=vancouver,ingest,published,$1 \
         "${@:2}"
 }
