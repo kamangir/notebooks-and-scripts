@@ -1,14 +1,10 @@
 import argparse
 import boto3
 from abcli.plugins import aws
-from notebooks_and_scripts import VERSION
-from abcli import logging
-import logging
+from notebooks_and_scripts import logger, VERSION, NAME
 import sys
 
-logger = logging.getLogger(__name__)
-
-NAME = "notebooks_and_scripts.aws_batch"
+NAME = f"{NAME}.aws_batch"
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
@@ -46,7 +42,7 @@ elif args.task == "submit":
         "-c",
         f"source /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,aws_batch abcli_scripts source {args.command_line}",
     ]
-    logger.info("{}.submit -> {}: {}".format(NAME, args.job_name, "\n".join(command)))
+    logger.info("submit -> {}: {}".format(args.job_name, "\n".join(command)))
 
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch.html
     client = boto3.client("batch")

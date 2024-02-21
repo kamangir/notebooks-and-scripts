@@ -1,9 +1,5 @@
 import argparse
-from . import *
-from abcli import logging
-import logging
-
-logger = logging.getLogger(__name__)
+from notebooks_and_scripts import logger, NAME, VERSION, DESCRIPTION
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
