@@ -4,7 +4,7 @@ import os
 
 import torch
 import torch.distributed as dist
-import torch.nn as nn
+from torch import nn
 import torch.nn.functional as F
 import torch.nn.parallel
 import torch.optim
@@ -12,7 +12,7 @@ import torch.utils.data
 import torch.utils.data.distributed
 import torchvision
 import torchvision.models
-import torchvision.transforms as transforms
+from torchvision import transforms
 
 try:
     from sagemaker_inference import environment
@@ -22,13 +22,24 @@ except:
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-classes = ("plane", "car", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck")
+classes = (
+    "plane",
+    "car",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck",
+)
 
 
 # https://github.com/pytorch/tutorials/blob/master/beginner_source/blitz/cifar10_tutorial.py#L118
 class Net(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
@@ -56,7 +67,9 @@ def _train(args):
         os.environ["WORLD_SIZE"] = str(world_size)
         host_rank = args.hosts.index(args.current_host)
         os.environ["RANK"] = str(host_rank)
-        dist.init_process_group(backend=args.dist_backend, rank=host_rank, world_size=world_size)
+        dist.init_process_group(
+            backend=args.dist_backend, rank=host_rank, world_size=world_size
+        )
         logger.info(
             "Initialized the distributed environment: '{}' backend on {} nodes. ".format(
                 args.dist_backend, dist.get_world_size()
@@ -81,12 +94,12 @@ def _train(args):
         trainset, batch_size=args.batch_size, shuffle=True, num_workers=args.workers
     )
 
-    testset = torchvision.datasets.CIFAR10(
-        root=args.data_dir, train=False, download=False, transform=transform
-    )
-    test_loader = torch.utils.data.DataLoader(
-        testset, batch_size=args.batch_size, shuffle=False, num_workers=args.workers
-    )
+    # testset = torchvision.datasets.CIFAR10(
+    #    root=args.data_dir, train=False, download=False, transform=transform
+    # )
+    # test_loader = torch.utils.data.DataLoader(
+    #    testset, batch_size=args.batch_size, shuffle=False, num_workers=args.workers
+    # )
 
     logger.info("Model loaded")
     model = Net()
@@ -163,7 +176,11 @@ if __name__ == "__main__":
         help="number of total epochs to run (default: 2)",
     )
     parser.add_argument(
-        "--batch_size", type=int, default=4, metavar="BS", help="batch size (default: 4)"
+        "--batch_size",
+        type=int,
+        default=4,
+        metavar="BS",
+        help="batch size (default: 4)",
     )
     parser.add_argument(
         "--lr",
@@ -173,17 +190,26 @@ if __name__ == "__main__":
         help="initial learning rate (default: 0.001)",
     )
     parser.add_argument(
-        "--momentum", type=float, default=0.9, metavar="M", help="momentum (default: 0.9)"
+        "--momentum",
+        type=float,
+        default=0.9,
+        metavar="M",
+        help="momentum (default: 0.9)",
     )
     parser.add_argument(
-        "--dist_backend", type=str, default="gloo", help="distributed backend (default: gloo)"
+        "--dist_backend",
+        type=str,
+        default="gloo",
+        help="distributed backend (default: gloo)",
     )
 
     env = environment.Environment()
     parser.add_argument("--hosts", type=list, default=env.hosts)
     parser.add_argument("--current-host", type=str, default=env.current_host)
     parser.add_argument("--model-dir", type=str, default=env.model_dir)
-    parser.add_argument("--data-dir", type=str, default=env.channel_input_dirs.get("training"))
+    parser.add_argument(
+        "--data-dir", type=str, default=env.channel_input_dirs.get("training")
+    )
     parser.add_argument("--num-gpus", type=int, default=env.num_gpus)
 
     _train(parser.parse_args())

@@ -14,7 +14,7 @@ function notebooks_and_scripts() {
             "init notebooks_and_scripts."
 
         notebooks_and_scripts_conda "$@"
-
+        notebooks_and_scripts pylint "$@"
         notebooks_and_scripts pytest "$@"
         return
     fi
@@ -34,6 +34,25 @@ function notebooks_and_scripts() {
     if [ "$task" == "pytest" ]; then
         abcli_pytest plugin=notebooks-and-scripts,$2 \
             "${@:3}"
+        return
+    fi
+
+    if [ "$task" == "pylint" ]; then
+        if [[ "$2" == "help" ]]; then
+            abcli_show_usage "notebooks_and_scripts pylint <args>" \
+                "pylint notebooks-and-scripts."
+            return
+        fi
+
+        abcli_pip install pylint
+
+        pushd $abcli_path_git/notebooks-and-scripts >/dev/null
+        pylint \
+            -d $abcli_pylint_ignored \
+            $(git ls-files '*.py') \
+            "${@:2}"
+        popd >/dev/null
+
         return
     fi
 
