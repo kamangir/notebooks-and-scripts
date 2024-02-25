@@ -1,4 +1,4 @@
-# notebooks & [meta] scripts
+# 📜 notebooks & [meta] scripts
 
 Repository of research [notebooks](./notebooks) and [[meta](./scripts#meta/)] [scripts](./scripts).
 
