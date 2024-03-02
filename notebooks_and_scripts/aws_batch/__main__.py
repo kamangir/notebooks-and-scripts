@@ -1,6 +1,6 @@
 import argparse
 import boto3
-from abcli.plugins import aws
+from abcli import env
 from notebooks_and_scripts import logger, VERSION, NAME
 import sys
 
@@ -61,11 +61,10 @@ elif args.task == "submit":
     job_id = response["jobId"]
     logger.info(f"job_id: {job_id}")
 
-    aws_region = aws.get_from_json("region", "")
     logger.info(
         "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
-            aws_region,
-            aws_region,
+            env.abcli_aws_region,
+            env.abcli_aws_region,
             job_id,
         )
     )
