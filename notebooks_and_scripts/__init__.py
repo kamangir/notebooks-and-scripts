@@ -3,7 +3,7 @@ import logging
 
 NAME = "notebooks & scripts"
 
-VERSION = "4.183.1"
+VERSION = "4.184.1"
 
 DESCRIPTION = "📜 notebooks for experiments & [meta] scripts for aws batch jobs and sagemaker serving."
 

@@ -46,13 +46,12 @@ function abcli_notebooks() {
         if [ "$do_setup" == 1 ]; then
             local ip_address=$(echo "$2" | tr . -)
 
-            local key_name=$(abcli_aws_json_get "['ec2']['key_name']")
-            local pem_filename=$abcli_path_bash/bootstrap/config/$key_name.pem
+            local pem_filename=$abcli_path_ignore/$abcli_aws_ec2_key_name.pem
 
             ssh \
                 -i $pem_filename \
                 -N -f -L 8888:localhost:8888 \
-                ubuntu@ec2-$ip_address.$(abcli_aws_region).compute.amazonaws.com
+                ubuntu@ec2-$ip_address.$abcli_aws_region.compute.amazonaws.com
         fi
 
         open https://localhost:8888
