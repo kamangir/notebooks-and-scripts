@@ -17,14 +17,16 @@ function cat_under_trees() {
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$ABCUL[\"$sentence\"]$ABCUL[$args]" \
             "paint a sentence by different artists, version $version."
 
-        abcli_log_list "$list_of_artists" , "artists(s)"
+        abcli_log_list $list_of_artists \
+            --after "artists(s)"
         return
     fi
 
     local count=$(abcli_option "$options" count -1)
     [[ "$count" != -1 ]] &&
         local list_of_artists=$(abcli_list_size $list_of_artists $count)
-    abcli_log_list "$list_of_artists" , "artists(s)"
+    abcli_log_list $list_of_artists \
+        --after "artists(s)"
 
     local sentence=${3:-$sentence}
     abcli_log "painting $sentence ..."

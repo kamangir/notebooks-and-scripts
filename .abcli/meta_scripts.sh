@@ -26,10 +26,9 @@ function abcli_meta_scripts() {
         output=$(python3 -c "print('$output'.replace('.sh',' '))")
         output=$(abcli_list_nonempty "$output" --delim space)
 
-        abcli_log_list \
-            "$output" \
-            space \
-            "task(s)"
+        abcli_log_list "$output" \
+            --delim space \
+            --after "task(s)"
         return
     fi
 

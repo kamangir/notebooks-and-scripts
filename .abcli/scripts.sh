@@ -93,11 +93,11 @@ function abcli_scripts() {
             local script_name=$3
 
             if [[ -z "$script_name" ]]; then
-                abcli_log_list \
-                    $(abcli_metadata get \
-                        dict.keys,filename \
-                        $abcli_path_scripts/meta.yaml) \
-                    , "meta script(s)" "📜 "
+                abcli_log_list $(abcli_metadata get \
+                    dict.keys,filename \
+                    $abcli_path_scripts/meta.yaml) \
+                    --before "📜" \
+                    --after "meta script(s)"
                 return
             fi
 
