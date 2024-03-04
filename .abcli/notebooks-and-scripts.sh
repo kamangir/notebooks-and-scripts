@@ -14,8 +14,11 @@ function notebooks_and_scripts() {
             "init notebooks_and_scripts."
 
         notebooks_and_scripts_conda "$@"
-        notebooks_and_scripts pylint "$@"
-        notebooks_and_scripts pytest "$@"
+
+        local task
+        for task in pylint pytest test; do
+            notebooks_and_scripts $task "$@"
+        done
         return
     fi
 
@@ -31,28 +34,9 @@ function notebooks_and_scripts() {
         return
     fi
 
-    if [ "$task" == "pytest" ]; then
-        abcli_pytest plugin=notebooks-and-scripts,$2 \
+    if [[ "|pylint|pytest|test|" == *"|$task|"* ]]; then
+        abcli_${task} plugin=notebooks-and-scripts,$2 \
             "${@:3}"
-        return
-    fi
-
-    if [ "$task" == "pylint" ]; then
-        if [[ "$2" == "help" ]]; then
-            abcli_show_usage "notebooks_and_scripts pylint <args>" \
-                "pylint notebooks-and-scripts."
-            return
-        fi
-
-        abcli_pip install pylint
-
-        pushd $abcli_path_git/notebooks-and-scripts >/dev/null
-        pylint \
-            -d $abcli_pylint_ignored \
-            $(git ls-files '*.py') \
-            "${@:2}"
-        popd >/dev/null
-
         return
     fi
 
@@ -63,3 +47,6 @@ function notebooks_and_scripts() {
 
     abcli_log_error "-abcli: scripts: $task: command not found."
 }
+
+abcli_source_path \
+    $abcli_path_git/notebooks-and-scripts/.abcli/tests
