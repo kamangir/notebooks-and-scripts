@@ -1,8 +1,9 @@
+import sys
 import argparse
 import boto3
 from abcli import env
-from notebooks_and_scripts import logger, VERSION, NAME
-import sys
+from notebooks_and_scripts import VERSION, NAME
+from notebooks_and_scripts.logger import logger
 
 NAME = f"{NAME}.aws_batch"
 

@@ -1,5 +1,6 @@
 import argparse
-from notebooks_and_scripts import logger, NAME, VERSION, DESCRIPTION
+from notebooks_and_scripts import NAME, VERSION, DESCRIPTION
+from notebooks_and_scripts.logger import logger
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
