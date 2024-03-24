@@ -9,5 +9,8 @@ setup(
     author="arash@kamangir.net",
     version=VERSION,
     description=DESCRIPTION,
-    packages=[NAME],
+    packages=[
+        NAME,
+        f"{NAME}.sagemaker",
+    ],
 )
