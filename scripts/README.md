@@ -65,7 +65,7 @@ abcli scripts source paint-a-sentence \
 
 ## [mission-patch](./mission-patch.sh)
 
-uses 🛠️ [openai](https://github.com/kamangir/openai) and 🎨 [aiart](https://github.com/kamangir/aiart)
+uses 🛠️ [openai_cli](https://github.com/kamangir/openai_cli) and 🎨 [aiart](https://github.com/kamangir/aiart)
 
 ```bash
  > scripts help mission-patch

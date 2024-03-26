@@ -11,13 +11,13 @@ function mission_patch() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local extra_options="dryrun,height=<1024>,~upload,url=<url>,width=<1024>"
         extra_options="$EOP$extra_options$EOPE"
-        local options="app=openai|blue_stability,count=<1>,open,$extra_options"
+        local options="app=openai_cli|blue_stability,count=<1>,open,$extra_options"
         abcli_script_show_usage "$script_name$ABCUL[$options]$ABCUL[<object-name>]$EARGS" \
             "generate mission patches for <url>."
         return
     fi
 
-    openai init
+    openai_cli init
 
     local url=$(abcli_option "$options" url https://earthdaily.com/constellation/)
     local count=$(abcli_option_int "$options" count 1)
@@ -31,20 +31,20 @@ function mission_patch() {
         --fake_agent 1)
     abcli_log "📜 $description"
 
-    # necessary because of assumptions in openai and aiart :(
+    # necessary because of assumptions in openai_cli and aiart :(
     abcli_select $object_name ~trail
     [[ "$do_open" == 1 ]] && open .
 
     local index
     for ((index = 1; index <= count; index++)); do
-        local prompt=$(openai complete "describe the following in three sentences: $description")
+        local prompt=$(openai_cli complete "describe the following in three sentences: $description")
         local prompt=$(echo "$prompt" | tr "'" " ")
         abcli_log "📜 $prompt"
 
         aiart generate image \
             $(abcli_option_subset \
                 "$options" \
-                app=openai,~dryrun,height=1024,width=1024) \
+                app=openai_cli,~dryrun,height=1024,width=1024) \
             $object_name-$(python3 -c "print('{:05d}'.format($index))") - \
             "generate a mission patch for the following: $prompt"
     done
