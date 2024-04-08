@@ -128,4 +128,5 @@ function abcli_docker() {
     fi
 
     abcli_log_error "-abcli: docker: $task: command not found."
+    return 1
 }

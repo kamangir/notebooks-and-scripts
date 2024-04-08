@@ -174,6 +174,7 @@ function abcli_scripts() {
     fi
 
     abcli_log_error "-abcli: scripts: $task: command not found."
+    return 1
 }
 
 function abcli_script_show_usage() {

@@ -35,4 +35,5 @@ function abcli_sagemaker() {
     fi
 
     abcli_log_error "-abcli: sagemaker: $task: command not found."
+    return 1
 }

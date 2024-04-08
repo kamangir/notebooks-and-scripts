@@ -112,4 +112,5 @@ function abcli_aws_batch() {
     fi
 
     abcli_log_error "-abcli: aws_batch: $task: command not found."
+    return 1
 }

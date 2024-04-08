@@ -46,6 +46,7 @@ function notebooks_and_scripts() {
     fi
 
     abcli_log_error "-abcli: scripts: $task: command not found."
+    return 1
 }
 
 abcli_source_path \

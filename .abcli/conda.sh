@@ -44,4 +44,5 @@ function notebooks_and_scripts_conda() {
     fi
 
     abcli_log_error "-notebooks_and_scripts: conda: $task: command not found."
+    return 1
 }

@@ -93,4 +93,5 @@ function abcli_notebooks() {
     fi
 
     abcli_log_error "-notebooks: $task: command not found."
+    return 1
 }
