@@ -13,6 +13,8 @@ function abcli_docker() {
         abcli_show_usage "@docker clear" \
             "clear docker."
 
+        abcli_docker eval "$@"
+
         abcli_show_usage "@docker push" \
             "push abcli docker image."
 
@@ -108,14 +110,28 @@ function abcli_docker() {
         return
     fi
 
-    if [ "$task" == "source" ]; then
+    [[ "$task" == evaluate ]] && task=eval
+    if [[ "|eval|source|" == *"|$task|"* ]]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-            abcli_show_usage "@docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
-                "source <script-name> <args> through the abcli docker image."
+            [[ "$task" == "eval" ]] &&
+                abcli_show_usage "@docker eval $EOP[$abcli_scripts_options]$EOPE$ABCUL<command-line>" \
+                    "run <command-line> through the abcli docker image."
+
+            [[ "$task" == "source" ]] &&
+                abcli_show_usage "@docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
+                    "source <script-name> <args> through the abcli docker image."
+
             return
         fi
 
-        local command_line="source \
+        local command_line
+        [[ "$task" == "eval" ]] &&
+            command_line="source \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
+            abcli_eval $options \
+            ${@:3}"
+        [[ "$task" == "source" ]] &&
+            command_line="source \
             /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
             abcli_scripts source $options \
             ${@:3}"
