@@ -29,13 +29,11 @@ function abcli_docker() {
     fi
 
     local options=$2
+    local do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
     local filename="Dockerfile"
-    local tag="kamangir/abcli"
 
     if [ "$task" == "browse" ]; then
-        local options=$2
-
         local show_public=$(abcli_option_int "$options" public 1)
 
         local url=https://hub.docker.com/repository/docker/kamangir/abcli/general
@@ -47,9 +45,8 @@ function abcli_docker() {
     fi
 
     if [ "$task" == "build" ]; then
-        abcli_log "docker: building $filename: $tag: $options"
+        abcli_log "docker: building $filename: $options"
 
-        local do_dryrun=$(abcli_option_int "$options" dryrun 0)
         local do_push=$(abcli_option_int "$options" push $(abcli_not $do_dryrun))
         local do_run=$(abcli_option_int "$options" run 0)
 
@@ -58,18 +55,17 @@ function abcli_docker() {
         mkdir -p temp
         cp -v ~/.kaggle/kaggle.json temp/
 
-        [[ "$do_dryrun" == 0 ]] &&
+        abcli_eval ,$options \
             docker build \
-                --build-arg HOME=$HOME \
-                -t $tag \
-                -f notebooks-and-scripts/$filename \
-                .
+            --build-arg HOME=$HOME \
+            -t kamangir/abcli \
+            -f notebooks-and-scripts/$filename \
+            .
 
         rm -rfv temp
 
         [[ "$do_push" == "1" ]] &&
-            abcli_eval - \
-                "docker push $tag:latest"
+            abcli_docker push $options
 
         [[ "$do_run" == "1" ]] &&
             abcli_docker run $options
@@ -80,23 +76,26 @@ function abcli_docker() {
     fi
 
     if [ "$task" == "clear" ]; then
-        abcli_eval - \
+        abcli_eval ,$options \
             "docker image prune"
-        abcli_eval - \
+        abcli_eval ,$options \
             "docker system prune"
         return
     fi
 
     if [ "$task" == "push" ]; then
-        abcli_eval - \
-            "docker push $tag:latest"
+        abcli_eval ,$options \
+            docker push \
+            kamangir/abcli:latest
+        abcli_eval ,$options \
+            docker tag \
+            kamangir/abcli:latest \
+            kamangir/abcli:abcli-$abcli_version
         return
     fi
 
     if [ "$task" == "run" ]; then
-        abcli_log "docker: running $filename: $tag: $options"
-
-        local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+        abcli_log "docker: running $filename: $options"
 
         abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
             docker-compose run abcli bash \
