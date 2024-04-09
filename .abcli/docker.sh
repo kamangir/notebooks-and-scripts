@@ -4,22 +4,22 @@ function abcli_docker() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
-        abcli_show_usage "abcli docker browse [~public]" \
+        abcli_show_usage "@docker browse [~public]" \
             "browse docker-hub"
 
-        abcli_show_usage "abcli docker build [dryrun,~push,run]" \
+        abcli_show_usage "@docker build [dryrun,~push,run]" \
             "build abcli docker image."
 
-        abcli_show_usage "abcli docker clear" \
+        abcli_show_usage "@docker clear" \
             "clear docker."
 
-        abcli_show_usage "abcli docker push" \
+        abcli_show_usage "@docker push" \
             "push abcli docker image."
 
-        abcli_show_usage "abcli docker run [dryrun]" \
+        abcli_show_usage "@docker run [dryrun]" \
             "run abcli docker image."
 
-        abcli_show_usage "abcli docker seed" \
+        abcli_show_usage "@docker seed" \
             "seed docker 🌱."
 
         abcli_docker source "$@"
@@ -110,7 +110,7 @@ function abcli_docker() {
 
     if [ "$task" == "source" ]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-            abcli_show_usage "abcli docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
+            abcli_show_usage "@docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
                 "docker source <script-name>."
             return
         fi
