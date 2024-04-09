@@ -87,10 +87,6 @@ function abcli_docker() {
         abcli_eval ,$options \
             docker push \
             kamangir/abcli:latest
-        abcli_eval ,$options \
-            docker tag \
-            kamangir/abcli:latest \
-            kamangir/abcli:abcli-$abcli_version
         return
     fi
 
