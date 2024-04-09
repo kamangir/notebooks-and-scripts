@@ -12,6 +12,7 @@ RUN pip install geopandas
 RUN pip install tqdm
 RUN pip install pymysql==0.10.1
 RUN pip install boto3
+RUN pip install python-dotenv[cli]
 
 # https://askubuntu.com/a/1013396/1590785
 ARG DEBIAN_FRONTEND=noninteractive
