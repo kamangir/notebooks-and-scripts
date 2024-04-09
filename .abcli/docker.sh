@@ -111,7 +111,7 @@ function abcli_docker() {
     if [ "$task" == "source" ]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
             abcli_show_usage "@docker source $EOP[$abcli_scripts_options]$EOPE$ABCUL<script-name> [<args>]" \
-                "docker source <script-name>."
+                "source <script-name> <args> through the abcli docker image."
             return
         fi
 
