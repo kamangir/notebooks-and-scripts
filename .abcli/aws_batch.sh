@@ -7,6 +7,7 @@ function abcli_aws_batch() {
 
     if [ "$task" == "help" ]; then
         abcli_aws_batch browse "$@"
+        abcli_aws_batch eval "$@"
         abcli_aws_batch list "$@"
         abcli_aws_batch source "$@"
         return
@@ -28,6 +29,11 @@ function abcli_aws_batch() {
 
             abcli_show_usage "@batch browse$ABCUL[queue=list]" \
                 "browse list of queues."
+            ;;
+        eval)
+            options="$abcli_scripts_options,name=<job-name>"
+            abcli_show_usage "@batch eval$ABCUL[$options]$ABCUL<command-line>" \
+                "eval <command-line> in aws batch."
             ;;
         list | ls)
             options="~count,prefix=<prefix>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST$options"
