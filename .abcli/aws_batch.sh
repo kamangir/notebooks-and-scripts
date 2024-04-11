@@ -113,7 +113,7 @@ function abcli_aws_batch() {
             submit \
             --command_line \"${@:2}\" \
             --job_name "$job_name" \
-            --task $task
+            --type $task
 
         return
     fi

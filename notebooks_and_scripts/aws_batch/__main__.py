@@ -24,7 +24,7 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
-    "--task",
+    "--type",
     type=str,
     default="source",
     help="eval|source|submit",
@@ -48,7 +48,7 @@ elif args.task == "submit":
         "bash",
         "-c",
         "source /root/git/awesome-bash-cli/bash/abcli.sh mono,install,aws_batch {} {}".format(
-            "abcli_eval" if args.task == "eval" else "abcli_scripts source",
+            "abcli_eval" if args.type == "eval" else "abcli_scripts source",
             args.command_line,
         ),
     ]
