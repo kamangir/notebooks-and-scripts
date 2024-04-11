@@ -20,24 +20,24 @@ function abcli_aws_batch() {
         options="$EOP,dryrun$EOPE"
         case "$task" in
         browse)
-            abcli_show_usage "abcli aws_batch browse$ABCUL[id=<job-id>]" \
+            abcli_show_usage "@batch browse$ABCUL[id=<job-id>]" \
                 "browse <job-id>."
 
-            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST]" \
+            abcli_show_usage "@batch browse$ABCUL[queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST]" \
                 "browse <queue-name>."
 
-            abcli_show_usage "abcli aws_batch browse$ABCUL[queue=list]" \
+            abcli_show_usage "@batch browse$ABCUL[queue=list]" \
                 "browse list of queues."
             ;;
         list | ls)
             options="~count,prefix=<prefix>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST$options"
-            abcli_show_usage "abcli aws_batch list$ABCUL[$options]" \
-                "list aws_batch jobs."
+            abcli_show_usage "@batch list$ABCUL[$options]" \
+                "list aws batch jobs."
             ;;
         source | submit)
             options="$abcli_scripts_options,name=<job-name>"
-            abcli_show_usage "abcli aws_batch source$ABCUL[$options]$ABCUL<script-name>$ABCUL[<args>]" \
-                "source <script-name> in aws_batch."
+            abcli_show_usage "@batch source$ABCUL[$options]$ABCUL<script-name>$ABCUL[<args>]" \
+                "source <script-name> in aws batch."
             ;;
         *)
             abcli_log_error "-abcli: aws_batch: $task: help: command not found."
