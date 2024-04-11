@@ -41,7 +41,7 @@ elif args.task == "submit":
     command = [
         "bash",
         "-c",
-        f"source /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,aws_batch abcli_scripts source {args.command_line}",
+        f"source /root/git/awesome-bash-cli/bash/abcli.sh install,aws_batch abcli_scripts source {args.command_line}",
     ]
     logger.info("submit -> {}: {}".format(args.job_name, "\n".join(command)))
 

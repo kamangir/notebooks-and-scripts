@@ -122,12 +122,12 @@ function abcli_docker() {
         local command_line
         [[ "$task" == "eval" ]] &&
             command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,mono \
             abcli_eval $options \
             ${@:3}"
         [[ "$task" == "source" ]] &&
             command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh install,minimal,mono \
+            /root/git/awesome-bash-cli/bash/abcli.sh install,mono \
             abcli_scripts source $options \
             ${@:3}"
 
