@@ -23,6 +23,12 @@ parser.add_argument(
     type=str,
     default="",
 )
+parser.add_argument(
+    "--task",
+    type=str,
+    default="source",
+    help="eval|source|submit",
+)
 args = parser.parse_args()
 
 success = False
@@ -41,9 +47,18 @@ elif args.task == "submit":
     command = [
         "bash",
         "-c",
-        f"source /root/git/awesome-bash-cli/bash/abcli.sh install,aws_batch abcli_scripts source {args.command_line}",
+        "source /root/git/awesome-bash-cli/bash/abcli.sh mono,install,aws_batch {} {}".format(
+            "abcli_eval" if args.task == "eval" else "abcli_scripts source",
+            args.command_line,
+        ),
     ]
-    logger.info("submit -> {}: {}".format(args.job_name, "\n".join(command)))
+    logger.info(
+        "{} -> {}: {}".format(
+            args.task,
+            args.job_name,
+            "\n".join(command),
+        )
+    )
 
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch.html
     client = boto3.client("batch")
