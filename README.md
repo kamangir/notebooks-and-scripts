@@ -9,7 +9,7 @@ Repository of research [notebooks](./notebooks) and [[meta](./scripts#meta/)] [s
 | [paint-a-sentence](./scripts/paint-a-sentence.sh)                                                         | [mission-patch](./scripts/mission-patch.sh)                                                 | [roofAI-train](./scripts/roofAI-train.sh)                                                                                                                                   |
 | https://medium.com/@arash-kamangir/a-cat-walking-under-apple-trees-style-by-stable-diffusion-ab60ece43e2a | https://medium.com/@arash-kamangir/private-mission-patch-%EF%B8%8F-1-0c2eddd79762           | https://arash-kamangir.medium.com/roofai-%EF%B8%8F-on-gpu-6-b02f8f67ed3f                                                                                                    |
 
-also: [`sagesemseg`](./scripts/sagesemseg/) |
+also: [`sagesemseg`](./scripts/sagesemseg/).
 
 ---
 
