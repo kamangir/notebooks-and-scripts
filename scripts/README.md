@@ -24,25 +24,6 @@ abcli scripts source [cat,dryrun] \
  . source <script-name>.
 ```
 
-## [@vanwatch](./vanwatch_meta/)
-
-[Vancouver Watching 🌈](https://github.com/kamangir/Vancouver-Watching) + AWS Batch.
-
-```bash
-@vanwatch ingest \
-	batch,dryrun \
-	area=<area>,count=<-1>,dryrun,gif,model=<model-id>,~process,publish,~upload \
-	-|<object-name> \
-	[<args>]
- . vanwatch ingest, defaults to vancouver x 10.
-@vanwatch process \
-	batch,dryrun \
-	count=<count>,~download,gif,model=<model-id>,publish,~upload \
-	.|all|<object-name> \
-	[<args>]
- . vanwatch process <object-name>.
-```
-
 ## [sagesemseg](./sagesemseg/)
 
 [Semantic Segmentation on AWS Sagemaker](https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb).
