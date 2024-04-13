@@ -10,6 +10,7 @@ function localflow() {
     if [ "$task" == "help" ]; then
         localflow_eval "$@"
         localflow_list "$@"
+        localflow_run "$@"
         return
     fi
 
