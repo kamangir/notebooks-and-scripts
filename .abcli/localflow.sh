@@ -1,9 +1,14 @@
 #! /usr/bin/env bash
 
+function notebooks_and_scripts_localflow() {
+    localflow "$@"
+}
+
 function localflow() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
+        localflow_eval "$@"
         localflow_list "$@"
         return
     fi
