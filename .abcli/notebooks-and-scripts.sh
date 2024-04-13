@@ -10,6 +10,8 @@ function notebooks_and_scripts() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
+        localflow "$@"
+
         abcli_show_usage "notebooks_and_scripts init [clear]" \
             "init notebooks_and_scripts."
 
@@ -51,3 +53,8 @@ function notebooks_and_scripts() {
 
 abcli_source_path \
     $abcli_path_git/notebooks-and-scripts/.abcli/tests
+
+abcli_env dot load \
+    plugin=notebooks-and-scripts
+abcli_env dot load \
+    filename=config.env,plugin=notebooks-and-scripts
