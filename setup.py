@@ -13,4 +13,7 @@ setup(
         NAME,
         f"{NAME}.sagemaker",
     ],
+    package_data={
+        NAME: ["config.env"],
+    },
 )
