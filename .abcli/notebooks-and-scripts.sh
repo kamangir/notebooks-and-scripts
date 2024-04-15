@@ -57,4 +57,4 @@ abcli_source_path \
 abcli_env dot load \
     plugin=notebooks-and-scripts
 abcli_env dot load \
-    filename=config.env,plugin=notebooks-and-scripts
+    filename=notebooks_and_scripts/config.env,plugin=notebooks-and-scripts
