@@ -1,4 +1,5 @@
 git+https://github.com/kamangir/awesome-bash-cli.git@current#egg=abcli
+beautifulsoup4
 boto3
 geojson
 geopandas
@@ -9,4 +10,11 @@ pyyaml
 pylint
 pytest
 python-dotenv[cli]
+requests
 tqdm
+
+# https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb
+# sagemaker>=2,<3
+
+# on mac
+# folium

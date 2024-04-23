@@ -15,8 +15,6 @@ function notebooks_and_scripts() {
         abcli_show_usage "notebooks_and_scripts init [clear]" \
             "init notebooks_and_scripts."
 
-        notebooks_and_scripts_conda "$@"
-
         local task
         for task in pylint pytest test; do
             notebooks_and_scripts $task "$@"
