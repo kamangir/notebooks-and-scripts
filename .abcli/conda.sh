@@ -4,12 +4,12 @@ function notebooks_and_scripts_conda() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
-        abcli_show_usage "notebooks_and_scripts conda create_env$ABCIL[~recreate]" \
+        abcli_show_usage "notebooks_and_scripts conda create$ABCIL[~recreate]" \
             "create conda environment."
         return
     fi
 
-    if [ "$task" == "create_env" ]; then
+    if [ "$task" == "create" ]; then
         local options=$2
         local do_recreate=$(abcli_option_int "$options" recreate 1)
 
@@ -20,7 +20,7 @@ function notebooks_and_scripts_conda() {
             return
         fi
 
-        abcli_conda create_env name=$environment_name
+        abcli_conda create name=$environment_name
 
         pip3 install pymysql==0.10.1
         pip3 install geojson
