@@ -26,7 +26,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3-opencv
 # No need to install opencv-python with pip since it's installed system-wide
 
-RUN apt install -y awscli
+RUN pip install awscli
 
 # Copy and install local packages
 RUN mkdir -p /root/git/awesome-bash-cli
