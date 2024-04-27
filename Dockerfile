@@ -17,6 +17,7 @@ RUN pip install tqdm
 RUN pip install pymysql==0.10.1
 RUN pip install boto3
 RUN pip install python-dotenv[cli]
+RUN pip install matplotlib
 
 # https://askubuntu.com/a/1013396/1590785
 ARG DEBIAN_FRONTEND=noninteractive
@@ -24,7 +25,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install OpenCV from the Ubuntu repositories
 # https://stackoverflow.com/a/66473309/17619982
 RUN apt-get update && apt-get install -y python3-opencv
-# No need to install opencv-python with pip since it's installed system-wide
+RUN pip install opencv-python
 
 RUN pip install awscli
 
