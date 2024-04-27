@@ -1,5 +1,6 @@
 import sys
 import argparse
+from notebooks_and_scripts.env import env
 from notebooks_and_scripts.aws_batch import VERSION, NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
@@ -32,9 +33,10 @@ parser.add_argument(
     help="eval|source|submit",
 )
 parser.add_argument(
-    "--breadth",
-    type=int,
-    default=5,
+    "--pattern",
+    type=str,
+    default=env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE,
+    help=f"harder example: {env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_HARD}",
 )
 parser.add_argument(
     "--depth",
