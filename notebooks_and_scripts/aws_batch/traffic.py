@@ -23,4 +23,6 @@ def create(
 def decode_traffic(pattern: str) -> nx.DiGraph:
     graph = nx.DiGraph()
 
+    # {[a{bc}d{efg}hi]j[kl{mn}op]q}
+
     return graph
