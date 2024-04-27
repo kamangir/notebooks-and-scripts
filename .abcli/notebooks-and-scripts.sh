@@ -15,8 +15,6 @@ function notebooks_and_scripts() {
 
         localflow "$@"
 
-        abcli_meta_scripts "$@"
-
         abcli_notebooks "$@"
 
         abcli_show_usage "notebooks_and_scripts init [clear]" \
