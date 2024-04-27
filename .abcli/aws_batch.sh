@@ -21,13 +21,13 @@ function abcli_aws_batch() {
         options="$EOP,dryrun$EOPE"
         case "$task" in
         browse)
-            abcli_show_usage "@batch browse$ABCUL[id=<job-id>]" \
+            abcli_show_usage "@batch browse id=<job-id>" \
                 "browse <job-id>."
 
-            abcli_show_usage "@batch browse$ABCUL[queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST]" \
+            abcli_show_usage "@batch browse${ABCUL}queue=<queue-name>,status=$ABCLI_AWS_BATCH_JOB_STATUS_LIST" \
                 "browse <queue-name>."
 
-            abcli_show_usage "@batch browse$ABCUL[queue=list]" \
+            abcli_show_usage "@batch browse queue=list" \
                 "browse list of queues."
             ;;
         eval)
