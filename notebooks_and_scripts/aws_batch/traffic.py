@@ -1,21 +1,15 @@
+import networkx as nx
 from notebooks_and_scripts.logger import logger
 
 
 def create(
     command_line: str,
-    breadth: int = 5,
-    depth: int = 5,
+    pattern: str = 5,
     job_name="",
 ) -> bool:
     logger.info(
-        "creating traffic: {} x {} @ {}-*".format(
-            "{"
-            + breadth * "j"
-            + "} -> "
-            + " -> ".join((depth - 2) * ["j"])
-            + "-> {"
-            + breadth * "j"
-            + "}",
+        "creating traffic: {} x {} -> {}-*".format(
+            pattern,
             command_line,
             job_name,
         )
@@ -23,4 +17,10 @@ def create(
 
     logger.info("🪄")
 
-    return False
+    return True
+
+
+def decode_traffic(pattern: str) -> nx.DiGraph:
+    graph = nx.DiGraph()
+
+    return graph

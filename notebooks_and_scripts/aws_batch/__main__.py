@@ -1,6 +1,6 @@
 import sys
 import argparse
-from notebooks_and_scripts.env import env
+from notebooks_and_scripts import env
 from notebooks_and_scripts.aws_batch import VERSION, NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
@@ -36,21 +36,18 @@ parser.add_argument(
     "--pattern",
     type=str,
     default=env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE,
-    help=f"harder example: {env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_HARD}",
-)
-parser.add_argument(
-    "--depth",
-    type=int,
-    default=5,
+    help="examples: {}, {}".format(
+        env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE,
+        env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_HARD,
+    ),
 )
 args = parser.parse_args()
 
 success = False
 if args.task == "create_traffic":
     success = create_traffic(
-        breadth=args.breadth,
         command_line=args.command_line,
-        depth=args.depth,
+        pattern=args.pattern,
         job_name=args.job_name,
     )
 elif args.task == "show_count":
