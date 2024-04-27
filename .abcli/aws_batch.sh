@@ -7,6 +7,7 @@ function abcli_aws_batch() {
 
     if [ "$task" == "help" ]; then
         abcli_aws_batch browse "$@"
+        abcli_aws_batch create_traffic "$@"
         abcli_aws_batch eval "$@"
         abcli_aws_batch list "$@"
         abcli_aws_batch source "$@"
@@ -29,6 +30,11 @@ function abcli_aws_batch() {
 
             abcli_show_usage "@batch browse queue=list" \
                 "browse list of queues."
+            ;;
+        create_traffic)
+            options="breadth=<5>,depth=<5>,name=<job-name>"
+            abcli_show_usage "@batch create_traffic$ABCUL[$options]$ABCUL<command-line>" \
+                "create <command-line> traffic in aws batch."
             ;;
         eval)
             options="$abcli_scripts_options,name=<job-name>"
@@ -76,6 +82,20 @@ function abcli_aws_batch() {
         fi
 
         abcli_browse_url $url
+        return
+    fi
+
+    if [[ "$task" == "create_traffic" ]]; then
+        local options=$1
+
+        python3 -m notebooks_and_scripts.aws_batch \
+            create_traffic \
+            --breadth $(abcli_option "$options" breadth 5) \
+            --command_line \"${@:2}\" \
+            --depth $(abcli_option "$options" depth 5) \
+            --job_name $(abcli_option "$options" job_name \
+                traffic-$(abcli_string_timestamp_short))
+
         return
     fi
 
