@@ -65,7 +65,7 @@ elif args.task == "submit":
     success = submit(
         command_line=args.command_line,
         job_name=args.job_name,
-        type=SubmissionType(args.type.upper()),
+        type=SubmissionType[args.type.upper()],
     )
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")

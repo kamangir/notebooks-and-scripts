@@ -64,3 +64,5 @@ abcli_env dot load \
     plugin=notebooks-and-scripts
 abcli_env dot load \
     filename=notebooks_and_scripts/config.env,plugin=notebooks-and-scripts
+
+abcli_log $(notebooks_and_scripts version --show_icon 1)
