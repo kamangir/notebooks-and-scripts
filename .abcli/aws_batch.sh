@@ -46,7 +46,7 @@ function abcli_aws_batch() {
                 "source <script-name> in aws batch."
             ;;
         *)
-            abcli_log_error "-abcli: aws_batch: $task: help: command not found."
+            abcli_log_error "-@batch: $task: help: command not found."
             return 1
             ;;
         esac
@@ -131,6 +131,6 @@ function abcli_aws_batch() {
         return
     fi
 
-    abcli_log_error "-abcli: aws_batch: $task: command not found."
+    abcli_log_error "-@batch: $task: command not found."
     return 1
 }
