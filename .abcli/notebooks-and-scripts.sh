@@ -10,10 +10,20 @@ function notebooks_and_scripts() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
+        abcli_aws_batch "$@"
+        abcli_docker "$@"
+
         localflow "$@"
+
+        abcli_meta_scripts "$@"
+
+        abcli_notebooks "$@"
 
         abcli_show_usage "notebooks_and_scripts init [clear]" \
             "init notebooks_and_scripts."
+
+        abcli_sagemaker "$@"
+        abcli_scripts "$@"
 
         local task
         for task in pylint pytest test; do

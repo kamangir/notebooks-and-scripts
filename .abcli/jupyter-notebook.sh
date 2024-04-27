@@ -8,15 +8,15 @@ function abcli_notebooks() {
     local task=$(abcli_unpack_keyword "$1" open)
 
     if [ "$task" == "help" ]; then
-        abcli_show_usage "abcli notebooks [open]$ABCUL[<notebook-name>]$ABCUL[<args>]" \
+        abcli_show_usage "@notebooks [open]$ABCUL[<notebook-name>]$ABCUL[<args>]" \
             "open ./<notebook-name>.ipynb."
-        abcli_show_usage "abcli notebooks build$ABCUL[<notebook-name>]" \
+        abcli_show_usage "@notebooks build$ABCUL[<notebook-name>]" \
             "build $abcli_object_name/<notebook-name>.ipynb."
-        abcli_show_usage "abcli notebooks connect$ABCUL<1-2-3-4> [setup]" \
+        abcli_show_usage "@notebooks connect$ABCUL<1-2-3-4> [setup]" \
             "connect to jupyter notebook on ec2:<1-2-3-4>."
-        abcli_show_usage "abcli notebooks create|touch$ABCUL[<notebook-name>]" \
+        abcli_show_usage "@notebooks create|touch$ABCUL[<notebook-name>]" \
             "create ./<notebook-name>.ipynb."
-        abcli_show_usage "abcli notebooks host$ABCUL[setup]" \
+        abcli_show_usage "@notebooks host$ABCUL[setup]" \
             "host jupyter notebook on ec2."
         return
     fi
