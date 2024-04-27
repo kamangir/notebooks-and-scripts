@@ -1,9 +1,13 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y psmisc
+RUN apt-get update && apt-get install -y psmisc python3-pip python3-venv
 
-RUN apt-get update && apt-get install -y python3-pip
+# Create a virtual environment to isolate our package installations
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
+# Install Python packages using pip in the virtual environment
+RUN pip install --upgrade pip
 RUN pip install numpy
 RUN pip install panda
 RUN pip install geojson
@@ -17,12 +21,15 @@ RUN pip install python-dotenv[cli]
 # https://askubuntu.com/a/1013396/1590785
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Install OpenCV from the Ubuntu repositories
 # https://stackoverflow.com/a/66473309/17619982
 RUN apt-get update && apt-get install -y python3-opencv
-RUN pip install opencv-python
+# No need to install opencv-python with pip since it's installed system-wide
 
-RUN apt install -y awscli
+# Install awscli from the Ubuntu repositories
+RUN apt-get install -y awscli
 
+# Copy and install local packages
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
