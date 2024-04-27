@@ -1,17 +1,19 @@
 import sys
 import argparse
-import boto3
-from abcli import env
-from notebooks_and_scripts import VERSION, NAME
+from notebooks_and_scripts.aws_batch import VERSION, NAME
+from notebooks_and_scripts.aws_batch.submission import (
+    submit,
+    SubmissionType,
+)
+from notebooks_and_scripts.aws_batch.traffic import create as create_traffic
 from notebooks_and_scripts.logger import logger
 
-NAME = f"{NAME}.aws_batch"
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="show_count|submit",
+    help="create_traffic|show_count|submit",
 )
 parser.add_argument(
     "--command_line",
@@ -29,10 +31,27 @@ parser.add_argument(
     default="source",
     help="eval|source|submit",
 )
+parser.add_argument(
+    "--breadth",
+    type=int,
+    default=5,
+)
+parser.add_argument(
+    "--depth",
+    type=int,
+    default=5,
+)
 args = parser.parse_args()
 
 success = False
-if args.task == "show_count":
+if args.task == "create_traffic":
+    success = create_traffic(
+        breadth=args.breadth,
+        command_line=args.command_line,
+        depth=args.depth,
+        job_name=args.job_name,
+    )
+elif args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()
 
@@ -43,48 +62,11 @@ if args.task == "show_count":
         if input_int:
             print("{} {}".format(input_int, input_int * "🌀"))
 elif args.task == "submit":
-    # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
-    command = [
-        "bash",
-        "-c",
-        "source /root/git/awesome-bash-cli/bash/abcli.sh mono,install,aws_batch {} {}".format(
-            "abcli_eval" if args.type == "eval" else "abcli_scripts source",
-            args.command_line,
-        ),
-    ]
-    logger.info(
-        "{} -> {}: {}".format(
-            args.task,
-            args.job_name,
-            "\n".join(command),
-        )
+    success = submit(
+        command_line=args.command_line,
+        job_name=args.job_name,
+        type=SubmissionType(args.type.upper()),
     )
-
-    # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch.html
-    client = boto3.client("batch")
-
-    # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/submit_job.html
-    response = client.submit_job(
-        jobName=args.job_name,
-        jobQueue="abcli-v3",
-        jobDefinition="abcli-custom-v1",
-        containerOverrides={
-            "command": command,
-        },
-    )
-    logger.info(f"response: {response}")
-
-    job_id = response["jobId"]
-    logger.info(f"job_id: {job_id}")
-
-    logger.info(
-        "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
-            env.abcli_aws_region,
-            env.abcli_aws_region,
-            job_id,
-        )
-    )
-    success = True
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 
