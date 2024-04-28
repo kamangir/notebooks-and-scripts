@@ -5,6 +5,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_pydot import read_dot
 from abcli import file, path
+from abcli.modules.host import signature as host_signature
 from abcli.logger import crash_report
 from notebooks_and_scripts.aws_batch import NAME, VERSION
 from notebooks_and_scripts.logger import logger
@@ -80,7 +81,16 @@ def load_from_file(
                 f"{graph.number_of_edges()} edge(s)",
                 f"layout: {layout}",
             ]
-        )
+        ),
+        fontsize=10,
+    )
+    plt.figtext(
+        0.5,
+        0.01,
+        " | ".join([f"{NAME}-{VERSION}"] + host_signature()),
+        ha="center",
+        fontsize=10,
+        color="black",
     )
     file.save_fig(export_as_image, log=log)
 
