@@ -5,14 +5,15 @@ from abcli.plugins.metadata import post, MetadataSourceType
 from abcli.modules import objects
 
 
-def create(
+def create_traffic(
     command_line: str,
     pattern: str,
     job_name="",
     verbose: bool = False,
 ) -> bool:
     logger.info(
-        "creating traffic: {} x {} -> {}-*".format(
+        "{}.create_traffic: {} x {} -> {}-*".format(
+            NAME,
             pattern,
             command_line,
             job_name,
