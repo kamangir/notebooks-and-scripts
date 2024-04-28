@@ -14,15 +14,11 @@ function abcli_aws_batch_submit() {
         return
     fi
 
-    local do_dryrun=$(abcli_option_int "$options" dryrun 0)
-
     job_name=$(abcli_option "$options" name $(abcli_string_timestamp))
 
-    local command_line="$@"
-
-    abcli_eval dryrun=$do_dryrun \
+    abcli_eval $options, \
         python3 -m notebooks_and_scripts.aws_batch \
         submit \
-        --command_line "$command_line" \
+        --command_line \"$@\" \
         --job_name "$job_name"
 }
