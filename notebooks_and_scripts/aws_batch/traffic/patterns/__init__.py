@@ -47,7 +47,7 @@ def load_from_file(
         graph = read_dot(filename)
     except:
         crash_report(f"-{NAME}: traffic: load_from_file({filename}): failed.")
-        return
+        return False, graph
 
     if log:
         logger.info(
