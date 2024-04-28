@@ -9,6 +9,18 @@ from abcli.logger import crash_report
 from notebooks_and_scripts.aws_batch import NAME, VERSION
 from notebooks_and_scripts.logger import logger
 
+layouts = {
+    "spring": nx.spring_layout,
+    "circular": nx.circular_layout,
+    "random": nx.random_layout,
+    "shell": nx.shell_layout,
+    "kamada_kawai": nx.kamada_kawai_layout,
+    "spectral": nx.spectral_layout,
+    "planar": nx.planar_layout,
+    "fruchterman_reingold": nx.fruchterman_reingold_layout,
+    "spiral": nx.spiral_layout,
+}
+
 
 def list_of_patterns() -> List[str]:
     return [
@@ -26,7 +38,8 @@ def load_from_file(
     filename: str,
     log: bool = True,
     export_as_image: str = "",
-    large: bool = False,
+    layout: str = "shell",
+    figsize: int = 5,
 ) -> Tuple[bool, nx.DiGraph]:
     graph = nx.DiGraph()
 
@@ -49,13 +62,12 @@ def load_from_file(
     if not export_as_image:
         return True, graph
 
-    plt.figure(
-        figsize=(
-            10 if large else 2,
-            10 if large else 2,
-        )
-    )
-    pos = nx.spring_layout(graph)  # positions for all nodes
+    layout_func = layouts.get(layout, None)
+    assert layout_func is not None
+
+    pos = layout_func(graph)
+
+    plt.figure(figsize=(figsize, figsize))
     nx.draw(
         graph,
         pos,
@@ -73,6 +85,7 @@ def load_from_file(
                 file.name(filename),
                 f"{graph.number_of_nodes()} node(s)",
                 f"{graph.number_of_edges()} edge(s)",
+                f"layout: {layout}",
             ]
         )
     )
