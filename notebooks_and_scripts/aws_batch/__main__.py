@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="create_traffic|show_count|submit",
+    help="create_traffic|list_of_patterns|show_count|submit",
 )
 parser.add_argument(
     "--command_line",
@@ -39,7 +39,25 @@ parser.add_argument(
     default=list_of_patterns()[0],
     help="|".join(list_of_patterns()),
 )
+parser.add_argument(
+    "--delim",
+    type=str,
+    default="+",
+)
+parser.add_argument(
+    "--count",
+    type=int,
+    default=-1,
+)
+parser.add_argument(
+    "--offset",
+    type=int,
+    default=0,
+)
 args = parser.parse_args()
+
+delim = " " if args.delim == "space" else args.delim
+
 
 success = False
 if args.task == "create_traffic":
@@ -48,6 +66,15 @@ if args.task == "create_traffic":
         pattern=args.pattern,
         job_name=args.job_name,
     )
+elif args.task == "list_of_patterns":
+    success = True
+
+    output = list_of_patterns()[args.offset :]
+
+    if args.count != -1:
+        output = output[: args.count]
+
+    print(delim.join(output))
 elif args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()

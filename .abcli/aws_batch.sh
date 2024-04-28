@@ -32,8 +32,8 @@ function abcli_aws_batch() {
                 "browse list of queues."
             ;;
         create_traffic)
-            local pattern=$ABCLI_AWS_BATCH_EXAMPLE_TRAFFIC_PATTERN
-            options="pattern=<$pattern>,name=<job-name>"
+            list_of_patterns=$(python3 -m notebooks_and_scripts.aws_batch list_of_patterns --delim \|)
+            options="pattern=$list_of_patterns,name=<job-name>"
             abcli_show_usage "@batch create_traffic$ABCUL[$options]$ABCUL<command-line>" \
                 "create <command-line> traffic in aws batch."
             ;;
@@ -89,7 +89,7 @@ function abcli_aws_batch() {
     if [[ "$task" == "create_traffic" ]]; then
         local options=$1
 
-        local pattern=$ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE
+        local pattern=$(python3 -m notebooks_and_scripts.aws_batch list_of_patterns --count 1)
         pattern=$(abcli_option "$options" pattern $pattern)
 
         local job_name=traffic-$(abcli_string_timestamp_short)

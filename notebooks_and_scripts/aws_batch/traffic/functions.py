@@ -1,4 +1,5 @@
 from notebooks_and_scripts.logger import logger
+from notebooks_and_scripts.aws_batch.traffic.patterns import load_pattern
 
 
 def create(
@@ -13,6 +14,10 @@ def create(
             job_name,
         )
     )
+
+    success, graph = load_pattern(pattern)
+    if not success:
+        return success
 
     logger.info("🪄")
 
