@@ -5,4 +5,7 @@ load_env(__name__)
 load_config(__name__)
 
 
-LOCALFLOW_STATUS_LIST = os.getenv("LOCALFLOW_STATUS_LIST", "")
+LOCALFLOW_STATUS_LIST = os.getenv(
+    "LOCALFLOW_STATUS_LIST",
+    "",
+)
