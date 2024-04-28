@@ -9,3 +9,9 @@ LOCALFLOW_STATUS_LIST = os.getenv(
     "LOCALFLOW_STATUS_LIST",
     "",
 )
+
+
+ABCLI_AWS_BATCH_JOB_STATUS_LIST = os.getenv(
+    "ABCLI_AWS_BATCH_JOB_STATUS_LIST",
+    "",
+)

@@ -32,7 +32,7 @@ def submit(
         "{} -> {}: {}".format(
             type.name,
             job_name,
-            "\n".join(command),
+            " 🔹 ".join(command),
         )
     )
 
