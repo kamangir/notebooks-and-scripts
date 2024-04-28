@@ -7,7 +7,7 @@ from notebooks_and_scripts.aws_batch.submission import (
     SubmissionType,
 )
 from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
-from notebooks_and_scripts.aws_batch.traffic.functions import create as create_traffic
+from notebooks_and_scripts.aws_batch.traffic.creation import create as create_traffic
 from notebooks_and_scripts.logger import logger
 
 
