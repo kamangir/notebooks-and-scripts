@@ -54,6 +54,12 @@ parser.add_argument(
     type=int,
     default=0,
 )
+parser.add_argument(
+    "--verbose",
+    type=int,
+    default=1,
+    help="0|1",
+)
 args = parser.parse_args()
 
 delim = " " if args.delim == "space" else args.delim
@@ -65,6 +71,7 @@ if args.task == "create_traffic":
         command_line=args.command_line,
         pattern=args.pattern,
         job_name=args.job_name,
+        verbose=args.verbose == 1,
     )
 elif args.task == "list_of_patterns":
     success = True

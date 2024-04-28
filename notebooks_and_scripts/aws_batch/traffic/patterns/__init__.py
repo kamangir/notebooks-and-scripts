@@ -50,14 +50,7 @@ def load_from_file(
         return False, graph
 
     if log:
-        logger.info(
-            "loaded a {}[{} node(s) X {} edge(s)] from {}.".format(
-                graph.__class__.__name__,
-                graph.number_of_nodes(),
-                graph.number_of_edges(),
-                filename,
-            )
-        )
+        logger.info(f"loaded a {graph} from {filename}.")
 
     if not export_as_image:
         return True, graph
