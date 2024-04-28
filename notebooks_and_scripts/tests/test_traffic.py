@@ -1,17 +1,16 @@
 from typing import Any
 import pytest
 from notebooks_and_scripts import env
-from notebooks_and_scripts.aws_batch.traffic import decode_traffic, encode_traffic
+from notebooks_and_scripts.aws_batch.traffic import load_pattern, list_of_patterns
+
+
+def test_list_of_patterns():
+    assert list_of_patterns
 
 
 @pytest.mark.parametrize(
     ["pattern"],
-    [
-        [env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE],
-        [env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_HARD],
-    ],
+    [list_of_patterns()],
 )
-def test_decode_encode_traffic(
-    pattern: str,
-):
-    assert encode_traffic(decode_traffic(pattern)) == pattern
+def test_load_pattern(pattern: str):
+    assert load_pattern(pattern)[0]

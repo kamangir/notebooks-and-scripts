@@ -4,12 +4,14 @@ boto3
 geojson
 geopandas
 matplotlib
+networkx
 opencv-python
-pymysql==0.10.1
-pyyaml
+pydot
 pylint
+pymysql==0.10.1
 pytest
 python-dotenv[cli]
+pyyaml
 requests
 tqdm
 
