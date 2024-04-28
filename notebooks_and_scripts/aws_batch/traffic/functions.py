@@ -4,7 +4,7 @@ from notebooks_and_scripts.aws_batch.traffic.patterns import load_pattern
 
 def create(
     command_line: str,
-    pattern: str = 5,
+    pattern: str,
     job_name="",
 ) -> bool:
     logger.info(
@@ -19,6 +19,6 @@ def create(
     if not success:
         return success
 
-    logger.info("🪄")
+    logger.info(f"🪄: {graph}")
 
     return True
