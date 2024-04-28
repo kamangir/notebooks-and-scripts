@@ -12,7 +12,7 @@ def test_list_of_patterns():
 
 @pytest.mark.parametrize(
     ["pattern"],
-    [list_of_patterns()],
+    [[pattern] for pattern in list_of_patterns()],
 )
 def test_load_pattern(pattern: str):
     assert load_pattern(pattern)[0]
