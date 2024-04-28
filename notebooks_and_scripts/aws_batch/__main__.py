@@ -73,7 +73,7 @@ delim = " " if args.delim == "space" else args.delim
 
 success = False
 if args.task == "create_traffic":
-    Traffic(
+    success = Traffic(
         args.job_name,
         args.verbose == 1,
     ).create(

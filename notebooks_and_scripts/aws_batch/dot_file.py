@@ -28,7 +28,6 @@ def export_graph_as_image(
     layout: str = "shell",
     figsize: int = 5,
     log: bool = True,
-    image_filename: str = "",
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -68,7 +67,7 @@ def export_graph_as_image(
         fontsize=10,
         color="black",
     )
-    return file.save_fig(image_filename, log=log)
+    return file.save_fig(filename, log=log)
 
 
 def load_from_file(
@@ -92,12 +91,15 @@ def load_from_file(
         not export_as_image
         or export_graph_as_image(
             G,
-            filename=export_as_image,
+            filename=(
+                file.set_extension(filename, export_as_image[1:])
+                if export_as_image.startswith(".")
+                else export_as_image
+            ),
             log=log,
             **kwargs,
-        ),
-        G,
-    )
+        )
+    ), G
 
 
 def save_to_file(
@@ -123,9 +125,12 @@ def save_to_file(
         not export_as_image
         or export_graph_as_image(
             G,
-            filename=export_as_image,
+            filename=(
+                file.set_extension(filename, export_as_image[1:])
+                if export_as_image.startswith(".")
+                else export_as_image
+            ),
             log=log,
             **kwargs,
-        ),
-        G,
-    )
+        )
+    ), G

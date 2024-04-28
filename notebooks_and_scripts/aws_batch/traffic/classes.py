@@ -15,15 +15,7 @@ class Traffic:
         job_name: str = "",
         verbose: bool = False,
     ):
-        self.job_name = (
-            job_name
-            if job_name
-            else string.pretty_date(
-                as_filename=True,
-                include_time=False,
-                unique=True,
-            )
-        )
+        self.job_name = job_name if job_name else objects.unique_object()
 
         self.verbose = verbose
 
@@ -47,6 +39,7 @@ class Traffic:
         if not dot_file.save_to_file(
             objects.path_of(f"{pattern}.dot", self.job_name),
             self.G,
+            export_as_image=".png",
         ):
             return False
 
@@ -69,7 +62,7 @@ class Traffic:
     ) -> bool:
         success, self.G = load_pattern(
             pattern=pattern,
-            export_as_image=objects.path_of(f"{pattern}.png", self.job_name),
+            export_as_image=objects.path_of(f"{pattern}-input.png", self.job_name),
         )
         if not success:
             return success
