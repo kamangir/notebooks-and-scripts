@@ -6,7 +6,8 @@ from notebooks_and_scripts.aws_batch.submission import (
     submit,
     SubmissionType,
 )
-from notebooks_and_scripts.aws_batch.traffic import create as create_traffic
+from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
+from notebooks_and_scripts.aws_batch.traffic.functions import create as create_traffic
 from notebooks_and_scripts.logger import logger
 
 
@@ -35,11 +36,8 @@ parser.add_argument(
 parser.add_argument(
     "--pattern",
     type=str,
-    default=env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE,
-    help="examples: {}, {}".format(
-        env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_SIMPLE,
-        env.ABCLI_AWS_BATCH_TRAFFIC_PATTERN_EXAMPLE_HARD,
-    ),
+    default=list_of_patterns()[0],
+    help="|".join(list_of_patterns()),
 )
 args = parser.parse_args()
 

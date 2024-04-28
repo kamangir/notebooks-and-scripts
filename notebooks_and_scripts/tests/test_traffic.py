@@ -1,7 +1,9 @@
-from typing import Any
 import pytest
 from notebooks_and_scripts import env
-from notebooks_and_scripts.aws_batch.traffic import load_pattern, list_of_patterns
+from notebooks_and_scripts.aws_batch.traffic.patterns import (
+    load_pattern,
+    list_of_patterns,
+)
 
 
 def test_list_of_patterns():
