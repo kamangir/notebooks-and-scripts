@@ -18,11 +18,13 @@ function abcli_aws_batch_create_traffic() {
     local pattern=$(python3 -m notebooks_and_scripts.aws_batch list_of_patterns --count 1)
     pattern=$(abcli_option "$options" pattern $pattern)
 
-    local job_name=traffic-$(abcli_string_timestamp_short)
+    local job_name=traffic-$(abcli_string_timestamp)
     job_name=$(abcli_option "$options" job_name $job_name)
 
     local command_line="${@:2}"
     [[ -z "$command_line" ]] && command_line="$(abcli unquote $ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND)"
+
+    abcli_log "creating aws-batch traffic: $command_line -$pattern-> $job_name"
 
     python3 -m notebooks_and_scripts.aws_batch \
         create_traffic \
