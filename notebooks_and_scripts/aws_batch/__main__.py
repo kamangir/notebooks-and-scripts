@@ -7,7 +7,7 @@ from notebooks_and_scripts.aws_batch.submission import (
     SubmissionType,
 )
 from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
-from notebooks_and_scripts.aws_batch.traffic.creation import create_traffic
+from notebooks_and_scripts.aws_batch.traffic.classes import Traffic
 from notebooks_and_scripts.logger import logger
 
 
@@ -20,7 +20,7 @@ parser.add_argument(
 parser.add_argument(
     "--command_line",
     type=str,
-    default="",
+    default=env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND_UQ,
 )
 parser.add_argument(
     "--job_name",
@@ -60,6 +60,12 @@ parser.add_argument(
     default=1,
     help="0|1",
 )
+parser.add_argument(
+    "--dryrun",
+    type=int,
+    default=1,
+    help="0|1",
+)
 args = parser.parse_args()
 
 delim = " " if args.delim == "space" else args.delim
@@ -67,11 +73,13 @@ delim = " " if args.delim == "space" else args.delim
 
 success = False
 if args.task == "create_traffic":
-    success = create_traffic(
-        command_line=args.command_line,
-        pattern=args.pattern,
-        job_name=args.job_name,
-        verbose=args.verbose == 1,
+    success = Traffic(
+        args.job_name,
+        args.verbose == 1,
+    ).create(
+        args.pattern,
+        args.command_line,
+        args.dryrun == 1,
     )
 elif args.task == "list_of_patterns":
     success = True

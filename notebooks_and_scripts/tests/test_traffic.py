@@ -1,18 +1,11 @@
 import pytest
-from notebooks_and_scripts import env
-from notebooks_and_scripts.aws_batch.traffic.patterns import (
-    load_pattern,
-    list_of_patterns,
-)
-
-
-def test_list_of_patterns():
-    assert list_of_patterns
+from notebooks_and_scripts.aws_batch.traffic.classes import Traffic
+from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
 
 
 @pytest.mark.parametrize(
     ["pattern"],
     [[pattern] for pattern in list_of_patterns()],
 )
-def test_load_pattern(pattern: str):
-    assert load_pattern(pattern)[0]
+def test_Traffic(pattern: str):
+    assert Traffic().create(pattern)
