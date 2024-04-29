@@ -19,7 +19,7 @@ function abcli_aws_batch_create_traffic() {
     pattern=$(abcli_option "$options" pattern $pattern)
 
     local job_name=traffic-$(abcli_string_timestamp)
-    job_name=$(abcli_option "$options" job_name $job_name)
+    job_name=$(abcli_option "$options" name $job_name)
 
     local command_line="${@:2}"
     [[ -z "$command_line" ]] && command_line="$(abcli unquote $ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND)"
@@ -36,4 +36,6 @@ function abcli_aws_batch_create_traffic() {
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $job_name
+
+    return 0
 }

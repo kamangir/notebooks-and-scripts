@@ -8,6 +8,7 @@ function abcli_aws_batch() {
         abcli_aws_batch_create_traffic "$@"
         abcli_aws_batch_eval "$@"
         abcli_aws_batch_list "$@"
+        abcli_aws_batch_monitor_traffic "$@"
         abcli_aws_batch_submit "$@"
         return
     fi

@@ -8,6 +8,7 @@ from notebooks_and_scripts.aws_batch.submission import (
 )
 from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
 from notebooks_and_scripts.aws_batch.traffic.classes import Traffic
+from notebooks_and_scripts.aws_batch.traffic.monitor import monitor_traffic
 from notebooks_and_scripts.logger import logger
 
 
@@ -15,7 +16,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="create_traffic|list_of_patterns|show_count|submit",
+    help="create_traffic|list_of_patterns|monitor_traffic|show_count|submit",
 )
 parser.add_argument(
     "--command_line",
@@ -90,6 +91,8 @@ elif args.task == "list_of_patterns":
         output = output[: args.count]
 
     print(delim.join(output))
+elif args.task == "monitor_traffic":
+    success = monitor_traffic(args.job_name)
 elif args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()
