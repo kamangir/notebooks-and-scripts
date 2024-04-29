@@ -32,7 +32,7 @@ def monitor_traffic(
 
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/describe_jobs.html
     page_size = 100
-    for index in range(0, len(G.nodes), page_size):
+    for index in tqdm(range(0, len(G.nodes), page_size)):
         nodes = list(G.nodes)[index : index + page_size]
 
         jobs = [G.nodes[node].get("job_id").replace('"', "") for node in nodes]
