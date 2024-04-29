@@ -11,7 +11,10 @@ from notebooks_and_scripts.aws_batch.dot_file import (
 )
 
 
-def monitor_traffic(job_name: str) -> bool:
+def monitor_traffic(
+    job_name: str,
+    verbose: bool = False,
+) -> bool:
     pattern = get(
         "traffic.pattern",
         "",
@@ -41,7 +44,9 @@ def monitor_traffic(job_name: str) -> bool:
             [item["status"] for item in response["jobs"]],
         ):
             G.nodes[node]["status"] = status
-            logger.info(f"{node}: {status}")
+
+            if verbose:
+                logger.info(f"{node}: {status}")
 
     return export_graph_as_image(
         G,
