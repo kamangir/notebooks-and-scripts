@@ -1,4 +1,4 @@
-from typing import Tuple, List
+from typing import Tuple, Dict
 import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
@@ -21,6 +21,16 @@ layouts = {
     "spiral": nx.spiral_layout,
 }
 
+status_color_map = {
+    "SUBMITTED": "lightblue",
+    "PENDING": "purple",
+    "RUNNABLE": "blue",
+    "STARTING": "lightgreen",
+    "RUNNING": "darkgreen",
+    "SUCCEEDED": "green",
+    "FAILED": "red",
+}
+
 
 def export_graph_as_image(
     G: nx.DiGraph,
@@ -28,6 +38,7 @@ def export_graph_as_image(
     layout: str = "shell",
     figsize: int = 5,
     log: bool = True,
+    colormap: Dict[str, str] = {},
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -36,21 +47,14 @@ def export_graph_as_image(
 
     pos = layout_func(G)
 
-    color_map = [
-        {
-            "RUNNABLE": "green",
-            "RUNNING": "orange",
-            "SUBMITTED": "blue",
-        }.get(G.nodes[node].get("status"), "lightblue")
-        for node in G
-    ]
+    node_color = [colormap.get(G.nodes[node].get("status"), "gray") for node in G]
 
     plt.figure(figsize=(figsize, figsize))
     nx.draw(
         G,
         pos,
         with_labels=True,
-        node_color=color_map,
+        node_color=node_color,
         edge_color="gray",
         node_size=500,
         font_size=10,

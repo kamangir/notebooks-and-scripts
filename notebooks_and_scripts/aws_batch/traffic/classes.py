@@ -34,8 +34,6 @@ class Traffic:
         if not self.load_pattern(command_line, pattern):
             return False
 
-        self.assign_status()
-
         metadata: Dict[str, Any] = {}
         failure_count: int = 0
         for node in tqdm(self.G.nodes):
@@ -54,6 +52,10 @@ class Traffic:
 
             if not success:
                 failure_count += 1
+                continue
+
+            self.G.nodes[node]["job_id"] = metadata[node]["jobId"]
+
         if failure_count:
             logger.error(f"{failure_count} failure(s).")
 
@@ -65,7 +67,7 @@ class Traffic:
             return False
 
         if not post(
-            NAME,
+            "traffic",
             {
                 "command_line": command_line,
                 "pattern": pattern,
@@ -98,9 +100,3 @@ class Traffic:
             )
 
         return True
-
-    def assign_status(self):
-        for node in self.G.nodes:
-            self.G.nodes[node]["status"] = (
-                "RUNNABLE" if self.G.in_degree(node) == 0 else "SUBMITTED"
-            )
