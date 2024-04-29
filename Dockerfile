@@ -19,6 +19,7 @@ RUN pip install boto3
 RUN pip install python-dotenv[cli]
 RUN pip install matplotlib
 RUN pip install networkx
+RUN pip install pydot
 
 # https://askubuntu.com/a/1013396/1590785
 ARG DEBIAN_FRONTEND=noninteractive
