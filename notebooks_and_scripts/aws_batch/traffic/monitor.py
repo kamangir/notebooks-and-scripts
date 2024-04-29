@@ -48,7 +48,7 @@ def monitor_traffic(job_name: str) -> bool:
         objects.path_of(
             "history/{}-{}.png".format(
                 pattern,
-                string.pretty_date(as_filename=True),
+                string.pretty_date(as_filename=True, unique=True),
             ),
             job_name,
         ),
