@@ -48,13 +48,8 @@ def monitor_traffic(
 
             summary.setdefault(status, []).append(node)
 
-    for status in summary:
-        logger.info(
-            "{}: {}".format(
-                status,
-                ", ".join(sorted(summary[status])),
-            )
-        )
+    for status, nodes in summary.items():
+        logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
 
     return export_graph_as_image(
         G,
