@@ -36,12 +36,21 @@ def export_graph_as_image(
 
     pos = layout_func(G)
 
+    color_map = [
+        {
+            "RUNNABLE": "green",
+            "RUNNING": "orange",
+            "SUBMITTED": "blue",
+        }.get(G.nodes[node].get("status"), "lightblue")
+        for node in G
+    ]
+
     plt.figure(figsize=(figsize, figsize))
     nx.draw(
         G,
         pos,
         with_labels=True,
-        node_color="lightblue",
+        node_color=color_map,
         edge_color="gray",
         node_size=500,
         font_size=10,
