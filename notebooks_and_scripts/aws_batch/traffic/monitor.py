@@ -51,7 +51,7 @@ def monitor_traffic(
     return export_graph_as_image(
         G,
         objects.path_of(
-            "history/{}-{}.png".format(
+            "{}-{}.png".format(
                 pattern,
                 string.pretty_date(as_filename=True, unique=True),
             ),
