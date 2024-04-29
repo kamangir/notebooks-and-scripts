@@ -5,7 +5,7 @@ function abcli_aws_batch_create_traffic() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         list_of_patterns=$(python3 -m notebooks_and_scripts.aws_batch list_of_patterns --delim \|)
-        options="~dryrun,pattern=$list_of_patterns,name=<job-name>,~upload,~verbose"
+        options="~dryrun,pattern=$list_of_patterns,name=<job-name>|.,~upload,~verbose"
         abcli_show_usage "@batch create_traffic$ABCUL[$options]$ABCUL<command-line>" \
             "create <command-line> traffic in aws batch."
         return
@@ -20,6 +20,7 @@ function abcli_aws_batch_create_traffic() {
 
     local job_name=traffic-$(abcli_string_timestamp)
     job_name=$(abcli_option "$options" name $job_name)
+    job_name=$(abcli_clarify_object $job_name)
 
     local command_line="${@:2}"
     [[ -z "$command_line" ]] && command_line="$(abcli unquote $ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND)"
