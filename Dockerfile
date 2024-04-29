@@ -18,6 +18,7 @@ RUN pip install pymysql==0.10.1
 RUN pip install boto3
 RUN pip install python-dotenv[cli]
 RUN pip install matplotlib
+RUN pip install networkx
 
 # https://askubuntu.com/a/1013396/1590785
 ARG DEBIAN_FRONTEND=noninteractive
@@ -34,16 +35,13 @@ RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
 RUN pip install -e .
-RUN pip install -r requirements.txt
 
 RUN mkdir -p /root/git/notebooks-and-scripts
 ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
 WORKDIR /root/git/notebooks-and-scripts
 RUN pip install -e .
-RUN pip install -r requirements.txt
 
 RUN mkdir -p /root/git/Vancouver-Watching
 ADD ./Vancouver-Watching /root/git/Vancouver-Watching
 WORKDIR /root/git/Vancouver-Watching
 RUN pip install -e .
-RUN pip install -r requirements.txt

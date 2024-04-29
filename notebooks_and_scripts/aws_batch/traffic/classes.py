@@ -47,7 +47,7 @@ class Traffic:
                 continue
 
             success, metadata[node] = submit(
-                command_line,
+                f"- {command_line}",
                 job_name,
                 SubmissionType.EVAL,
             )
