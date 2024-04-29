@@ -1,3 +1,4 @@
+from typing import Tuple, Any
 from enum import Enum
 import boto3
 from abcli import env
@@ -18,7 +19,7 @@ def submit(
     command_line: str,
     job_name: str,
     type: SubmissionType,
-) -> bool:
+) -> Tuple[bool, Any]:
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
         "bash",
@@ -61,4 +62,4 @@ def submit(
         )
     )
 
-    return True
+    return True, response

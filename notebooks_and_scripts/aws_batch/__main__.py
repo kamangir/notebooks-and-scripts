@@ -101,7 +101,7 @@ elif args.task == "show_count":
         if input_int:
             print("{} {}".format(input_int, input_int * "🌀"))
 elif args.task == "submit":
-    success = submit(
+    success, _ = submit(
         command_line=args.command_line,
         job_name=args.job_name,
         type=SubmissionType[args.type.upper()],

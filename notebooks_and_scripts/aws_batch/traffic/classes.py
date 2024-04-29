@@ -1,3 +1,4 @@
+from typing import Dict, Any
 import networkx as nx
 from tqdm import tqdm
 from abcli.modules import objects
@@ -35,6 +36,8 @@ class Traffic:
 
         self.assign_status()
 
+        metadata: Dict[str, Any]
+        failure_count: int = 0
         for node in tqdm(self.G.nodes):
             command_line = self.G.nodes[node]["command_line"]
             job_name = f"{self.job_name}-{node}"
@@ -43,11 +46,16 @@ class Traffic:
                 logger.info(f"{command_line} -> {job_name}")
                 continue
 
-            submit(
+            success, metadata[node] = submit(
                 command_line,
                 job_name,
                 SubmissionType.EVAL,
             )
+
+            if not success:
+                failure_count += 1
+        if failure_count:
+            logger.error(f"{failure_count} failure(s).")
 
         if not dot_file.save_to_file(
             objects.path_of(f"{pattern}.dot", self.job_name),
@@ -56,17 +64,20 @@ class Traffic:
         ):
             return False
 
-        return post(
+        if not post(
             NAME,
             {
                 "command_line": command_line,
                 "pattern": pattern,
-                "submission": {},
+                "submission": metadata,
+                "failure_count": failure_count,
             },
             source=self.job_name,
             source_type=MetadataSourceType.OBJECT,
-            verbose=self.verbose,
-        )
+        ):
+            return False
+
+        return failure_count == 0
 
     def load_pattern(
         self,
