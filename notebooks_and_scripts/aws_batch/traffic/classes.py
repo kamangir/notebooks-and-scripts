@@ -1,10 +1,11 @@
 import networkx as nx
-from abcli import string
+from tqdm import tqdm
 from abcli.modules import objects
 from abcli.plugins.metadata import post, MetadataSourceType
 from notebooks_and_scripts import env
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.aws_batch import dot_file
+from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 from notebooks_and_scripts.aws_batch.traffic import NAME
 from notebooks_and_scripts.aws_batch.traffic.patterns import load_pattern
 
@@ -34,7 +35,19 @@ class Traffic:
 
         self.assign_status()
 
-        logger.info("🪄")
+        for node in tqdm(self.G.nodes):
+            command_line = self.G.nodes[node]["command_line"]
+            job_name = f"{self.job_name}-{node}"
+
+            if dryrun:
+                logger.info(f"{command_line} -> {job_name}")
+                continue
+
+            submit(
+                command_line,
+                job_name,
+                SubmissionType.EVAL,
+            )
 
         if not dot_file.save_to_file(
             objects.path_of(f"{pattern}.dot", self.job_name),
