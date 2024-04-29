@@ -23,13 +23,13 @@ layouts = {
 }
 
 status_color_map = {
-    "SUBMITTED": "lightblue",
-    "PENDING": "purple",
-    "RUNNABLE": "blue",
-    "STARTING": "lightgreen",
-    "RUNNING": "darkgreen",
+    "SUBMITTED": "red",
+    "PENDING": "orange",
+    "RUNNABLE": "purple",
+    "STARTING": "cyan",
+    "RUNNING": "blue",
     "SUCCEEDED": "green",
-    "FAILED": "red",
+    "FAILED": "black",
 }
 
 
