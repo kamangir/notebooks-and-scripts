@@ -1,3 +1,4 @@
+from typing import Dict
 import boto3
 from tqdm import tqdm
 from abcli import string
@@ -13,7 +14,6 @@ from notebooks_and_scripts.aws_batch.dot_file import (
 
 def monitor_traffic(
     job_name: str,
-    verbose: bool = False,
 ) -> bool:
     pattern = get(
         "traffic.pattern",
@@ -32,6 +32,7 @@ def monitor_traffic(
 
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/describe_jobs.html
     page_size = 100
+    summary: Dict[str, str] = {}
     for index in tqdm(range(0, len(G.nodes), page_size)):
         nodes = list(G.nodes)[index : index + page_size]
 
@@ -45,8 +46,15 @@ def monitor_traffic(
         ):
             G.nodes[node]["status"] = status
 
-            if verbose:
-                logger.info(f"{node}: {status}")
+            summary.setdefault(status, []).append(node)
+
+    for status in summary:
+        logger.info(
+            "{}: {}".format(
+                status,
+                ", ".join(sorted(summary[status])),
+            )
+        )
 
     return export_graph_as_image(
         G,
