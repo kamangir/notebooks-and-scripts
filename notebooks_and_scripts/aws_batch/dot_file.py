@@ -81,7 +81,7 @@ def export_graph_as_image(
                 " | ".join(item)
                 for item in np.array_split(
                     [f"{NAME}-{VERSION}"] + host_signature(),
-                    2,
+                    3,
                 )
             ]
         ),
