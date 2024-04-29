@@ -1,4 +1,5 @@
 from typing import Tuple, Dict
+import numpy as np
 import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
@@ -75,7 +76,15 @@ def export_graph_as_image(
     plt.figtext(
         0.5,
         0.01,
-        " | ".join([f"{NAME}-{VERSION}"] + host_signature()),
+        "\n".join(
+            [
+                " | ".join(item)
+                for item in np.array_split(
+                    [f"{NAME}-{VERSION}"] + host_signature(),
+                    2,
+                )
+            ]
+        ),
         ha="center",
         fontsize=10,
         color="black",

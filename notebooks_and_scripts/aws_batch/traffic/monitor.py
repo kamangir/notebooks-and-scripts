@@ -1,8 +1,10 @@
 from typing import Dict
 import boto3
+import glob
 from tqdm import tqdm
 from abcli import string
 from abcli.modules import objects
+from abcli.plugins.graphics.gif import generate_animated_gif
 from abcli.plugins.metadata import get, MetadataSourceType
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.aws_batch.dot_file import (
@@ -51,7 +53,7 @@ def monitor_traffic(
     for status, nodes in summary.items():
         logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
 
-    return export_graph_as_image(
+    if not export_graph_as_image(
         G,
         objects.path_of(
             "{}-{}.png".format(
@@ -61,4 +63,11 @@ def monitor_traffic(
             job_name,
         ),
         colormap=status_color_map,
+    ):
+        return False
+
+    return generate_animated_gif(
+        glob.glob(objects.path_of(f"{pattern}-*.png", job_name)),
+        objects.path_of(f"{pattern}.gif", job_name),
+        frame_duration=333,
     )
