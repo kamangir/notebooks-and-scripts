@@ -36,7 +36,7 @@ class Traffic:
 
         self.assign_status()
 
-        metadata: Dict[str, Any]
+        metadata: Dict[str, Any] = {}
         failure_count: int = 0
         for node in tqdm(self.G.nodes):
             command_line = self.G.nodes[node]["command_line"]
