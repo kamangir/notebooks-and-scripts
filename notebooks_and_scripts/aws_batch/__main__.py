@@ -74,14 +74,18 @@ delim = " " if args.delim == "space" else args.delim
 
 success = False
 if args.task == "create_traffic":
-    success = Traffic(
+    traffic = Traffic(
         args.job_name,
         args.verbose == 1,
-    ).create(
-        args.pattern,
-        args.command_line,
-        args.dryrun == 1,
     )
+
+    success = traffic.load_pattern(
+        args.command_line,
+        args.pattern,
+    )
+
+    if success:
+        success = traffic.submit(args.dryrun == 1)
 elif args.task == "list_of_patterns":
     success = True
 

@@ -1,4 +1,4 @@
-from typing import Tuple, Any
+from typing import Tuple, Any, List
 from enum import Enum
 import boto3
 from abcli import env
@@ -19,6 +19,7 @@ def submit(
     command_line: str,
     job_name: str,
     type: SubmissionType,
+    dependency_job_id_list: List[str],
 ) -> Tuple[bool, Any]:
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
@@ -30,10 +31,18 @@ def submit(
         ),
     ]
     logger.info(
-        "{} -> {}: {}".format(
+        "{} -> {}: {}{}".format(
             type.name,
             job_name,
             " 🔹 ".join(command),
+            (
+                " # {} dependencies: {}".format(
+                    len(dependency_job_id_list),
+                    ", ".join(dependency_job_id_list),
+                )
+                if dependency_job_id_list
+                else ""
+            ),
         )
     )
 
@@ -48,12 +57,17 @@ def submit(
         containerOverrides={
             "command": command,
         },
+        dependsOn=[
+            {
+                "jobId": job_id,
+                "type": "SEQUENTIAL",
+            }
+            for job_id in dependency_job_id_list
+        ],
     )
     logger.info(f"response: {response}")
 
     job_id = response["jobId"]
-    logger.info(f"job_id: {job_id}")
-
     logger.info(
         "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
             env.abcli_aws_region,

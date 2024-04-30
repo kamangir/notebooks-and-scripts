@@ -18,18 +18,11 @@ from notebooks_and_scripts.aws_batch.dot_file import (
 def monitor_traffic(
     job_name: str,
 ) -> bool:
-    pattern = get(
-        "traffic.pattern",
-        "",
-        job_name,
-        MetadataSourceType.OBJECT,
-    )
-
-    success, G = load_from_file(objects.path_of(f"{pattern}.dot", job_name))
+    success, G = load_from_file(objects.path_of(f"traffic.dot", job_name))
     if not success:
         return success
 
-    logger.info(f"monitor_traffic: {job_name} @ {pattern}: {G}")
+    logger.info(f"monitor_traffic: {job_name} @ {G}")
 
     client = boto3.client("batch")
 
@@ -57,8 +50,7 @@ def monitor_traffic(
     if not export_graph_as_image(
         G,
         objects.path_of(
-            "{}-{}.png".format(
-                pattern,
+            "traffic-{}.png".format(
                 string.pretty_date(as_filename=True, unique=True),
             ),
             job_name,
@@ -71,10 +63,10 @@ def monitor_traffic(
         [
             filename
             for filename in sorted(
-                glob.glob(objects.path_of(f"{pattern}-*.png", job_name))
+                glob.glob(objects.path_of("traffic-*.png", job_name))
             )
             if len(file.name(filename)) > 15
         ],
-        objects.path_of(f"{pattern}.gif", job_name),
+        objects.path_of("traffic.gif", job_name),
         frame_duration=333,
     )

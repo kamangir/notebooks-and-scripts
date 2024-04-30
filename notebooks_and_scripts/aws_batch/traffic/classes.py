@@ -25,62 +25,6 @@ class Traffic:
 
         self.valid: bool = True
 
-    def create(
-        self,
-        pattern: str = env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_PATTERN,
-        command_line: str = env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND_UQ,
-        dryrun: bool = True,
-    ) -> bool:
-        if not self.load_pattern(command_line, pattern):
-            return False
-
-        metadata: Dict[str, Any] = {}
-        failure_count: int = 0
-        for node in tqdm(self.G.nodes):
-            command_line = self.G.nodes[node]["command_line"]
-            job_name = f"{self.job_name}-{node}"
-
-            if dryrun:
-                logger.info(f"{command_line} -> {job_name}")
-                continue
-
-            success, metadata[node] = submit(
-                f"- {command_line}",
-                job_name,
-                SubmissionType.EVAL,
-            )
-
-            if not success:
-                failure_count += 1
-                continue
-
-            self.G.nodes[node]["job_id"] = metadata[node]["jobId"]
-
-        if failure_count:
-            logger.error(f"{failure_count} failure(s).")
-
-        if not dot_file.save_to_file(
-            objects.path_of(f"{pattern}.dot", self.job_name),
-            self.G,
-            export_as_image=".png",
-        ):
-            return False
-
-        if not post(
-            "traffic",
-            {
-                "command_line": command_line,
-                "pattern": pattern,
-                "submission": metadata,
-                "failure_count": failure_count,
-            },
-            source=self.job_name,
-            source_type=MetadataSourceType.OBJECT,
-        ):
-            return False
-
-        return failure_count == 0
-
     def load_pattern(
         self,
         command_line: str = env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND_UQ,
@@ -99,4 +43,88 @@ class Traffic:
                 self.job_name,
             )
 
+        if not post(
+            "load_pattern",
+            {
+                "command_line": command_line,
+                "pattern": pattern,
+            },
+            source=self.job_name,
+            source_type=MetadataSourceType.OBJECT,
+        ):
+            return False
+
         return True
+
+    def submit(
+        self,
+        dryrun: bool = True,
+    ) -> bool:
+        metadata: Dict[str, Any] = {}
+        failure_count: int = 0
+        round: int = 1
+        while not all(self.G.nodes[node].get("job_id") for node in self.G.nodes):
+            for node in tqdm(self.G.nodes):
+                if self.G.nodes[node].get("job_id"):
+                    continue
+
+                pending_dependencies = [
+                    node_
+                    for node_ in self.G.predecessors(node)
+                    if not self.G.nodes[node_].get("job_id")
+                ]
+                if pending_dependencies:
+                    logger.info(
+                        "node {}: {} pending dependenci(es): {}".format(
+                            node,
+                            len(pending_dependencies),
+                            ", ".join(pending_dependencies),
+                        )
+                    )
+                    continue
+
+                command_line = self.G.nodes[node]["command_line"]
+                job_name = f"{self.job_name}-{node}"
+
+                if dryrun:
+                    self.G.nodes[node]["job_id"] = f"dryrun-round-{round}"
+                    logger.info(f"{command_line} -> {job_name}")
+                    continue
+
+                success, metadata[node] = submit(
+                    f"- {command_line}",
+                    job_name,
+                    SubmissionType.EVAL,
+                )
+                if not success:
+                    failure_count += 1
+
+                self.G.nodes[node]["job_id"] = (
+                    metadata[node]["jobId"] if success else "failed"
+                )
+
+            logger.info(f"end of round {round}")
+            round += 1
+
+        if failure_count:
+            logger.error(f"{failure_count} failure(s).")
+
+        if not dot_file.save_to_file(
+            objects.path_of(f"traffic.dot", self.job_name),
+            self.G,
+            export_as_image=".png",
+        ):
+            return False
+
+        if not post(
+            "submission",
+            {
+                "metadata": metadata,
+                "failure_count": failure_count,
+            },
+            source=self.job_name,
+            source_type=MetadataSourceType.OBJECT,
+        ):
+            return False
+
+        return failure_count == 0
