@@ -2,6 +2,7 @@ from typing import Dict
 import boto3
 import glob
 from tqdm import tqdm
+from abcli import file
 from abcli import string
 from abcli.modules import objects
 from abcli.plugins.graphics.gif import generate_animated_gif
@@ -67,7 +68,13 @@ def monitor_traffic(
         return False
 
     return generate_animated_gif(
-        glob.glob(objects.path_of(f"{pattern}-*.png", job_name)),
+        [
+            filename
+            for filename in sorted(
+                glob.glob(objects.path_of(f"{pattern}-*.png", job_name))
+            )
+            if len(file.name(filename)) > 15
+        ],
         objects.path_of(f"{pattern}.gif", job_name),
         frame_duration=333,
     )
