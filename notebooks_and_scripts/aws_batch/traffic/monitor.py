@@ -36,13 +36,14 @@ def monitor_traffic(
 
         response = client.describe_jobs(jobs=jobs)
 
-        for node, status in zip(
-            nodes,
-            [item["status"] for item in response["jobs"]],
-        ):
-            G.nodes[node]["status"] = status
+        status: Dict[str, str] = {}
+        for item in response["jobs"]:
+            status[item["jobId"]] = item["status"]
 
-            summary.setdefault(status, []).append(node)
+        for node, job_id in zip(nodes, jobs):
+            G.nodes[node]["status"] = status[job_id]
+
+            summary.setdefault(status[job_id], []).append(node)
 
     for status, nodes in summary.items():
         logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
