@@ -36,7 +36,7 @@ def submit(
             job_name,
             " 🔹 ".join(command),
             (
-                " # {} dependencies: {}".format(
+                " # {} dependenci(es): {}".format(
                     len(dependency_job_id_list),
                     ", ".join(dependency_job_id_list),
                 )
