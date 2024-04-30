@@ -20,6 +20,7 @@ def submit(
     job_name: str,
     type: SubmissionType,
     dependency_job_id_list: List[str] = [],
+    verbose: bool = True,
 ) -> Tuple[bool, Any]:
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
@@ -65,15 +66,17 @@ def submit(
             for job_id in dependency_job_id_list
         ],
     )
-    logger.info(f"response: {response}")
+    if verbose:
+        logger.info(f"response: {response}")
 
     job_id = response["jobId"]
-    logger.info(
-        "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
-            env.abcli_aws_region,
-            env.abcli_aws_region,
-            job_id,
+    if verbose:
+        logger.info(
+            "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
+                env.abcli_aws_region,
+                env.abcli_aws_region,
+                job_id,
+            )
         )
-    )
 
     return True, response

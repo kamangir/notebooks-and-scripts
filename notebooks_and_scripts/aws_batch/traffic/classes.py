@@ -70,7 +70,7 @@ class Traffic:
 
                 pending_dependencies = [
                     node_
-                    for node_ in self.G.predecessors(node)
+                    for node_ in self.G.successors(node)
                     if not self.G.nodes[node_].get("job_id")
                 ]
                 if pending_dependencies:
@@ -97,8 +97,9 @@ class Traffic:
                     SubmissionType.EVAL,
                     dependency_job_id_list=[
                         self.G.nodes[node_].get("job_id")
-                        for node_ in self.G.predecessors(node)
+                        for node_ in self.G.successors(node)
                     ],
+                    verbose=False,
                 )
                 if not success:
                     failure_count += 1
