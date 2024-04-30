@@ -95,6 +95,10 @@ class Traffic:
                     f"- {command_line}",
                     job_name,
                     SubmissionType.EVAL,
+                    dependency_job_id_list=[
+                        self.G.nodes[node_].get("job_id")
+                        for node_ in self.G.predecessors(node)
+                    ],
                 )
                 if not success:
                     failure_count += 1

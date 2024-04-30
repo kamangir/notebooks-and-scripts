@@ -19,7 +19,7 @@ def submit(
     command_line: str,
     job_name: str,
     type: SubmissionType,
-    dependency_job_id_list: List[str],
+    dependency_job_id_list: List[str] = [],
 ) -> Tuple[bool, Any]:
     # https://unix.stackexchange.com/questions/243571/how-to-run-source-with-docker-exec/243580#243580
     command = [
