@@ -18,7 +18,7 @@ from notebooks_and_scripts.aws_batch.dot_file import (
 def monitor_traffic(
     job_name: str,
 ) -> bool:
-    success, G = load_from_file(objects.path_of(f"traffic.dot", job_name))
+    success, G = load_from_file(objects.path_of("traffic.dot", job_name))
     if not success:
         return success
 

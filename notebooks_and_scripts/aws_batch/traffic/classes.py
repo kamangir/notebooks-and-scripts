@@ -115,7 +115,7 @@ class Traffic:
             logger.error(f"{failure_count} failure(s).")
 
         if not dot_file.save_to_file(
-            objects.path_of(f"traffic.dot", self.job_name),
+            objects.path_of("traffic.dot", self.job_name),
             self.G,
             export_as_image=".png",
         ):
