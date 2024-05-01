@@ -1,15 +1,11 @@
 #! /usr/bin/env bash
 
-function abcli_aws_batch_monitor() {
-    abcli_aws_batch_monitor_traffic "$@"
-}
-
-function abcli_aws_batch_monitor_traffic() {
+function notebooks_and_scripts_workflow_monitor() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="$EOP~download,${EOPE}name=.|<job-name>$EOP,~upload$EOPE"
-        abcli_show_usage "@batch monitor $options" \
+        abcli_show_usage "@workflow monitor $options" \
             "monitor traffic."
         return
     fi
@@ -27,8 +23,8 @@ function abcli_aws_batch_monitor_traffic() {
     [[ "$do_upload" == 1 ]] &&
         abcli_download - $job_name
 
-    python3 -m notebooks_and_scripts.aws_batch \
-        monitor_traffic \
+    python3 -m notebooks_and_scripts.workflow \
+        monitor \
         --job_name $job_name
 
     [[ "$do_upload" == 1 ]] &&

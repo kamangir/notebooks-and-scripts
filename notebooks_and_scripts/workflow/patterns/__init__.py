@@ -3,9 +3,7 @@ import os
 import glob
 import networkx as nx
 from abcli import file
-from notebooks_and_scripts.aws_batch import NAME, VERSION
-from notebooks_and_scripts.aws_batch.dot_file import load_from_file as load_dot_file
-from notebooks_and_scripts.logger import logger
+from notebooks_and_scripts.workflow.dot_file import load_from_file as load_dot_file
 
 
 def list_of_patterns() -> List[str]:

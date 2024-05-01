@@ -6,9 +6,6 @@ from notebooks_and_scripts.aws_batch.submission import (
     submit,
     SubmissionType,
 )
-from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
-from notebooks_and_scripts.aws_batch.traffic.classes import Traffic
-from notebooks_and_scripts.aws_batch.traffic.monitor import monitor_traffic
 from notebooks_and_scripts.logger import logger
 
 
@@ -16,12 +13,12 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="create_traffic|list_of_patterns|monitor_traffic|show_count|submit",
+    help="show_count|submit",
 )
 parser.add_argument(
     "--command_line",
     type=str,
-    default=env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND_UQ,
+    default=env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_COMMAND_UQ,
 )
 parser.add_argument(
     "--job_name",
@@ -34,70 +31,10 @@ parser.add_argument(
     default="source",
     help="eval|source|submit",
 )
-parser.add_argument(
-    "--pattern",
-    type=str,
-    default=list_of_patterns()[0],
-    help="|".join(list_of_patterns()),
-)
-parser.add_argument(
-    "--delim",
-    type=str,
-    default="+",
-)
-parser.add_argument(
-    "--count",
-    type=int,
-    default=-1,
-)
-parser.add_argument(
-    "--offset",
-    type=int,
-    default=0,
-)
-parser.add_argument(
-    "--verbose",
-    type=int,
-    default=1,
-    help="0|1",
-)
-parser.add_argument(
-    "--dryrun",
-    type=int,
-    default=1,
-    help="0|1",
-)
 args = parser.parse_args()
 
-delim = " " if args.delim == "space" else args.delim
-
-
 success = False
-if args.task == "create_traffic":
-    traffic = Traffic(
-        args.job_name,
-        args.verbose == 1,
-    )
-
-    success = traffic.load_pattern(
-        args.command_line,
-        args.pattern,
-    )
-
-    if success:
-        success = traffic.submit(args.dryrun == 1)
-elif args.task == "list_of_patterns":
-    success = True
-
-    output = list_of_patterns()[args.offset :]
-
-    if args.count != -1:
-        output = output[: args.count]
-
-    print(delim.join(output))
-elif args.task == "monitor_traffic":
-    success = monitor_traffic(args.job_name)
-elif args.task == "show_count":
+if args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()
 

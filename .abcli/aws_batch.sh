@@ -1,14 +1,12 @@
 #!/bin/bash
 
 function abcli_aws_batch() {
-    local task=${1:-help}
+    local task=$1
 
     if [ "$task" == "help" ]; then
         abcli_aws_batch_browse "$@"
-        abcli_aws_batch_create_traffic "$@"
         abcli_aws_batch_eval "$@"
         abcli_aws_batch_list "$@"
-        abcli_aws_batch_monitor_traffic "$@"
         abcli_aws_batch_submit "$@"
         return
     fi

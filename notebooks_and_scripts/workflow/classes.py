@@ -1,20 +1,31 @@
 from typing import Dict, Any
+import boto3
+import glob
 import networkx as nx
 from tqdm import tqdm
+from abcli import file
+from abcli import string
 from abcli.modules import objects
-from abcli.plugins.metadata import post, MetadataSourceType
+from abcli.plugins.metadata import get, post, MetadataSourceType
+from abcli.plugins.graphics.gif import generate_animated_gif
 from notebooks_and_scripts import env
 from notebooks_and_scripts.logger import logger
-from notebooks_and_scripts.aws_batch import dot_file
+from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
-from notebooks_and_scripts.aws_batch.traffic import NAME
-from notebooks_and_scripts.aws_batch.traffic.patterns import load_pattern
+from notebooks_and_scripts.workflow.dot_file import (
+    load_from_file,
+    export_graph_as_image,
+    status_color_map,
+)
+from notebooks_and_scripts.workflow.patterns import load_pattern
+from notebooks_and_scripts.workflow.runner import Runner
 
 
-class Traffic:
+class Workflow:
     def __init__(
         self,
         job_name: str = "",
+        load: bool = False,
         verbose: bool = False,
     ):
         self.job_name = job_name if job_name else objects.unique_object()
@@ -23,16 +34,26 @@ class Traffic:
 
         self.G: nx.DiGraph = nx.DiGraph()
 
-        self.valid: bool = True
+        if load:
+            assert self.load_from(
+                objects.path_of(
+                    filename="workflow.dot",
+                    object_name=self.job_name,
+                )
+            )
+
+    def load_file(self, filename: str) -> bool:
+        success, self.G = load_from_file(filename)
+        return success
 
     def load_pattern(
         self,
-        command_line: str = env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_COMMAND_UQ,
-        pattern: str = env.ABCLI_AWS_BATCH_DEFAULT_TRAFFIC_PATTERN,
+        command_line: str = env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_COMMAND_UQ,
+        pattern: str = env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_PATTERN,
     ) -> bool:
         success, self.G = load_pattern(
             pattern=pattern,
-            export_as_image=objects.path_of(f"{pattern}-input.png", self.job_name),
+            export_as_image=objects.path_of(f"{pattern}.png", self.job_name),
         )
         if not success:
             return success
@@ -43,7 +64,7 @@ class Traffic:
                 self.job_name,
             )
 
-        if not post(
+        return post(
             "load_pattern",
             {
                 "command_line": command_line,
@@ -51,15 +72,69 @@ class Traffic:
             },
             source=self.job_name,
             source_type=MetadataSourceType.OBJECT,
+        )
+
+    @staticmethod
+    def monitor(job_name: str) -> bool:
+        workflow = Workflow(job_name, load=True)
+
+        logger.info(f"{workflow.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
+
+        client = boto3.client("batch")
+
+        # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/describe_jobs.html
+        page_size = 100
+        summary: Dict[str, str] = {}
+        for index in tqdm(range(0, len(G.nodes), page_size)):
+            nodes = list(G.nodes)[index : index + page_size]
+
+            jobs = [G.nodes[node].get("job_id").replace('"', "") for node in nodes]
+
+            response = client.describe_jobs(jobs=jobs)
+
+            status: Dict[str, str] = {}
+            for item in response["jobs"]:
+                status[item["jobId"]] = item["status"]
+
+            for node, job_id in zip(nodes, jobs):
+                G.nodes[node]["status"] = status[job_id]
+
+                summary.setdefault(status[job_id], []).append(node)
+
+        for status, nodes in summary.items():
+            logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
+
+        if not export_graph_as_image(
+            G,
+            objects.path_of(
+                "workflow-{}.png".format(
+                    string.pretty_date(as_filename=True, unique=True),
+                ),
+                job_name,
+            ),
+            colormap=status_color_map,
         ):
             return False
 
-        return True
+        return generate_animated_gif(
+            [
+                filename
+                for filename in sorted(
+                    glob.glob(objects.path_of("workflow-*.png", job_name))
+                )
+                if len(file.name(filename)) > 15
+            ],
+            objects.path_of("workflow.gif", job_name),
+            frame_duration=333,
+        )
 
     def submit(
         self,
+        runner: Runner,
         dryrun: bool = True,
     ) -> bool:
+        logger.info(f"{self.G} -> {runner}")
+
         metadata: Dict[str, Any] = {}
         failure_count: int = 0
         round: int = 1
@@ -115,7 +190,7 @@ class Traffic:
             logger.error(f"{failure_count} failure(s).")
 
         if not dot_file.save_to_file(
-            objects.path_of("traffic.dot", self.job_name),
+            objects.path_of("workflow.dot", self.job_name),
             self.G,
             export_as_image=".png",
         ):
