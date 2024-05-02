@@ -5,8 +5,8 @@ function notebooks_and_scripts_workflow_submit() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         list_of_runners=$(python3 -m notebooks_and_scripts.workflow.runners list --delim \|)
-        local options="$EOP~download,${EOPE}runner=$list_of_runners$EOP,~upload$EOPE"
-        abcli_show_usage "@workflow submit [$options] [.|<job-name>]" \
+        local options="$EOP~download,${EOPE}runner=$list_of_runners$EOP,~upload"
+        abcli_show_usage "@workflow submit$ABCUL$options$ABCUL.|<job-name>$EOPE" \
             "submit workflow."
         return
     fi

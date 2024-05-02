@@ -5,8 +5,9 @@ function notebooks_and_scripts_workflow_create() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         list_of_patterns=$(python3 -m notebooks_and_scripts.workflow.patterns list --delim \|)
-        options="dryrun,pattern=$list_of_patterns,~submit,~upload,~verbose"
-        abcli_show_usage "@workflow create$ABCUL[$options]$ABCUL[.|<job-name>]$ABCUL<command-line>" \
+        list_of_runners=$(python3 -m notebooks_and_scripts.workflow.runners list --delim \|)
+        options="${EOP}dryrun,${EOPE}pattern=$list_of_patterns,submit_to=$list_of_runners$EOP,~upload,~verbose"
+        abcli_show_usage "@workflow create$ABCUL$options$ABCUL-|<job-name>$ABCUL<command-line>$EOPE" \
             "create a <command-line> workflow."
         return
     fi
