@@ -1,84 +1,27 @@
 from typing import Dict, Any
 import boto3
 import glob
-import networkx as nx
 from tqdm import tqdm
 from abcli import file
 from abcli import string
 from abcli.modules import objects
-from abcli.plugins.metadata import get, post, MetadataSourceType
 from abcli.plugins.graphics.gif import generate_animated_gif
-from notebooks_and_scripts import env
+from abcli.plugins.metadata import post, MetadataSourceType
+from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
+from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
-from notebooks_and_scripts.workflow.dot_file import (
-    load_from_file,
-    export_graph_as_image,
-    status_color_map,
-)
-from notebooks_and_scripts.workflow.patterns import load_pattern
-from notebooks_and_scripts.workflow.runners import Runner
 
 
-class Workflow:
-    def __init__(
-        self,
-        job_name: str = "",
-        load: bool = False,
-        verbose: bool = False,
-    ):
-        self.job_name = job_name if job_name else objects.unique_object()
-
-        self.verbose = verbose
-
-        self.G: nx.DiGraph = nx.DiGraph()
-
-        if load:
-            assert self.load_from(
-                objects.path_of(
-                    filename="workflow.dot",
-                    object_name=self.job_name,
-                )
-            )
-
-    def load_file(self, filename: str) -> bool:
-        success, self.G = load_from_file(filename)
-        return success
-
-    def load_pattern(
-        self,
-        command_line: str = env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_COMMAND_UQ,
-        pattern: str = env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_PATTERN,
-    ) -> bool:
-        success, self.G = load_pattern(
-            pattern=pattern,
-            export_as_image=objects.path_of(f"{pattern}.png", self.job_name),
-        )
-        if not success:
-            return success
-
-        for node in self.G.nodes:
-            self.G.nodes[node]["command_line"] = command_line.replace(
-                "{job_name}",
-                self.job_name,
-            )
-
-        return post(
-            "load_pattern",
-            {
-                "command_line": command_line,
-                "pattern": pattern,
-            },
-            source=self.job_name,
-            source_type=MetadataSourceType.OBJECT,
-        )
+class AWSBatchWorkflow(Workflow):
+    def __init__(self, **kw_args):
+        super().__init(**kw_args)
+        self.runner: RunnerType = RunnerType.AWS_BATCH
 
     @staticmethod
     def monitor(job_name: str) -> bool:
-        workflow = Workflow(job_name, load=True)
-
-        assert False, "TODO: load runner from metadata and act accordingly."
+        workflow = AWSBatchWorkflow(job_name, load=True)
 
         logger.info(f"{workflow.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
 
@@ -108,7 +51,7 @@ class Workflow:
         for status, nodes in summary.items():
             logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
 
-        if not export_graph_as_image(
+        if not dot_file.export_graph_as_image(
             workflow.G,
             objects.path_of(
                 "workflow-{}.png".format(
@@ -116,7 +59,7 @@ class Workflow:
                 ),
                 job_name,
             ),
-            colormap=status_color_map,
+            colormap=dot_file.status_color_map,
         ):
             return False
 
@@ -134,10 +77,9 @@ class Workflow:
 
     def submit(
         self,
-        runner: Runner,
         dryrun: bool = True,
     ) -> bool:
-        logger.info(f"{self.G} -> {runner}")
+        logger.info(f"{self.G} -> {self.runner}")
 
         metadata: Dict[str, Any] = {}
         failure_count: int = 0

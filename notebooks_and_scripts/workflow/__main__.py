@@ -2,8 +2,8 @@ import argparse
 from notebooks_and_scripts import env
 from notebooks_and_scripts.aws_batch import VERSION, NAME
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
-from notebooks_and_scripts.workflow.classes import Workflow
-from notebooks_and_scripts.workflow.runners import Runner
+from notebooks_and_scripts.workflow.generic import Workflow
+from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.logger import logger
 
 
@@ -27,7 +27,7 @@ parser.add_argument(
     "--runner",
     type=str,
     default="local",
-    help="|".join([str(runner) for runner in list(Runner)]),
+    help="|".join([type.name.lower() for type in RunnerType]),
 )
 parser.add_argument(
     "--pattern",
@@ -64,7 +64,7 @@ if args.task == "create":
 
     if success:
         success = workflow.submit(
-            runner=Runner[args.runner.upper()],
+            runner=RunnerType[args.runner.upper()],
             dryrun=args.dryrun == 1,
         )
 elif args.task == "monitor":
@@ -77,7 +77,7 @@ elif args.task == "submit":
     )
 
     success = workflow.submit(
-        runner=Runner[args.runner.upper()],
+        runner=RunnerType[args.runner.upper()],
         dryrun=args.dryrun == 1,
     )
 else:

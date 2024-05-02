@@ -1,9 +1,9 @@
 import pytest
 from abcli.modules.objects import unique_object
 from notebooks_and_scripts import env
-from notebooks_and_scripts.workflow.classes import Workflow
+from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
-from notebooks_and_scripts.workflow.runners import Runner
+from notebooks_and_scripts.workflow.runners import RunnerType
 
 
 @pytest.mark.parametrize(
@@ -17,13 +17,13 @@ from notebooks_and_scripts.workflow.runners import Runner
     ],
 )
 @pytest.mark.parametrize(
-    ["runner"],
-    [[runner] for runner in list(Runner)],
+    ["runner_type"],
+    [runner_type for runner_type in RunnerType],
 )
 def test_workflow(
     pattern: str,
     command_line: str,
-    runner: str,
+    runner_type: str,
 ):
     job_name = unique_object()
 
@@ -34,4 +34,4 @@ def test_workflow(
         pattern,
     )
 
-    assert workflow.submit(runner, dryrun=True)
+    assert workflow.submit(runner_type, dryrun=True)
