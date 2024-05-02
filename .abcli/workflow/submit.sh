@@ -4,12 +4,26 @@ function notebooks_and_scripts_workflow_submit() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="dryrun,upload"
-        local args="[--<keyword> <value>]$ABCUL[--<keyword> <value>]"
-        abcli_show_usage "blue_plugin node leaf$ABCUL[$options]$ABCUL<object-name>$ABCUL$args" \
-            "blue-plugin node leaf <object-name>."
+        local options="$EOP~download,~upload$EOPE"
+        abcli_show_usage "@workflow submit [$options] [.|<job-name>]" \
+            "submit workflow."
         return
     fi
 
-    echo "blue-plugin: node: leaf: 🪄"
+    local do_download=$(abcli_option_int "$options" download 1)
+    local do_upload=$(abcli_option_int "$options" upload 1)
+
+    local job_name=$(abcli_clarify_object $2 .)
+
+    [[ "$do_download" == 1 ]] &&
+        abcli_download - $job_name
+
+    python3 -m notebooks_and_scripts.workflow \
+        submit \
+        --job_name $job_name
+
+    [[ "$do_upload" == 1 ]] &&
+        abcli_upload - $job_name
+
+    return 0
 }

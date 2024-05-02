@@ -1,12 +1,12 @@
 import pytest
 from abcli import file
 from abcli.modules import objects
-from notebooks_and_scripts.aws_batch.dot_file import (
+from notebooks_and_scripts.workflow.dot_file import (
     load_from_file,
     save_to_file,
     export_graph_as_image,
 )
-from notebooks_and_scripts.aws_batch.traffic.patterns import list_of_patterns
+from notebooks_and_scripts.workflow.patterns import list_of_patterns
 
 
 @pytest.mark.parametrize(
@@ -17,7 +17,7 @@ def test_dot_file(pattern: str):
     object_name = objects.unique_object()
 
     filename = file.absolute(
-        f"../aws_batch/traffic/patterns/{pattern}.dot",
+        f"../workflow/patterns/{pattern}.dot",
         file.path(__file__),
     )
 

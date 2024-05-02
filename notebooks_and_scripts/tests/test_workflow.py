@@ -20,7 +20,7 @@ from notebooks_and_scripts.workflow.runner import Runner
     ["runner"],
     [[runner] for runner in list(Runner)],
 )
-def test_Traffic(
+def test_workflow(
     pattern: str,
     command_line: str,
     runner: str,

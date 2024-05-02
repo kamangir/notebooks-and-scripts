@@ -7,7 +7,7 @@ from networkx.drawing.nx_pydot import read_dot
 from abcli import file, path
 from abcli.modules.host import signature as host_signature
 from abcli.logger import crash_report
-from notebooks_and_scripts.aws_batch import NAME, VERSION
+from notebooks_and_scripts.workflow import NAME, VERSION
 from notebooks_and_scripts.logger import logger
 
 layouts = {
@@ -103,7 +103,7 @@ def load_from_file(
     try:
         G = read_dot(filename)
     except:
-        crash_report(f"-{NAME}: traffic: load_from_file({filename}): failed.")
+        crash_report(f"-{NAME}: load_from_file({filename}): failed.")
         return False, G
 
     if log:
