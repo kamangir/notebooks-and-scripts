@@ -78,7 +78,7 @@ class Workflow:
     def monitor(job_name: str) -> bool:
         workflow = Workflow(job_name, load=True)
 
-        # TODO: load runner from metadata and act accordingly.
+        assert False, "TODO: load runner from metadata and act accordingly."
 
         logger.info(f"{workflow.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
 
