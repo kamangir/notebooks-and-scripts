@@ -3,7 +3,7 @@ from abcli.modules.objects import unique_object
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow.classes import Workflow
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
-from notebooks_and_scripts.workflow.runner import Runner
+from notebooks_and_scripts.workflow.runners import Runner
 
 
 @pytest.mark.parametrize(

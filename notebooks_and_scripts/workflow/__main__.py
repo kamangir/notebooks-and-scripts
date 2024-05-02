@@ -3,7 +3,7 @@ from notebooks_and_scripts import env
 from notebooks_and_scripts.aws_batch import VERSION, NAME
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.classes import Workflow
-from notebooks_and_scripts.workflow.runner import Runner
+from notebooks_and_scripts.workflow.runners import Runner
 from notebooks_and_scripts.logger import logger
 
 
@@ -26,7 +26,7 @@ parser.add_argument(
 parser.add_argument(
     "--runner",
     type=str,
-    default="LOCAL",
+    default="local",
     help="|".join([str(runner) for runner in list(Runner)]),
 )
 parser.add_argument(
@@ -68,10 +68,7 @@ if args.task == "create":
             dryrun=args.dryrun == 1,
         )
 elif args.task == "monitor":
-    success = Workflow.monitor(
-        job_name=args.job_name,
-        runner=Runner[args.runner.upper()],
-    )
+    success = Workflow.monitor(job_name=args.job_name)
 elif args.task == "submit":
     workflow = Workflow(
         job_name=args.job_name,

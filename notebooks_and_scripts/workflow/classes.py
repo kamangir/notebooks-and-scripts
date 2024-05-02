@@ -18,7 +18,7 @@ from notebooks_and_scripts.workflow.dot_file import (
     status_color_map,
 )
 from notebooks_and_scripts.workflow.patterns import load_pattern
-from notebooks_and_scripts.workflow.runner import Runner
+from notebooks_and_scripts.workflow.runners import Runner
 
 
 class Workflow:
@@ -78,6 +78,8 @@ class Workflow:
     def monitor(job_name: str) -> bool:
         workflow = Workflow(job_name, load=True)
 
+        # TODO: load runner from metadata and act accordingly.
+
         logger.info(f"{workflow.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
 
         client = boto3.client("batch")
@@ -85,10 +87,12 @@ class Workflow:
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/describe_jobs.html
         page_size = 100
         summary: Dict[str, str] = {}
-        for index in tqdm(range(0, len(G.nodes), page_size)):
-            nodes = list(G.nodes)[index : index + page_size]
+        for index in tqdm(range(0, len(workflow.G.nodes), page_size)):
+            nodes = list(workflow.G.nodes)[index : index + page_size]
 
-            jobs = [G.nodes[node].get("job_id").replace('"', "") for node in nodes]
+            jobs = [
+                workflow.G.nodes[node].get("job_id").replace('"', "") for node in nodes
+            ]
 
             response = client.describe_jobs(jobs=jobs)
 
@@ -97,7 +101,7 @@ class Workflow:
                 status[item["jobId"]] = item["status"]
 
             for node, job_id in zip(nodes, jobs):
-                G.nodes[node]["status"] = status[job_id]
+                workflow.G.nodes[node]["status"] = status[job_id]
 
                 summary.setdefault(status[job_id], []).append(node)
 
@@ -105,7 +109,7 @@ class Workflow:
             logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
 
         if not export_graph_as_image(
-            G,
+            workflow.G,
             objects.path_of(
                 "workflow-{}.png".format(
                     string.pretty_date(as_filename=True, unique=True),

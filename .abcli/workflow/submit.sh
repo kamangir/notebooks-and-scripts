@@ -4,7 +4,8 @@ function notebooks_and_scripts_workflow_submit() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="$EOP~download,~upload$EOPE"
+        list_of_runners=$(python3 -m notebooks_and_scripts.workflow.runners list --delim \|)
+        local options="$EOP~download,${EOPE}runner=$list_of_runners$EOP,~upload$EOPE"
         abcli_show_usage "@workflow submit [$options] [.|<job-name>]" \
             "submit workflow."
         return
@@ -20,7 +21,8 @@ function notebooks_and_scripts_workflow_submit() {
 
     python3 -m notebooks_and_scripts.workflow \
         submit \
-        --job_name $job_name
+        --job_name $job_name \
+        --runner $runner
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $job_name

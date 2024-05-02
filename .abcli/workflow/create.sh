@@ -4,7 +4,7 @@ function notebooks_and_scripts_workflow_create() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        list_of_patterns=$(python3 -m notebooks_and_scripts.aws_batch list_of_patterns --delim \|)
+        list_of_patterns=$(python3 -m notebooks_and_scripts.workflow.patterns list --delim \|)
         options="dryrun,pattern=$list_of_patterns,~submit,~upload,~verbose"
         abcli_show_usage "@workflow create$ABCUL[$options]$ABCUL[.|<job-name>]$ABCUL<command-line>" \
             "create a <command-line> workflow."
