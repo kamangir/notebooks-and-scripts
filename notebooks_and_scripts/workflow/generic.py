@@ -5,7 +5,6 @@ from notebooks_and_scripts import env
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.patterns import load_pattern
-from notebooks_and_scripts.workflow.runners import RunnerType
 
 
 class Workflow:
@@ -28,8 +27,6 @@ class Workflow:
                     object_name=self.job_name,
                 )
             )
-
-        self.runner: RunnerType = RunnerType.PENDING
 
     def load_file(self, filename: str) -> bool:
         success, self.G = dot_file.load_from_file(filename)
@@ -62,12 +59,3 @@ class Workflow:
             source=self.job_name,
             source_type=MetadataSourceType.OBJECT,
         )
-
-    @staticmethod
-    def monitor(job_name: str) -> bool:
-        logger.info("not implemented.")
-        return False
-
-    def submit(self, dryrun: bool = True) -> bool:
-        logger.info("not implemented.")
-        return False

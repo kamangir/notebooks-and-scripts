@@ -11,19 +11,19 @@ from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.runners import RunnerType
+from notebooks_and_scripts.workflow.runners.generic import Runner
 from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 
 
-class AWSBatchWorkflow(Workflow):
+class AWSBatchRunner(Runner):
     def __init__(self, **kw_args):
         super().__init(**kw_args)
         self.runner: RunnerType = RunnerType.AWS_BATCH
 
-    @staticmethod
-    def monitor(job_name: str) -> bool:
-        workflow = AWSBatchWorkflow(job_name, load=True)
+    def monitor(self, job_name: str) -> bool:
+        workflow = Workflow(job_name, load=True)
 
-        logger.info(f"{workflow.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
+        logger.info(f"{self.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
 
         client = boto3.client("batch")
 
@@ -77,22 +77,25 @@ class AWSBatchWorkflow(Workflow):
 
     def submit(
         self,
+        workflow: Workflow,
         dryrun: bool = True,
     ) -> bool:
-        logger.info(f"{self.G} -> {self.runner}")
+        logger.info(f"{workflow.G} -> {self.runner}")
 
         metadata: Dict[str, Any] = {}
         failure_count: int = 0
         round: int = 1
-        while not all(self.G.nodes[node].get("job_id") for node in self.G.nodes):
-            for node in tqdm(self.G.nodes):
-                if self.G.nodes[node].get("job_id"):
+        while not all(
+            workflow.G.nodes[node].get("job_id") for node in workflow.G.nodes
+        ):
+            for node in tqdm(workflow.G.nodes):
+                if workflow.G.nodes[node].get("job_id"):
                     continue
 
                 pending_dependencies = [
                     node_
-                    for node_ in self.G.successors(node)
-                    if not self.G.nodes[node_].get("job_id")
+                    for node_ in workflow.G.successors(node)
+                    if not workflow.G.nodes[node_].get("job_id")
                 ]
                 if pending_dependencies:
                     logger.info(
@@ -104,11 +107,11 @@ class AWSBatchWorkflow(Workflow):
                     )
                     continue
 
-                command_line = self.G.nodes[node]["command_line"]
+                command_line = workflow.G.nodes[node]["command_line"]
                 job_name = f"{self.job_name}-{node}"
 
                 if dryrun:
-                    self.G.nodes[node]["job_id"] = f"dryrun-round-{round}"
+                    workflow.G.nodes[node]["job_id"] = f"dryrun-round-{round}"
                     logger.info(f"{command_line} -> {job_name}")
                     continue
 
@@ -117,15 +120,15 @@ class AWSBatchWorkflow(Workflow):
                     job_name,
                     SubmissionType.EVAL,
                     dependency_job_id_list=[
-                        self.G.nodes[node_].get("job_id")
-                        for node_ in self.G.successors(node)
+                        workflow.G.nodes[node_].get("job_id")
+                        for node_ in workflow.G.successors(node)
                     ],
                     verbose=False,
                 )
                 if not success:
                     failure_count += 1
 
-                self.G.nodes[node]["job_id"] = (
+                workflow.G.nodes[node]["job_id"] = (
                     metadata[node]["jobId"] if success else "failed"
                 )
 
@@ -137,7 +140,7 @@ class AWSBatchWorkflow(Workflow):
 
         if not dot_file.save_to_file(
             objects.path_of("workflow.dot", self.job_name),
-            self.G,
+            workflow.G,
             export_as_image=".png",
         ):
             return False
