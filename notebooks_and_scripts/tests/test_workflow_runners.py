@@ -20,7 +20,7 @@ from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 )
 @pytest.mark.parametrize(
     ["runner_type"],
-    [runner_type for runner_type in RunnerType],
+    [[runner_type] for runner_type in RunnerType],
 )
 def test_workflow_runners(
     pattern: str,
