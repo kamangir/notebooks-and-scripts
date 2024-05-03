@@ -11,12 +11,12 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="create|monitor|submit",
+    help="create",
 )
 parser.add_argument(
     "--command_line",
     type=str,
-    default=env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_COMMAND_UQ,
+    default=env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ,
 )
 parser.add_argument(
     "--job_name",
@@ -24,38 +24,17 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
-    "--runner",
-    type=str,
-    default="local",
-    help="|".join([type.name.lower() for type in RunnerType]),
-)
-parser.add_argument(
     "--pattern",
     type=str,
     default=list_of_patterns()[0],
     help="|".join(list_of_patterns()),
-)
-parser.add_argument(
-    "--verbose",
-    type=int,
-    default=1,
-    help="0|1",
-)
-parser.add_argument(
-    "--dryrun",
-    type=int,
-    default=1,
-    help="0|1",
 )
 args = parser.parse_args()
 
 
 success = False
 if args.task == "create":
-    workflow = Workflow(
-        job_name=args.job_name,
-        verbose=args.verbose == 1,
-    )
+    workflow = Workflow(job_name=args.job_name)
 
     success = workflow.load_pattern(
         command_line=args.command_line,
@@ -63,23 +42,7 @@ if args.task == "create":
     )
 
     if success:
-        success = workflow.submit(
-            runner=RunnerType[args.runner.upper()],
-            dryrun=args.dryrun == 1,
-        )
-elif args.task == "monitor":
-    success = Workflow.monitor(job_name=args.job_name)
-elif args.task == "submit":
-    workflow = Workflow(
-        job_name=args.job_name,
-        load=True,
-        verbose=args.verbose == 1,
-    )
-
-    success = workflow.submit(
-        runner=RunnerType[args.runner.upper()],
-        dryrun=args.dryrun == 1,
-    )
+        success = workflow.save()
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 

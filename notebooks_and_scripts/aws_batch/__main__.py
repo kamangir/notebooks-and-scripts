@@ -18,7 +18,7 @@ parser.add_argument(
 parser.add_argument(
     "--command_line",
     type=str,
-    default=env.ABCLI_AWS_BATCH_DEFAULT_WORKFLOW_COMMAND_UQ,
+    default=env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ,
 )
 parser.add_argument(
     "--job_name",

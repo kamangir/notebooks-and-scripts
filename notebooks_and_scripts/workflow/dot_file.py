@@ -127,7 +127,7 @@ def load_from_file(
 def save_to_file(
     filename: str,
     G: nx.DiGraph,
-    export_as_image: str = "",
+    export_as_image: str = ".png",
     log: bool = True,
     **kwargs,
 ):

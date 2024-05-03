@@ -1,13 +1,26 @@
 from notebooks_and_scripts.logger import logger
-from notebooks_and_scripts.workflow.runners import RunnerType
+from notebooks_and_scripts.workflow.generic import Workflow
+from notebooks_and_scripts.workflow.runners.factory import RunnerType
 
 
-class Runner:
+class GenericRunner:
     def __init__(self):
-        self.type: RunnerType = RunnerType.PENDING
+        self.type: RunnerType = RunnerType.GENERIC
 
-    def monitor(self, job_name: str) -> bool:
-        return False
+    def monitor(
+        self,
+        workflow: Workflow,
+    ) -> bool:
+        logger.info(f"{self.__class__.__name__}.monitor: {workflow.G}")
+        return True
 
-    def submit(self, dryrun: bool = True) -> bool:
+    def submit(
+        self,
+        workflow: Workflow,
+        dryrun: bool = True,
+    ) -> bool:
+        workflow.runner_type = self.type.name.lower()
+
+        logger.info(f"{self.__class__.__name__}.submit({workflow.G}, dryrun={dryrun})")
+
         return False

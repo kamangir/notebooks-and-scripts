@@ -3,7 +3,7 @@ import os
 import glob
 import networkx as nx
 from abcli import file
-from notebooks_and_scripts.workflow.dot_file import load_from_file as load_dot_file
+from notebooks_and_scripts.workflow import dot_file
 
 
 def list_of_patterns() -> List[str]:
@@ -22,7 +22,7 @@ def load_pattern(
     pattern: str,
     **kw_args,
 ) -> Tuple[bool, nx.DiGraph]:
-    return load_dot_file(
+    return dot_file.load_from_file(
         filename=os.path.join(file.path(__file__), f"{pattern}.dot"),
         **kw_args,
     )

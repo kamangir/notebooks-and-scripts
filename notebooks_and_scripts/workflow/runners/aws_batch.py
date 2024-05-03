@@ -11,19 +11,20 @@ from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.runners import RunnerType
-from notebooks_and_scripts.workflow.runners.generic import Runner
+from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 
 
-class AWSBatchRunner(Runner):
+class AWSBatchRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
         self.runner: RunnerType = RunnerType.AWS_BATCH
 
-    def monitor(self, job_name: str) -> bool:
-        workflow = Workflow(job_name, load=True)
-
-        logger.info(f"{self.__class__.__name__}.monitor: {job_name} @ {workflow.G}")
+    def monitor(
+        self,
+        workflow: Workflow,
+    ) -> bool:
+        assert super().monitor(workflow)
 
         client = boto3.client("batch")
 
@@ -57,7 +58,7 @@ class AWSBatchRunner(Runner):
                 "workflow-{}.png".format(
                     string.pretty_date(as_filename=True, unique=True),
                 ),
-                job_name,
+                workflow.job_name,
             ),
             colormap=dot_file.status_color_map,
         ):
@@ -67,11 +68,11 @@ class AWSBatchRunner(Runner):
             [
                 filename
                 for filename in sorted(
-                    glob.glob(objects.path_of("workflow-*.png", job_name))
+                    glob.glob(objects.path_of("workflow-*.png", workflow.job_name))
                 )
                 if len(file.name(filename)) > 15
             ],
-            objects.path_of("workflow.gif", job_name),
+            objects.path_of("workflow.gif", workflow.job_name),
             frame_duration=333,
         )
 
@@ -80,7 +81,7 @@ class AWSBatchRunner(Runner):
         workflow: Workflow,
         dryrun: bool = True,
     ) -> bool:
-        logger.info(f"{workflow.G} -> {self.runner}")
+        assert super().submit(workflow, dryrun)
 
         metadata: Dict[str, Any] = {}
         failure_count: int = 0
@@ -141,7 +142,6 @@ class AWSBatchRunner(Runner):
         if not dot_file.save_to_file(
             objects.path_of("workflow.dot", self.job_name),
             workflow.G,
-            export_as_image=".png",
         ):
             return False
 
