@@ -12,6 +12,7 @@ class GenericRunner:
         workflow: Workflow,
     ) -> bool:
         logger.info(f"{self.__class__.__name__}.monitor: {workflow.G}")
+
         return True
 
     def submit(
@@ -23,4 +24,4 @@ class GenericRunner:
 
         logger.info(f"{self.__class__.__name__}.submit({workflow.G}, dryrun={dryrun})")
 
-        return False
+        return True
