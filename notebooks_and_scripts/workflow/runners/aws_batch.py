@@ -109,7 +109,7 @@ class AWSBatchRunner(GenericRunner):
                     continue
 
                 command_line = workflow.G.nodes[node]["command_line"]
-                job_name = f"{self.job_name}-{node}"
+                job_name = f"{workflow.job_name}-{node}"
 
                 if dryrun:
                     workflow.G.nodes[node]["job_id"] = f"dryrun-round-{round}"
@@ -140,7 +140,7 @@ class AWSBatchRunner(GenericRunner):
             logger.error(f"{failure_count} failure(s).")
 
         if not dot_file.save_to_file(
-            objects.path_of("workflow.dot", self.job_name),
+            objects.path_of("workflow.dot", workflow.job_name),
             workflow.G,
         ):
             return False
@@ -151,7 +151,7 @@ class AWSBatchRunner(GenericRunner):
                 "metadata": metadata,
                 "failure_count": failure_count,
             },
-            source=self.job_name,
+            source=workflow.job_name,
             source_type=MetadataSourceType.OBJECT,
         ):
             return False
