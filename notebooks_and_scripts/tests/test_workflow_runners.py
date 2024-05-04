@@ -36,7 +36,7 @@ def test_workflow_runners(
         pattern,
     )
 
-    runner = runner_class[RunnerType[runner_type.upper()]]()
+    runner = runner_class[runner_type]()
     assert isinstance(runner, GenericRunner)
 
     assert runner.submit(workflow, dryrun=True)
