@@ -5,7 +5,7 @@ function notebooks_and_scripts_workflow_create() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="pattern=$NBS_PATTRENS_LIST$EOP,~upload"
-        abcli_show_usage "@workflow create$ABCUL$options$ABCUL-|<job-name>$ABCUL<command-line>$EOPE" \
+        abcli_show_usage "workflow create$ABCUL$options$ABCUL-|<job-name>$ABCUL<command-line>$EOPE" \
             "create a <pattern> workflow."
         return
     fi

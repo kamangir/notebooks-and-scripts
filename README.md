@@ -17,16 +17,16 @@ also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstr
 
 ```bash
  > workflow help
-@workflow create \
+workflow create \
 	pattern=a-bc-d|hourglass,~upload \
 	-|<job-name> \
 	<command-line>
  . create a <pattern> workflow.
-@workflow monitor \
+workflow monitor \
 	~download,~upload \
 	.|<job-name>
  . monitor workflow.
-@workflow submit \
+workflow submit \
 	~download,dryrun,to=aws_batch|generic|local|localflow,~upload \
 	.|<job-name>
  . submit workflow.

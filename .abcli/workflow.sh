@@ -20,7 +20,7 @@ function notebooks_and_scripts_workflow() {
         return
     fi
 
-    abcli_log_error "-@workflow: $task: command not found."
+    abcli_log_error "-workflow: $task: command not found."
     return 1
 }
 

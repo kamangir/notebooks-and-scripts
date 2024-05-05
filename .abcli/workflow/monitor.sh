@@ -5,7 +5,7 @@ function notebooks_and_scripts_workflow_monitor() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="$EOP~download,~upload"
-        abcli_show_usage "@workflow monitor$ABCUL$options$ABCUL.|<job-name>$EOPE" \
+        abcli_show_usage "workflow monitor$ABCUL$options$ABCUL.|<job-name>$EOPE" \
             "monitor workflow."
         return
     fi
