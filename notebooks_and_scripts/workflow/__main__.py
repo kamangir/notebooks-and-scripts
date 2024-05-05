@@ -1,11 +1,9 @@
-import sys
 import argparse
 from notebooks_and_scripts import env
 from notebooks_and_scripts.aws_batch import VERSION, NAME
-from notebooks_and_scripts.aws_batch.submission import (
-    submit,
-    SubmissionType,
-)
+from notebooks_and_scripts.workflow.patterns import list_of_patterns
+from notebooks_and_scripts.workflow.generic import Workflow
+from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.logger import logger
 
 
@@ -13,7 +11,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="show_count|submit",
+    help="create",
 )
 parser.add_argument(
     "--command_line",
@@ -26,30 +24,25 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
-    "--type",
+    "--pattern",
     type=str,
-    default="source",
-    help="eval|source|submit",
+    default=list_of_patterns()[0],
+    help="|".join(list_of_patterns()),
 )
 args = parser.parse_args()
 
-success = False
-if args.task == "show_count":
-    success = True
-    input_string = sys.stdin.read().strip()
 
-    if not input_string.isdigit():
-        print(input_string)
-    else:
-        input_int = int(input_string)
-        if input_int:
-            print("{} {}".format(input_int, input_int * "🌀"))
-elif args.task == "submit":
-    success, _ = submit(
+success = False
+if args.task == "create":
+    workflow = Workflow(job_name=args.job_name)
+
+    success = workflow.load_pattern(
         command_line=args.command_line,
-        job_name=args.job_name,
-        type=SubmissionType[args.type.upper()],
+        pattern=args.pattern,
     )
+
+    if success:
+        success = workflow.save()
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 

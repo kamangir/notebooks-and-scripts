@@ -31,8 +31,6 @@ function abcli_docker() {
     local options=$2
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
-    local filename="Dockerfile"
-
     if [ "$task" == "browse" ]; then
         local show_public=$(abcli_option_int "$options" public 1)
 
@@ -45,7 +43,7 @@ function abcli_docker() {
     fi
 
     if [ "$task" == "build" ]; then
-        abcli_log "docker: building $filename: $options"
+        abcli_log "@docker: build $options ..."
 
         local do_push=$(abcli_option_int "$options" push $(abcli_not $do_dryrun))
         local do_run=$(abcli_option_int "$options" run 0)
@@ -59,8 +57,9 @@ function abcli_docker() {
             docker build \
             --build-arg HOME=$HOME \
             -t kamangir/abcli \
-            -f notebooks-and-scripts/$filename \
+            -f notebooks-and-scripts/Dockerfile \
             .
+        [[ $? -ne 0 ]] && return 1
 
         rm -rfv temp
 
@@ -91,12 +90,11 @@ function abcli_docker() {
     fi
 
     if [ "$task" == "run" ]; then
-        abcli_log "docker: running $filename: $options"
+        abcli_log "@docker: run $options ..."
 
         abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
             docker-compose run abcli bash \
             --init-file /root/git/awesome-bash-cli/bash/abcli.sh
-
         return
     fi
 

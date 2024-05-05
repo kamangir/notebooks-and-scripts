@@ -13,7 +13,7 @@ function notebooks_and_scripts() {
         abcli_aws_batch "$@"
         abcli_docker "$@"
 
-        localflow "$@"
+        notebooks_and_scripts_localflow "$@"
 
         abcli_notebooks "$@"
 
@@ -27,6 +27,9 @@ function notebooks_and_scripts() {
         for task in pylint pytest test; do
             notebooks_and_scripts $task "$@"
         done
+
+        notebooks_and_scripts_workflow "$@"
+
         return
     fi
 

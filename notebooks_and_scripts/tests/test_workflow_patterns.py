@@ -1,5 +1,5 @@
 import pytest
-from notebooks_and_scripts.aws_batch.traffic.patterns import (
+from notebooks_and_scripts.workflow.patterns import (
     load_pattern,
     list_of_patterns,
 )
