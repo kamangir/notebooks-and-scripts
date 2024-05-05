@@ -32,10 +32,11 @@ also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstr
  . submit workflow.
 ```
 
-| a-bc-d | hourglass | map-reduce |
-| ------ | --------- | ---------- |
-| 🚧     | 🚧        | 🚧         |
-| 🚧     | 🚧        | 🚧         |
+| [`a-bc-d`](./notebooks_and_scripts/workflow/patterns/a-bc-d.dot) | [`hourglass`](./notebooks_and_scripts/workflow/patterns/hourglass.dot)                                                                                                     | `map-reduce` 🚧 |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| 🚧                                                               | [![image](https://github.com/kamangir/assets/blob/main/nbs/workflow/hourglass/workflow.gif?raw=true)](https://github.com/kamangir/assets/tree/main/nbs/workflow/hourglass) | 🚧              |
+
+|
 
 ---
 
