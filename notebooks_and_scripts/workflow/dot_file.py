@@ -23,7 +23,7 @@ layouts = {
 }
 
 status_color_map = {
-    "SUBMITTED": "red",
+    "SUBMITTED": "yellow",
     "PENDING": "orange",
     "RUNNABLE": "purple",
     "STARTING": "cyan",
@@ -40,6 +40,7 @@ def export_graph_as_image(
     figsize: int = 5,
     log: bool = True,
     colormap: Dict[str, str] = {},
+    hot_node: str = "",
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -48,7 +49,17 @@ def export_graph_as_image(
 
     pos = layout_func(G)
 
-    node_color = [colormap.get(G.nodes[node].get("status"), "gray") for node in G]
+    node_color = [
+        (
+            "red"
+            if node == hot_node
+            else colormap.get(
+                G.nodes[node].get("status"),
+                "gray",
+            )
+        )
+        for node in G
+    ]
 
     plt.figure(figsize=(figsize, figsize))
     nx.draw(

@@ -66,6 +66,17 @@ class Workflow:
                 self.job_name,
             )
 
+        self.G.add_node("X")
+        for node in self.G.nodes:
+            if self.G.in_degree(node) == 0 and node != "X":
+                self.G.add_edge("X", node)
+        self.G.nodes["X"]["command_line"] = (
+            "abcli publish extension=git {job_name}".replace(
+                "{job_name}",
+                self.job_name,
+            )
+        )
+
         return self.post_metadata(
             "load_pattern",
             {
