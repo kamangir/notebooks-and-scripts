@@ -1,6 +1,7 @@
+from typing import Any
 import networkx as nx
 from abcli.modules import objects
-from abcli.plugins.metadata import post, MetadataSourceType
+from abcli.plugins.metadata import post, MetadataSourceType, get
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow import patterns
@@ -17,6 +18,7 @@ class Workflow:
         self.runner_type: str = "generic"
 
         self.G: nx.DiGraph = nx.DiGraph()
+
         if load:
             success, self.G = dot_file.load_from_file(
                 objects.path_of(
@@ -25,6 +27,20 @@ class Workflow:
                 )
             )
             assert success
+
+            self.runner_type = self.get_metadata("runner", "generic")
+
+    def get_metadata(
+        self,
+        key: str,
+        default: str = "",
+    ) -> str:
+        return get(
+            key,
+            default,
+            source=self.job_name,
+            source_type=MetadataSourceType.OBJECT,
+        )
 
     def load_pattern(
         self,
@@ -44,12 +60,22 @@ class Workflow:
                 self.job_name,
             )
 
-        return post(
+        return self.post_metadata(
             "load_pattern",
             {
                 "command_line": command_line,
                 "pattern": pattern,
             },
+        )
+
+    def post_metadata(
+        self,
+        key: str,
+        value: Any,
+    ) -> bool:
+        return post(
+            key,
+            value,
             source=self.job_name,
             source_type=MetadataSourceType.OBJECT,
         )
@@ -61,4 +87,7 @@ class Workflow:
                 object_name=self.job_name,
             ),
             self.G,
+        ) and self.post_metadata(
+            "runner",
+            {"type": self.runner_type},
         )
