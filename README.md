@@ -32,6 +32,15 @@ workflow submit \
  . submit workflow.
 ```
 
+```bash
+@select - open
+workflow create pattern=hourglass .
+workflow submit to=aws_batch
+@watch - @download
+```
+
+from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef
+
 | [`a-bc-d`](./notebooks_and_scripts/workflow/patterns/a-bc-d.dot) | [`hourglass`](./notebooks_and_scripts/workflow/patterns/hourglass.dot)                                                                                                     | `map-reduce` 🚧 |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
 | 🚧                                                               | [![image](https://github.com/kamangir/assets/blob/main/nbs/workflow/hourglass/workflow.gif?raw=true)](https://github.com/kamangir/assets/tree/main/nbs/workflow/hourglass) | 🚧              |
