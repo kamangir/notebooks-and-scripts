@@ -25,7 +25,7 @@ function localflow_run() {
                 return 1
             fi
 
-            abcli_sleep 10
+            abcli_sleep seconds=10
             continue
         fi
         abcli_log "⚙️  $job_name"
@@ -49,7 +49,7 @@ function localflow_run() {
             return 1
         fi
 
-        abcli_eval $options, \
+        abcli_eval ,$options \
             "$command_line"
 
         abcli_tag set \

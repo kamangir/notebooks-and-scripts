@@ -16,7 +16,7 @@ function abcli_aws_batch_eval() {
 
     job_name=$(abcli_option "$options" name $(abcli_string_timestamp))
 
-    abcli_eval $options, \
+    abcli_eval ,$options \
         python3 -m notebooks_and_scripts.aws_batch \
         submit \
         --command_line \"$@\" \
