@@ -40,7 +40,7 @@ def export_graph_as_image(
     figsize: int = 5,
     log: bool = True,
     colormap: Dict[str, str] = {},
-    hot_node: str = "",
+    hot_node: str = "void",
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
