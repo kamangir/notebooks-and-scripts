@@ -75,7 +75,7 @@ elif args.task == "submit":
         load=True,
     )
 
-    runner = runner_class[RunnerType[args.runner_type.upper()]]
+    runner = runner_class[RunnerType[args.runner_type.upper()]]()
 
     success = runner.submit(
         workflow,

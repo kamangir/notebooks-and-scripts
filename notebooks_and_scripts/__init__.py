@@ -4,4 +4,4 @@ ICON = "📜"
 
 DESCRIPTION = f"{ICON} notebooks for experiments & [meta] scripts for aws batch jobs and sagemaker serving."
 
-VERSION = "4.391.1"
+VERSION = "4.392.1"
