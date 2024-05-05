@@ -34,6 +34,11 @@ parser.add_argument(
     default="",
 )
 parser.add_argument(
+    "--hot_node",
+    type=str,
+    default="void",
+)
+parser.add_argument(
     "--offset",
     type=int,
     default=0,
@@ -66,7 +71,7 @@ elif args.task == "monitor":
 
     runner = runner_class[RunnerType[workflow.runner_type.upper()]]()
 
-    success = runner.monitor(workflow)
+    success = runner.monitor(workflow, args.hot_node)
 
     if success:
         success = workflow.save()

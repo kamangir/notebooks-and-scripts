@@ -23,6 +23,7 @@ class AWSBatchRunner(GenericRunner):
     def monitor(
         self,
         workflow: Workflow,
+        hot_node: str = "void",
     ) -> bool:
         assert super().monitor(workflow)
 
@@ -61,6 +62,7 @@ class AWSBatchRunner(GenericRunner):
                 workflow.job_name,
             ),
             colormap=dot_file.status_color_map,
+            hot_node=hot_node,
         ):
             return False
 

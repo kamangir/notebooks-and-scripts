@@ -50,7 +50,6 @@ class Workflow:
 
     def load_pattern(
         self,
-        command_line: str = env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ,
         pattern: str = env.NBS_DEFAULT_WORKFLOW_PATTERN,
     ) -> bool:
         success, self.G = patterns.load_pattern(
@@ -60,29 +59,23 @@ class Workflow:
         if not success:
             return success
 
-        for node in self.G.nodes:
-            self.G.nodes[node]["command_line"] = command_line.replace(
-                "{job_name}",
-                self.job_name,
-            )
-
         self.G.add_node("X")
         for node in self.G.nodes:
             if self.G.in_degree(node) == 0 and node != "X":
                 self.G.add_edge("X", node)
-        self.G.nodes["X"]["command_line"] = (
-            "abcli publish extension=gif {job_name}".replace(
-                "{job_name}",
-                self.job_name,
+
+        for node in self.G.nodes:
+            self.G.nodes[node]["command_line"] = (
+                "workflow monitor node={},publish={} {}".format(
+                    node,
+                    int(node == "X"),
+                    self.job_name,
+                )
             )
-        )
 
         return self.post_metadata(
             "load_pattern",
-            {
-                "command_line": command_line,
-                "pattern": pattern,
-            },
+            {"pattern": pattern},
         )
 
     def post_metadata(

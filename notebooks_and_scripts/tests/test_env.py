@@ -10,7 +10,4 @@ def test_notebooks_and_scripts_env():
     assert env.LOCALFLOW_STATUS_LIST
     assert env.ABCLI_AWS_BATCH_JOB_STATUS_LIST
 
-    assert env.NBS_DEFAULT_WORKFLOW_COMMAND
-    assert env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ
-
     assert env.NBS_DEFAULT_WORKFLOW_PATTERN

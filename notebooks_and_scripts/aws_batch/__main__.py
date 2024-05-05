@@ -16,11 +16,6 @@ parser.add_argument(
     help="show_count|submit",
 )
 parser.add_argument(
-    "--command_line",
-    type=str,
-    default=env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ,
-)
-parser.add_argument(
     "--job_name",
     type=str,
     default="",
@@ -46,7 +41,6 @@ if args.task == "show_count":
             print("{} {}".format(input_int, input_int * "🌀"))
 elif args.task == "submit":
     success, _ = submit(
-        command_line=args.command_line,
         job_name=args.job_name,
         type=SubmissionType[args.type.upper()],
     )

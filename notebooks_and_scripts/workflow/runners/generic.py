@@ -10,8 +10,9 @@ class GenericRunner:
     def monitor(
         self,
         workflow: Workflow,
+        hot_node: str = "void",
     ) -> bool:
-        logger.info(f"{self.__class__.__name__}.monitor: {workflow.G}")
+        logger.info(f"{self.__class__.__name__}.monitor: {workflow.G} @ {hot_node}")
 
         return True
 

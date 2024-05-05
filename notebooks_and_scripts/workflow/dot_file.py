@@ -80,6 +80,7 @@ def export_graph_as_image(
                 f"{G.number_of_nodes()} node(s)",
                 f"{G.number_of_edges()} edge(s)",
                 f"layout: {layout}",
+                f"@{hot_node}",
             ]
         ),
         fontsize=10,

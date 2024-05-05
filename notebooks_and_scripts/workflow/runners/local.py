@@ -11,8 +11,9 @@ class LocalRunner(GenericRunner):
     def monitor(
         self,
         workflow: Workflow,
+        hot_node: str = "void",
     ) -> bool:
-        assert super().monitor(workflow)
+        assert super().monitor(workflow, hot_node)
 
         return True
 

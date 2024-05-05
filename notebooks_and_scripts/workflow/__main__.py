@@ -14,11 +14,6 @@ parser.add_argument(
     help="create",
 )
 parser.add_argument(
-    "--command_line",
-    type=str,
-    default=env.NBS_DEFAULT_WORKFLOW_COMMAND_UQ,
-)
-parser.add_argument(
     "--job_name",
     type=str,
     default="",
@@ -36,10 +31,7 @@ success = False
 if args.task == "create":
     workflow = Workflow(job_name=args.job_name)
 
-    success = workflow.load_pattern(
-        command_line=args.command_line,
-        pattern=args.pattern,
-    )
+    success = workflow.load_pattern(pattern=args.pattern)
 
     if success:
         success = workflow.save()
