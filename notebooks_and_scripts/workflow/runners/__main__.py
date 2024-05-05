@@ -22,6 +22,11 @@ parser.add_argument(
     default=-1,
 )
 parser.add_argument(
+    "--job_name",
+    type=str,
+    default="",
+)
+parser.add_argument(
     "--offset",
     type=int,
     default=0,
