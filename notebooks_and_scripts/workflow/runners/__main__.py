@@ -2,7 +2,6 @@ import argparse
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow import VERSION, NAME
-from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 from notebooks_and_scripts.workflow.runners.factory import runner_class
 from notebooks_and_scripts.logger import logger
 
@@ -65,7 +64,7 @@ elif args.task == "monitor":
         load=True,
     )
 
-    runner: GenericRunner = runner_class[RunnerType[workflow.runner_type.upper()]]()
+    runner = runner_class[RunnerType[workflow.runner_type.upper()]]()
 
     success = runner.monitor(workflow)
 
@@ -77,7 +76,7 @@ elif args.task == "submit":
         load=True,
     )
 
-    runner: GenericRunner = runner_class[RunnerType[args.runner_type.upper()]]()
+    runner = runner_class[RunnerType[args.runner_type.upper()]]()
 
     success = runner.submit(
         workflow,
