@@ -28,7 +28,13 @@ class Workflow:
             )
             assert success
 
-            self.runner_type = self.get_metadata("runner", "generic")
+            self.runner_type = self.get_metadata(
+                "runner",
+                {},
+            ).get(
+                "type",
+                "generic",
+            )
 
     def get_metadata(
         self,
