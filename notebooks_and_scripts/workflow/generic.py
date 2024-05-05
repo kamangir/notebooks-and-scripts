@@ -56,9 +56,9 @@ class Workflow:
 
     def save(self) -> bool:
         return dot_file.save_to_file(
-            self.G,
             objects.path_of(
                 filename="workflow.dot",
                 object_name=self.job_name,
             ),
+            self.G,
         )

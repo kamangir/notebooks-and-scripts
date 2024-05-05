@@ -18,7 +18,7 @@ function notebooks_and_scripts_workflow_create() {
     local command_line="${@:3}"
     [[ -z "$command_line" ]] && command_line="$(abcli unquote $NBS_DEFAULT_WORKFLOW_COMMAND)"
 
-    abcli_log "creating workflow: $command_line -$pattern-> $job_name"
+    abcli_log "creating workflow: \"$command_line\" -$pattern-> $job_name"
 
     python3 -m notebooks_and_scripts.workflow \
         create \
