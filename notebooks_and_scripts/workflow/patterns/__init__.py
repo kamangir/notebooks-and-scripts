@@ -7,15 +7,17 @@ from notebooks_and_scripts.workflow import dot_file
 
 
 def list_of_patterns() -> List[str]:
-    return [
-        file.name(filename)
-        for filename in glob.glob(
-            os.path.join(
-                file.path(__file__),
-                "*.dot",
+    return sorted(
+        [
+            file.name(filename)
+            for filename in glob.glob(
+                os.path.join(
+                    file.path(__file__),
+                    "*.dot",
+                )
             )
-        )
-    ]
+        ]
+    )
 
 
 def load_pattern(

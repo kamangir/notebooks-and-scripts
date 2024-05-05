@@ -13,4 +13,30 @@ also: [`sagesemseg`](./scripts/sagesemseg/).
 
 ---
 
+also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of bash commands on aws batch.
+
+```bash
+ > workflow help
+@workflow create \
+	pattern=a-bc-d|hourglass,~upload \
+	-|<job-name> \
+	<command-line>
+ . create a <pattern> workflow.
+@workflow monitor \
+	~download,~upload \
+	.|<job-name>
+ . monitor workflow.
+@workflow submit \
+	~download,dryrun,to=aws_batch|generic|local|localflow,~upload \
+	.|<job-name>
+ . submit workflow.
+```
+
+| a-bc-d | hourglass | map-reduce |
+| ------ | --------- | ---------- |
+| 🚧     | 🚧        | 🚧         |
+| 🚧     | 🚧        | 🚧         |
+
+---
+
 To use on [AWS SageMaker](https://aws.amazon.com/sagemaker/) replace `<plugin-name>` with `nbs` and follow [these instructions](https://github.com/kamangir/blue-plugin/blob/main/SageMaker.md).
