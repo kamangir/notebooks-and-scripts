@@ -18,7 +18,7 @@ from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 class AWSBatchRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
-        self.runner: RunnerType = RunnerType.AWS_BATCH
+        self.type: RunnerType = RunnerType.AWS_BATCH
 
     def monitor(
         self,

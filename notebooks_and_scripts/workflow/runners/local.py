@@ -6,7 +6,7 @@ from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 class LocalRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
-        self.runner: RunnerType = RunnerType.LOCAL
+        self.type: RunnerType = RunnerType.LOCAL
 
     def monitor(
         self,
