@@ -71,7 +71,7 @@ class Workflow:
             if self.G.in_degree(node) == 0 and node != "X":
                 self.G.add_edge("X", node)
         self.G.nodes["X"]["command_line"] = (
-            "abcli publish extension=git {job_name}".replace(
+            "abcli publish extension=gif {job_name}".replace(
                 "{job_name}",
                 self.job_name,
             )
