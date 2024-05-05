@@ -36,8 +36,6 @@ also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstr
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
 | 🚧                                                               | [![image](https://github.com/kamangir/assets/blob/main/nbs/workflow/hourglass/workflow.gif?raw=true)](https://github.com/kamangir/assets/tree/main/nbs/workflow/hourglass) | 🚧              |
 
-|
-
 ---
 
 To use on [AWS SageMaker](https://aws.amazon.com/sagemaker/) replace `<plugin-name>` with `nbs` and follow [these instructions](https://github.com/kamangir/blue-plugin/blob/main/SageMaker.md).
