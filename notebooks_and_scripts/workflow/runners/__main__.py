@@ -12,14 +12,21 @@ parser.add_argument(
     help="list|monitor|submit",
 )
 parser.add_argument(
+    "--count",
+    type=int,
+    default=-1,
+)
+parser.add_argument(
     "--delim",
     type=str,
     default="+",
 )
+
 parser.add_argument(
-    "--count",
+    "--dryrun",
     type=int,
-    default=-1,
+    default=0,
+    help="0|1",
 )
 parser.add_argument(
     "--job_name",
@@ -36,12 +43,6 @@ parser.add_argument(
     type=str,
     default="local",
     help="|".join([type.name.lower() for type in RunnerType]),
-)
-parser.add_argument(
-    "--dryrun",
-    type=int,
-    default=0,
-    help="0|1",
 )
 args = parser.parse_args()
 
