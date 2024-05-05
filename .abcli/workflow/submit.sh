@@ -22,7 +22,7 @@ function notebooks_and_scripts_workflow_submit() {
 
     python3 -m notebooks_and_scripts.workflow.runners \
         submit \
-        --do_dryrun $do_dryrun \
+        --dryrun $do_dryrun \
         --job_name $job_name \
         --runner_type $runner_type
 
