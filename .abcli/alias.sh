@@ -10,7 +10,6 @@ alias @notebooks=abcli_notebooks
 
 alias @cat="abcli_scripts cat"
 alias @code="abcli_scripts code"
-alias @list="abcli_scripts list"
 
 alias @mv="abcli_scripts move"
 
