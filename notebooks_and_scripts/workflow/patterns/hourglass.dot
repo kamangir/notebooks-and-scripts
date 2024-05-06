@@ -9,10 +9,15 @@ digraph G {
     A7 -> B;
     A8 -> B;
     A9 -> B;
+
     B -> C;
+
     C -> D;
+
     D -> E;
+
     E -> F;
+
     F -> G0;
     F -> G1;
     F -> G2;
