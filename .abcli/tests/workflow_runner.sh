@@ -5,7 +5,7 @@ function test_notebooks_and_scripts_worflow_runner() {
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
     local pattern
-    for pattern in $(echo $NBS_PATTRENS_LIST | tr + " "); do
+    for pattern in $(echo $NBS_PATTRENS_LIST | tr \| " "); do
         abcli_log "testing pattern=$pattern"
 
         local object_name=$pattern-$(abcli_string_timestamp)
