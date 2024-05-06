@@ -46,7 +46,7 @@ if args.task == "show_count":
             print("{} {}".format(input_int, input_int * "🌀"))
 elif args.task == "submit":
     success, _ = submit(
-        command_lone=args.command_line,
+        command_line=args.command_line,
         job_name=args.job_name,
         type=SubmissionType[args.type.upper()],
     )
