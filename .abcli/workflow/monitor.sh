@@ -17,6 +17,10 @@ function notebooks_and_scripts_workflow_monitor() {
 
     local job_name=$(abcli_clarify_object $2 .)
 
+    local pattern=$(abcli_metadata get \
+        key=load_pattern.pattern,object \
+        $job_name)
+
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
@@ -29,7 +33,7 @@ function notebooks_and_scripts_workflow_monitor() {
         abcli_upload - $job_name
 
     [[ "$do_publish" == 1 ]] &&
-        abcli_publish extension=gif $job_name
+        abcli_publish as=$pattern,~download,suffix=.gif $job_name
 
     return 0
 }
