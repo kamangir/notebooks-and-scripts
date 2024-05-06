@@ -12,7 +12,7 @@ function test_notebooks_and_scripts_worflow_runner() {
 
         workflow create pattern=$pattern $object_name
 
-        workflow submit to=aws_batch $object_name
+        workflow submit ~download,to=aws_batch $object_name
 
         workflow monitor ~download $job_name
 
