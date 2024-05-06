@@ -41,7 +41,7 @@ workflow submit to=aws_batch
 
 from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef
 
-| [`a-bc-d`](./notebooks_and_scripts/workflow/patterns/a-bc-d.dot)                             | [`hourglass`](./notebooks_and_scripts/workflow/patterns/hourglass.dot)                          | `map-reduce` 🚧                                                                                  |
+| [`a-bc-d`](./notebooks_and_scripts/workflow/patterns/a-bc-d.dot)                             | [`hourglass`](./notebooks_and_scripts/workflow/patterns/hourglass.dot)                          | [`map-reduce`](./notebooks_and_scripts/workflow/patterns/map-reduce.dot)                         |
 | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/a-bc-d/workflow.gif?raw=true) | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/hourglass/workflow.gif?raw=true) | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/map-reduce/workflow.gif?raw=true) |
 
