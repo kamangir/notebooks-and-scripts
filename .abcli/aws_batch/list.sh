@@ -8,9 +8,15 @@ function abcli_aws_batch_list() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        options="~count,dryrun,prefix=<prefix>,status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST | tr , \|)"
-        abcli_show_usage "@batch list$ABCUL[$options]" \
+        options="~count$EOP,dryrun,prefix=<prefix>,status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST | tr , \|)$EOPE,watch"
+        abcli_show_usage "@batch list$ABCUL$options" \
             "list aws batch jobs."
+        return
+    fi
+
+    if [ $(abcli_option_int "$options" watch 0) == 1 ]; then
+        abcli_watch seconds=10 \
+            abcli_aws_batch_list ,$options,~watch
         return
     fi
 
@@ -24,7 +30,7 @@ function abcli_aws_batch_list() {
     [[ ! -z "$prefix" ]] && pipes="| grep $prefix"
     [[ "$show_count" == 1 ]] && pipes="$pipes | wc -l | python3 -m notebooks_and_scripts.aws_batch show_count"
 
-    [[ -z "$status" ]] && status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST | tr , " ")
+    [[ -z "$status" ]] && status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST_WATCH | tr , " ")
 
     abcli_log "queue: $queue"
     local status_
