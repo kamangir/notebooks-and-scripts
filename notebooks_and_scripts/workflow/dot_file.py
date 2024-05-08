@@ -79,7 +79,7 @@ def export_graph_as_image(
         plt.text(
             0.5,
             0.5,
-            G.nodes[hot_node].get("command_line"),
+            G.nodes[hot_node].get("command_line").replace('"', ""),
             horizontalalignment="center",
             verticalalignment="center",
             transform=plt.gca().transAxes,
