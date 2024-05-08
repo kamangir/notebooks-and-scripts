@@ -71,7 +71,21 @@ def export_graph_as_image(
         node_size=500,
         font_size=10,
         font_color="darkred",
+        # arrowstyle="-|>",
+        # arrowsize=5,
     )
+
+    if hot_node in G.nodes:
+        plt.text(
+            0.5,
+            0.5,
+            G.nodes[hot_node].get("command_line"),
+            horizontalalignment="center",
+            verticalalignment="center",
+            transform=plt.gca().transAxes,
+            fontsize=12,
+            color="green",
+        )
     plt.title(
         " | ".join(
             [
