@@ -37,5 +37,5 @@ function abcli_aws_batch_browse() {
         url="$base_url#jobs/detail/$job_id"
     fi
 
-    abcli_browse_url $url
+    abcli_browse $url
 }

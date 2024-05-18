@@ -30,7 +30,7 @@ function abcli_sagemaker() {
         local aws_region=$(aws configure get region)
         local url="https://$aws_region.console.aws.amazon.com/sagemaker/home?region=$aws_region#/dashboard"
 
-        abcli_browse_url $url
+        abcli_browse $url
         return
     fi
 

@@ -38,7 +38,7 @@ function abcli_docker() {
         [[ "$show_public" == 1 ]] &&
             local url=https://hub.docker.com/r/kamangir/abcli/tags
 
-        abcli_browse_url $url
+        abcli_browse $url
         return
     fi
 
