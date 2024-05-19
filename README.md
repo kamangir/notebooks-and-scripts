@@ -1,6 +1,6 @@
 # 📜 notebooks & [meta] scripts
 
-Repository of research [notebooks](./notebooks) and [[meta](./scripts#meta/)] [scripts](./scripts) for aws batch jobs and sagemaker serving.
+[notebooks](./notebooks) and [scripts](./scripts) for ai experiments and aws batch jobs.
 
 ---
 
