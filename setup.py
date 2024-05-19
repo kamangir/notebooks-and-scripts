@@ -15,6 +15,8 @@ setup(
     author="arash@kamangir.net",
     version=VERSION,
     description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=[
         NAME,
         f"{NAME}.sagemaker",
