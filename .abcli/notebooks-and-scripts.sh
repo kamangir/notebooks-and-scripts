@@ -23,11 +23,6 @@ function notebooks_and_scripts() {
         abcli_sagemaker "$@"
         abcli_scripts "$@"
 
-        local task
-        for task in pylint pytest test; do
-            notebooks_and_scripts $task "$@"
-        done
-
         notebooks_and_scripts_workflow "$@"
 
         return
@@ -46,8 +41,15 @@ function notebooks_and_scripts() {
     fi
 
     if [[ "|pylint|pytest|test|" == *"|$task|"* ]]; then
-        abcli_${task} plugin=notebooks-and-scripts,$2 \
+        abcli_${task} plugin=notebooks_and_scripts,$2 \
             "${@:3}"
+        return
+    fi
+
+    if [[ "|pypi|" == *"|$task|"* ]]; then
+        abcli_${task} "$2" \
+            plugin=notebooks_and_scripts,$3 \
+            "${@:4}"
         return
     fi
 
