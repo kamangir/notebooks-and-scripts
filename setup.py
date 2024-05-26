@@ -12,7 +12,11 @@ setup(
         NAME,
         f"{NAME}.sagemaker",
     ],
+    include_package_data=True,
     package_data={
-        NAME: ["config.env"],
+        NAME: [
+            "config.env",
+            ".abcli/**/*.sh",
+        ],
     },
 )
