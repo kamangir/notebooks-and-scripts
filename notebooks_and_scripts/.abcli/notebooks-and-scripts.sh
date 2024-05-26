@@ -21,8 +21,7 @@ function notebooks_and_scripts() {
         "${@:2}"
 }
 
-abcli_source_path \
-    $abcli_path_git/notebooks-and-scripts/.abcli/tests
+abcli_source_path - caller,suffix=/tests
 
 abcli_env dot load \
     plugin=notebooks-and-scripts

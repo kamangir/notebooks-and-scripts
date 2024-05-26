@@ -42,7 +42,7 @@ ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
 WORKDIR /root/git/notebooks-and-scripts
 RUN pip install -e .
 
-RUN mkdir -p /root/git/Vancouver-Watching
-ADD ./Vancouver-Watching /root/git/Vancouver-Watching
-WORKDIR /root/git/Vancouver-Watching
+RUN mkdir -p /root/git/vancouver-watching
+ADD ./vancouver-watching /root/git/vancouver-watching
+WORKDIR /root/git/vancouver-watching
 RUN pip install -e .

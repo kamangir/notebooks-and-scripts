@@ -24,5 +24,4 @@ function localflow() {
     return 1
 }
 
-abcli_source_path \
-    $abcli_path_git/notebooks-and-scripts/.abcli/localflow
+abcli_source_path - caller,suffix=/localflow
