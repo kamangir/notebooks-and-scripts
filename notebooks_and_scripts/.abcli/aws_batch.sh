@@ -21,5 +21,4 @@ function abcli_aws_batch() {
     return 1
 }
 
-abcli_source_path \
-    $abcli_path_git/notebooks-and-scripts/.abcli/aws_batch
+abcli_source_path - caller,suffix=/aws_batch

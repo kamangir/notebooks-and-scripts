@@ -24,5 +24,4 @@ function notebooks_and_scripts_workflow() {
     return 1
 }
 
-abcli_source_path \
-    $abcli_path_git/notebooks-and-scripts/.abcli/workflow
+abcli_source_path - caller,suffix=/workflow
