@@ -94,7 +94,7 @@ function abcli_docker() {
 
         abcli_eval dryrun=$do_dryrun,path=$abcli_path_nbs \
             docker-compose run abcli bash \
-            --init-file /root/git/awesome-bash-cli/bash/abcli.sh
+            --init-file /root/git/awesome-bash-cli/abcli/.abcli/abcli.sh
         return
     fi
 
@@ -124,12 +124,12 @@ function abcli_docker() {
         local command_line
         [[ "$task" == "eval" ]] &&
             command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh $abcli_options \
+            /root/git/awesome-bash-cli/abcli/.abcli/abcli.sh $abcli_options \
             abcli_eval $options \
             ${@:3}"
         [[ "$task" == "source" ]] &&
             command_line="source \
-            /root/git/awesome-bash-cli/bash/abcli.sh $abcli_options \
+            /root/git/awesome-bash-cli/abcli/.abcli/abcli.sh $abcli_options \
             abcli_scripts source $options \
             ${@:3}"
 

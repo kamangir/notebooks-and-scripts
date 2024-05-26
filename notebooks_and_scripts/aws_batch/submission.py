@@ -26,7 +26,7 @@ def submit(
     command = [
         "bash",
         "-c",
-        "source /root/git/awesome-bash-cli/bash/abcli.sh mono,install,aws_batch {} {}".format(
+        "source /root/git/awesome-bash-cli/abcli/.abcli/abcli.sh mono,install,aws_batch {} {}".format(
             type.runner,
             command_line,
         ),
