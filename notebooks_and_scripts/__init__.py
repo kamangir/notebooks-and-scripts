@@ -4,4 +4,4 @@ ICON = "📜"
 
 DESCRIPTION = f"{ICON} notebooks and scripts for ai experiments and aws batch jobs."
 
-VERSION = "4.458.1"
+VERSION = "4.460.1"
