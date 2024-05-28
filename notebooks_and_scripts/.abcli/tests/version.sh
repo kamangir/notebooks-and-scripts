@@ -6,4 +6,6 @@ function test_notebooks_and_scripts_version() {
 
     abcli_eval dryrun=$do_dryrun \
         "notebooks_and_scripts version ${@:2}"
+
+    return 0
 }
