@@ -1,6 +1,10 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y psmisc python3-pip python3-venv
+RUN apt-get update && apt-get install -y \
+    psmisc \
+    python3-pip \
+    python3-venv \
+    curl
 
 # Create a virtual environment to isolate our package installations
 RUN python3 -m venv /opt/venv
@@ -9,7 +13,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Install Python packages using pip in the virtual environment
 RUN pip install --upgrade pip
 RUN pip install numpy
-RUN pip install panda
+RUN pip install pandas
 RUN pip install geojson
 RUN pip install beautifulsoup4
 RUN pip install geopandas
@@ -30,6 +34,7 @@ RUN apt-get update && apt-get install -y python3-opencv
 RUN pip install opencv-python
 
 RUN pip install awscli
+RUN pip install setuptools
 
 RUN pip install blueness
 
