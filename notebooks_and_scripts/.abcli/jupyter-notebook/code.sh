@@ -13,5 +13,5 @@ function abcli_notebooks_code() {
 
     [[ "$notebook_name" == *.ipynb ]] && notebook_name="${notebook_name%.ipynb}"
 
-    code "$notebook_name.ipynb"
+    echo code "$notebook_name.ipynb"
 }
