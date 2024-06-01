@@ -11,5 +11,7 @@ function abcli_notebooks_code() {
 
     abcli_notebooks_create "$1"
 
-    code
+    [[ "$notebook_name" == *.ipynb ]] && notebook_name="${notebook_name%.ipynb}"
+
+    code "$notebook_name.ipynb"
 }
