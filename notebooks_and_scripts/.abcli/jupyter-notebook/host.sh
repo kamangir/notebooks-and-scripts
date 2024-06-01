@@ -4,14 +4,14 @@ function abcli_notebooks_host() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        abcli_show_usage "@notebooks host [setup]" \
+        abcli_show_usage "@notebooks host$ABCUL${EOP}setup$EOPE" \
             "host jupyter notebook on ec2."
         return
     fi
 
     local do_setup=$(abcli_option_int "$options" setup 0)
 
-    if [ "$do_setup" == 1 ]; then
+    if [[ "$do_setup" == 1 ]]; then
         jupyter notebook password
 
         mkdir -p $abcli_path_home/ssl

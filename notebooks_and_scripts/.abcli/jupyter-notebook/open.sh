@@ -4,8 +4,8 @@ function abcli_notebooks_open() {
     local notebook_name=$(abcli_clarify_input $1 notebook)
 
     if [[ "$notebook_name" == "help" ]]; then
-        abcli_show_usage "@notebooks [open]$ABCUL[<notebook-name>]$ABCUL[<args>]" \
-            "open ./<notebook-name>.ipynb."
+        abcli_show_usage "@notebooks ${EOP}open$ABCUL<notebook-name>|notebook$ABCUL<args>$EOPE" \
+            "open <notebook-name>."
         return
     fi
 

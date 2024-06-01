@@ -4,7 +4,7 @@ function abcli_notebooks_build() {
     local notebook_name=$(abcli_clarify_input $1 notebook)
 
     if [[ "$notebook_name" == "help" ]]; then
-        abcli_show_usage "@notebooks build [<notebook-name>]" \
+        abcli_show_usage "@notebooks build$ABCUL$EOP<notebook-name>|notebook$EOPE" \
             "build $abcli_object_name/<notebook-name>.ipynb."
         return
     fi
