@@ -6,6 +6,7 @@ alias @batch=abcli_aws_batch
 
 alias @docker=abcli_docker
 
+alias @notebook=abcli_notebooks
 alias @notebooks=abcli_notebooks
 
 alias @cat="abcli_scripts cat"
