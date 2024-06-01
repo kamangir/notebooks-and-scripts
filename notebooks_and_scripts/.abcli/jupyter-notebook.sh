@@ -7,6 +7,7 @@ function abcli_notebooks() {
     if [ "$task" == "help" ]; then
         abcli_notebooks_open "$@"
         abcli_notebooks_build "$@"
+        abcli_notebooks_code "$@"
         abcli_notebooks_connect "$@"
         abcli_notebooks_create "$@"
         abcli_notebooks_host "$@"
