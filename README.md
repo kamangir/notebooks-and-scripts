@@ -1,8 +1,10 @@
-# 📜 notebooks & [meta] scripts
+# 📜 notebooks & scripts
 
-[notebooks](./notebooks) and [scripts](./scripts) for ai experiments and aws batch jobs.
+📜 [notebooks](./notebooks) and [scripts](./scripts) for ai experiments and aws batch jobs.
 
----
+```bash
+pip install notebooks-and-scripts
+```
 
 | ![image](https://github.com/kamangir/assets/blob/main/nbs/3x4.jpg?raw=true)                               | ![image](https://github.com/kamangir/assets/blob/main/nbs/mission-patch-00008.png?raw=true) | ![image](https://github.com/kamangir/assets/blob/main/nbs/train-summary.png?raw=true) ![image](https://github.com/kamangir/assets/blob/main/nbs/predict-00000.png?raw=true) |
 | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -11,7 +13,7 @@
 
 also: [`sagesemseg`](./scripts/sagesemseg/).
 
----
+## `workflow`
 
 also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of bash commands on aws batch.
 
@@ -46,5 +48,7 @@ from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc6
 | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/a-bc-d/workflow.gif?raw=true)                                                              | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/hourglass/workflow.gif?raw=true)                                                                    | ![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/map-reduce/workflow.gif?raw=true)                                                                      |
 
 ---
+
+[![PyPI version](https://img.shields.io/pypi/v/notebooks-and-scripts.svg)](https://pypi.org/project/notebooks-and-scripts/)
 
 To use on [AWS SageMaker](https://aws.amazon.com/sagemaker/) replace `<plugin-name>` with `nbs` and follow [these instructions](https://github.com/kamangir/blue-plugin/blob/main/SageMaker.md).
