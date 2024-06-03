@@ -14,13 +14,13 @@ function abcli_notebooks_host() {
     if [[ "$do_setup" == 1 ]]; then
         jupyter notebook password
 
-        mkdir -p $abcli_path_home/ssl
+        mkdir -p $HOME/ssl
         openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-            -keyout $abcli_path_home/ssl/mykey.key \
-            -out $abcli_path_home/ssl/mycert.pem
+            -keyout $HOME/ssl/mykey.key \
+            -out $HOME/ssl/mycert.pem
     fi
 
     jupyter notebook \
-        --certfile=$abcli_path_home/ssl/mycert.pem \
-        --keyfile $abcli_path_home/ssl/mykey.key
+        --certfile=$HOME/ssl/mycert.pem \
+        --keyfile $HOME/ssl/mykey.key
 }
