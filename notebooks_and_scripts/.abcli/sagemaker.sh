@@ -13,11 +13,11 @@ function abcli_sagemaker() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         case "$task" in
         browse)
-            abcli_show_usage "abcli sagemaker browse$ABCUL[dashboard]" \
+            abcli_show_usage "@sagemaker browse$ABCUL[dashboard]" \
                 "browse sagemaker."
             ;;
         *)
-            abcli_log_error "-abcli: sagemaker: $task: help: command not found."
+            abcli_log_error "-@sagemaker: $task: help: command not found."
             return 1
             ;;
         esac
@@ -34,6 +34,6 @@ function abcli_sagemaker() {
         return
     fi
 
-    abcli_log_error "-abcli: sagemaker: $task: command not found."
+    abcli_log_error "-@sagemaker: $task: command not found."
     return 1
 }
