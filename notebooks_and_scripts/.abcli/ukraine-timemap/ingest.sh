@@ -24,4 +24,6 @@ function ukraine_timemap_ingest() {
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $object_name
+
+    return 0
 }
