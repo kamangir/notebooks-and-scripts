@@ -1,8 +1,7 @@
 from abcli import file
 from abcli.modules import objects
 import geopandas as gpd
-import geojson
-from geojson import Feature, Point, FeatureCollection
+from geojson import Point
 from notebooks_and_scripts.ukraine_timemap import NAME
 from notebooks_and_scripts.logger import logger
 
