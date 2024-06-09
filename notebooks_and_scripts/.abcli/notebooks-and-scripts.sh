@@ -13,6 +13,7 @@ function notebooks_and_scripts() {
         abcli_sagemaker "$@"
         abcli_scripts "$@"
         notebooks_and_scripts_workflow "$@"
+        ukraine_timemap "$@"
         return
     fi
 
