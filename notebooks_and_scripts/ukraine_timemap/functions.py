@@ -13,7 +13,7 @@ def ingest(
     verbose: bool = False,
 ) -> bool:
     logger.info(f"{NAME}.ingest -> {object_name}")
-    filename = objects.path_of("api.json", object_name)
+    filename = objects.path_of("ukraine_timemap.json", object_name)
 
     success = file.download(api_url, filename)
     if not success:
@@ -58,7 +58,7 @@ def ingest(
         logger.error(f"{failure_count:,} event(s) failed to ingest.")
 
     return gdf.empty or file.save_geojson(
-        objects.path_of("api.geojson", object_name),
+        objects.path_of("ukraine_timemap.geojson", object_name),
         gdf,
         log=verbose,
     )
