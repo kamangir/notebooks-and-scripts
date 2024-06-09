@@ -4,6 +4,7 @@ function ukraine_timemap() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ]; then
+        ukraine_timemap_browse "$@"
         ukraine_timemap_ingest "$@"
         return
     fi
