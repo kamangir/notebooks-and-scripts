@@ -57,7 +57,7 @@ def ingest(
     if failure_count:
         logger.error(f"{failure_count:,} event(s) failed to ingest.")
 
-    return not len(gdf) or file.save_geojson(
+    return not gdf or file.save_geojson(
         objects.path_of("api.geojson", object_name),
         gdf,
         log=verbose,
