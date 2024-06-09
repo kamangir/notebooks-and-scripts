@@ -23,22 +23,27 @@ def ingest(
     success, list_of_events = file.load_json(filename)
     if not success:
         return success
-    logger.info("{:,} events(s) ingested.".format(len(list_of_events)))
+    logger.info("{:,} event(s) ingested from the api.".format(len(list_of_events)))
 
     records = []
     failure_count = 0
     for event in list_of_events:
         try:
-            point = Point(float(event["longitude"]), float(event["latitude"]))
+            point = Point(
+                (
+                    float(event["longitude"]),
+                    float(event["latitude"]),
+                )
+            )
             record = {
                 "geometry": point,
-                "sources": event["sources"],
+                "sources": ", ".join(event["sources"]),
                 "id": event["id"],
                 "description": event["description"],
                 "date": event["date"],
                 "location": event["location"],
                 "graphic": event["graphic"],
-                "associations": event["associations"],
+                "associations": ", ".join(event["associations"]),
                 "time": event["time"],
             }
         except Exception as e:
@@ -49,14 +54,11 @@ def ingest(
         records.append(record)
     gdf = gpd.GeoDataFrame(records)
 
-    logger.info(f"ingested {len(gdf)} event(s).")
+    logger.info("{:,} event(s) ingested into the gdf.".format(len(gdf)))
     if failure_count:
-        logger.error(f"failed to ingest {failure_count} event(s).")
+        logger.error(f"{failure_count:,} event(s) failed to ingest.")
 
-    if not len(gdf):
-        return True
-
-    return file.save_geojson(
+    return not len(gdf) or file.save_geojson(
         objects.path_of("api.geojson", object_name),
         gdf,
         log=verbose,
