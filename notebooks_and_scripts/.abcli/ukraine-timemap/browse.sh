@@ -14,9 +14,9 @@ function ukraine_timemap_browse() {
     local do_github=$(abcli_option_int "$options" github 0)
 
     local url="https://ukraine.bellingcat.com/"
-    [[ "$do_dataset" == 1 ]] &&
-        url="https://github.com/bellingcat/ukraine-timemap"
     [[ "$do_github" == 1 ]] &&
+        url="https://github.com/bellingcat/ukraine-timemap"
+    [[ "$do_dataset" == 1 ]] &&
         url="https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/ukr/timemap/api.json"
 
     abcli_browse $url
