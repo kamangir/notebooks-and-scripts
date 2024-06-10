@@ -6,6 +6,14 @@
 pip install notebooks-and-scripts
 ```
 
+🔷 [scripts](#scripts) 🔷 [ukraine-timemap](#ukraine-timemap) 🇺🇦 🔷 [workflow](#workflow) 🔷
+
+---
+
+## scripts
+
+scripts are maintained as legacy and are replaced with `@docker eval - <command>`.
+
 | ![image](https://github.com/kamangir/assets/blob/main/nbs/3x4.jpg?raw=true)                               | ![image](https://github.com/kamangir/assets/blob/main/nbs/mission-patch-00008.png?raw=true) | ![image](https://github.com/kamangir/assets/blob/main/nbs/train-summary.png?raw=true) ![image](https://github.com/kamangir/assets/blob/main/nbs/predict-00000.png?raw=true) |
 | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [paint-a-sentence](./scripts/paint-a-sentence.sh)                                                         | [mission-patch](./scripts/mission-patch.sh)                                                 | [roofAI-train](./scripts/roofAI-train.sh)                                                                                                                                   |
@@ -13,7 +21,44 @@ pip install notebooks-and-scripts
 
 also: [`sagesemseg`](./scripts/sagesemseg/).
 
-## `workflow`
+---
+
+## ukraine-timemap 🇺🇦
+
+`ukraine-timemap` ingests the [Civilian Harm in Ukraine TimeMap](https://github.com/bellingcat/ukraine-timemap) dataset, available through [this UI](https://ukraine.bellingcat.com/) and [this API](https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/ukr/timemap/api.json), and generates a `geojson`, a QGIS project, and more.
+
+download the latest ingested object: [ukraine-timemap.tar.gz](https://kamangir-public.s3.ca-central-1.amazonaws.com/ukraine_timemap.tar.gz).
+
+```bash
+ > ukraine_timemap help
+ukraine_timemap browse \
+	[dataset|github]
+ . browse ukraine-timemap.
+ukraine_timemap ingest \
+	[dryrun,~upload] \
+	[-|<object-name>] \
+	[--verbose 1]
+ . ingest the latest dataset from https://github.com/bellingcat/ukraine-timemap.
+```
+
+example use,
+
+```
+@select ukraine-timemap-$(@@timestamp)
+ukraine_timemap ingest - . --verbose 1
+@open . QGIS
+@publish tar .
+```
+
+![image](https://github.com/kamangir/assets/blob/main/nbs/ukraine-timemap/ingest_log.png?raw=true)
+
+![image](https://github.com/kamangir/assets/blob/main/nbs/ukraine-timemap/QGIS.png?raw=true)
+
+more: https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-93-bf0cee062693
+
+---
+
+## workflow
 
 also home to [`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of bash commands on aws batch.
 
