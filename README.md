@@ -6,7 +6,7 @@
 pip install notebooks-and-scripts
 ```
 
-🔷 [scripts](#scripts) 🔷 [ukraine-timemap](#ukraine-timemap) 🇺🇦 🔷 [workflow](#workflow) 🔷
+🔷 [scripts](#scripts) 🔷 [ukraine-timemap](#ukraine-timemap-) 🇺🇦 🔷 [workflow](#workflow) 🔷
 
 ---
 
