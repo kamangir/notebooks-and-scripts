@@ -13,7 +13,11 @@ def ingest(
     verbose: bool = False,
 ) -> bool:
     logger.info(f"{NAME}.ingest -> {object_name}")
-    filename = objects.path_of("ukraine_timemap.json", object_name)
+    filename = objects.path_of(
+        "ukraine_timemap.json",
+        object_name,
+        create=True,
+    )
 
     success = file.download(api_url, filename)
     if not success:
