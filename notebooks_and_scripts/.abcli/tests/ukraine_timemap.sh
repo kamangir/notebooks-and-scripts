@@ -17,5 +17,9 @@ function test_notebooks_and_scripts_ukraine_timemap() {
         as=ukraine_timemap,tar \
         $object_name
 
+    abcli_publish \
+        as=ukraine_timemap,suffix=.png \
+        $object_name
+
     return 0
 }
