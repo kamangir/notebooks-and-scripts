@@ -1,4 +1,5 @@
 from abcli import file, fullname
+from abcli.plugins.metadata import post
 from datetime import datetime
 from collections import Counter
 from typing import Tuple
@@ -9,8 +10,12 @@ from notebooks_and_scripts import VERSION
 from notebooks_and_scripts.ukraine_timemap import NAME
 from notebooks_and_scripts.logger import logger
 import matplotlib.pyplot as plt
+from typing import Dict
+from typing import Any
 
-api_url = "https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/ukr/timemap/api.json"
+API_URL = "https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/ukr/timemap/api.json"
+
+DESCRIPTION = "Civilian Harm in Ukraine TimeMap"
 
 
 def ingest(
@@ -27,8 +32,12 @@ def ingest(
     )
 
     gdf = gpd.GeoDataFrame()
+    metadata: Dict[str, Any] = {
+        "description": DESCRIPTION,
+        "created_by": f"{NAME}-{VERSION}.{fullname()}",
+    }
 
-    success = file.download(api_url, filename)
+    success = file.download(API_URL, filename)
     if not success:
         return success, gdf
 
@@ -36,6 +45,7 @@ def ingest(
     if not success:
         return success, gdf
     logger.info("{:,} event(s) ingested from the api.".format(len(list_of_events)))
+    metadata["api_count"] = len(list_of_events)
 
     records = []
     failure_count = 0
@@ -70,8 +80,10 @@ def ingest(
     gdf = gdf.sort_values(by="date_obj", ascending=False)
 
     logger.info("{:,} event(s) -ingested-> gdf.".format(len(gdf)))
+    metadata["ingested_count"] = len(gdf)
     if failure_count:
         logger.error(f"{failure_count:,} event(s) failed to ingest.")
+    metadata["failure_count"] = failure_count
 
     histogram = Counter(list(gdf["date_obj"].values))
 
@@ -83,6 +95,7 @@ def ingest(
             max(dates),
         )
     )
+    metadata["range"] = [min(dates), max(dates)]
 
     if do_visualize:
         values = [histogram[date] for date in dates]
@@ -99,7 +112,7 @@ def ingest(
             )
         )
         plt.ylabel("# Events / Day")
-        plt.title("Civilian Harm in Ukraine TimeMap")
+        plt.title(DESCRIPTION)
 
         date_count = 20
         if len(dates) > date_count:
@@ -125,6 +138,10 @@ def ingest(
         if not file.save_geojson(
             objects.path_of("ukraine_timemap.geojson", object_name),
             gdf.drop(columns=["date_obj"]),
+            log=log,
+        ) or not file.save_yaml(
+            objects.path_of("metadata.yaml", object_name),
+            metadata,
             log=log,
         ):
             return False, gdf
