@@ -1,19 +1,23 @@
-from abcli import file
+from abcli import file, fullname
+from datetime import datetime
+from collections import Counter
 from typing import Tuple
 from abcli.modules import objects
 import geopandas as gpd
 from geojson import Point
+from notebooks_and_scripts import VERSION
 from notebooks_and_scripts.ukraine_timemap import NAME
 from notebooks_and_scripts.logger import logger
+import matplotlib.pyplot as plt
 
 api_url = "https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/ukr/timemap/api.json"
 
 
 def ingest(
     object_name: str,
-    sorted: bool = True,
     do_save: bool = True,
-    verbose: bool = False,
+    do_visualize: bool = True,
+    log: bool = True,
 ) -> Tuple[bool, gpd.GeoDataFrame]:
     logger.info(f"{NAME}.ingest -> {object_name}")
     filename = objects.path_of(
@@ -49,6 +53,7 @@ def ingest(
                 "id": event["id"],
                 "description": event["description"],
                 "date": event["date"],
+                "date_obj": datetime.strptime(event["date"], "%m/%d/%Y").date(),
                 "location": event["location"],
                 "graphic": event["graphic"],
                 "associations": ", ".join(event["associations"]),
@@ -62,28 +67,65 @@ def ingest(
         records.append(record)
     gdf = gpd.GeoDataFrame(records)
 
-    gdf["date"] = gdf["date"].apply(
-        lambda date: "/".join(
-            [
-                date.split("/")[2],
-                date.split("/")[0],
-                date.split("/")[1],
-            ]
+    gdf = gdf.sort_values(by="date_obj", ascending=False)
+
+    logger.info("{:,} event(s) -ingested-> gdf.".format(len(gdf)))
+    if failure_count:
+        logger.error(f"{failure_count:,} event(s) failed to ingest.")
+
+    histogram = Counter(list(gdf["date_obj"].values))
+
+    dates = sorted(histogram.keys())
+    logger.info(
+        "{:,} day(s) of events, starting {}, until {}.".format(
+            len(dates),
+            min(dates),
+            max(dates),
         )
     )
 
-    if sorted:
-        gdf = gdf.sort_values(by="date", ascending=False)
+    if do_visualize:
+        values = [histogram[date] for date in dates]
 
-    logger.info("{:,} event(s) ingested into the gdf.".format(len(gdf)))
-    if failure_count:
-        logger.error(f"{failure_count:,} event(s) failed to ingest.")
+        plt.figure(figsize=(10, 5))
+        plt.bar(dates, values, color="blue")
+        plt.xlabel(
+            " | ".join(
+                [
+                    "Date",
+                    object_name,
+                    f"{NAME}-{VERSION}.{fullname()}",
+                ]
+            )
+        )
+        plt.ylabel("# Events / Day")
+        plt.title("Civilian Harm in Ukraine TimeMap")
+
+        date_count = 20
+        if len(dates) > date_count:
+            selected_dates = [
+                dates[i] for i in range(0, len(dates), len(dates) // date_count)
+            ]
+            if dates[-1] not in selected_dates:
+                selected_dates.append(dates[-1])
+        else:
+            selected_dates = dates
+        plt.xticks(selected_dates, rotation=45)
+
+        plt.tight_layout()
+        plt.grid(True)
+
+        if do_save:
+            file.save_fig(
+                objects.path_of("ukraine_timemap.png", object_name),
+                log=log,
+            )
 
     if do_save and not gdf.empty:
         if not file.save_geojson(
             objects.path_of("ukraine_timemap.geojson", object_name),
-            gdf,
-            log=verbose,
+            gdf.drop(columns=["date_obj"]),
+            log=log,
         ):
             return False, gdf
 

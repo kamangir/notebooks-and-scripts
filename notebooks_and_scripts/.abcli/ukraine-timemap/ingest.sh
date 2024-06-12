@@ -5,8 +5,7 @@ function ukraine_timemap_ingest() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="dryrun,~upload"
-        local args="[--verbose 1]"
-        abcli_show_usage "ukraine_timemap ingest$ABCUL[$options]$ABCUL[-|<object-name>]$ABCUL$args" \
+        abcli_show_usage "ukraine_timemap ingest$ABCUL[$options]$ABCUL[-|<object-name>]" \
             "ingest the latest dataset from https://github.com/bellingcat/ukraine-timemap."
         return
     fi

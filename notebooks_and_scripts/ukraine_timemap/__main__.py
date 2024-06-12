@@ -14,20 +14,11 @@ parser.add_argument(
     "--object_name",
     type=str,
 )
-parser.add_argument(
-    "--verbose",
-    type=bool,
-    default=0,
-    help="0|1",
-)
 args = parser.parse_args()
 
 success = False
 if args.task == "ingest":
-    success, _ = ingest(
-        object_name=args.object_name,
-        verbose=args.verbose == 1,
-    )
+    success, _ = ingest(object_name=args.object_name)
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 

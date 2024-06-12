@@ -4,6 +4,7 @@ beautifulsoup4
 boto3
 geojson
 geopandas
+ipdb
 matplotlib
 networkx
 opencv-python
