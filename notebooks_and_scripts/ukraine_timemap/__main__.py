@@ -24,7 +24,7 @@ args = parser.parse_args()
 
 success = False
 if args.task == "ingest":
-    success = ingest(
+    success, _ = ingest(
         object_name=args.object_name,
         verbose=args.verbose == 1,
     )

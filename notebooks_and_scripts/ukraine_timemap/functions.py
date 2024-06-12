@@ -1,4 +1,5 @@
 from abcli import file
+from typing import Tuple
 from abcli.modules import objects
 import geopandas as gpd
 from geojson import Point
@@ -10,8 +11,9 @@ api_url = "https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/
 
 def ingest(
     object_name: str,
+    do_save: bool = True,
     verbose: bool = False,
-) -> bool:
+) -> Tuple[bool, gpd.GeoDataFrame]:
     logger.info(f"{NAME}.ingest -> {object_name}")
     filename = objects.path_of(
         "ukraine_timemap.json",
@@ -19,13 +21,15 @@ def ingest(
         create=True,
     )
 
+    gdf = gpd.GeoDataFrame()
+
     success = file.download(api_url, filename)
     if not success:
-        return success
+        return success, gdf
 
     success, list_of_events = file.load_json(filename)
     if not success:
-        return success
+        return success, gdf
     logger.info("{:,} event(s) ingested from the api.".format(len(list_of_events)))
 
     records = []
@@ -61,8 +65,12 @@ def ingest(
     if failure_count:
         logger.error(f"{failure_count:,} event(s) failed to ingest.")
 
-    return gdf.empty or file.save_geojson(
-        objects.path_of("ukraine_timemap.geojson", object_name),
-        gdf,
-        log=verbose,
-    )
+    if do_save and not gdf.empty:
+        if not file.save_geojson(
+            objects.path_of("ukraine_timemap.geojson", object_name),
+            gdf,
+            log=verbose,
+        ):
+            return False, gdf
+
+    return True, gdf
