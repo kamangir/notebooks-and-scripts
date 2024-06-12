@@ -1,5 +1,4 @@
-from abcli import file, fullname
-from abcli.plugins.metadata import post
+from abcli import file, fullname, string
 from datetime import datetime
 from collections import Counter
 from typing import Tuple
@@ -35,6 +34,7 @@ def ingest(
     metadata: Dict[str, Any] = {
         "description": DESCRIPTION,
         "created_by": f"{NAME}-{VERSION}.{fullname()}",
+        "creation_date": string.pretty_date(),
     }
 
     success = file.download(API_URL, filename)
