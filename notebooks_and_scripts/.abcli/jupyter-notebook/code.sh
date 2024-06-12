@@ -4,7 +4,7 @@ function abcli_notebooks_code() {
     local notebook_name=$(abcli_clarify_input $1 notebook)
 
     if [[ "$notebook_name" == "help" ]]; then
-        abcli_show_usage "@notebooks ${EOP}code$ABCUL<notebook-name>|notebookEOPE" \
+        abcli_show_usage "@notebooks ${EOP}code$ABCUL<notebook-name>|notebook$EOPE" \
             "code <notebook-name>."
         return
     fi

@@ -11,3 +11,7 @@ function notebooks() {
 function jupyter-notebook() {
     abcli_notebooks "$@"
 }
+
+function ukraine() {
+    ukraine_timemap "$@"
+}

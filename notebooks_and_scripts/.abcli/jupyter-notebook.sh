@@ -14,6 +14,11 @@ function abcli_notebooks() {
         return
     fi
 
+    if [[ "$task" == "init" ]]; then
+        notebooks_and_scripts "$@"
+        return
+    fi
+
     local function_name=abcli_notebooks_$task
     if [[ $(type -t $function_name) == "function" ]]; then
         $function_name "${@:2}"

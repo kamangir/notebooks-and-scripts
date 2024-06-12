@@ -4,7 +4,7 @@ function abcli_notebooks_create() {
     local notebook_name=$(abcli_clarify_input $1 notebook)
 
     if [[ "$notebook_name" == "help" ]]; then
-        abcli_show_usage "@notebooks create|touch$ABCUL$EOP<notebook-name>|notebook$EOPE" \
+        abcli_show_usage "@notebooks create|touch$ABCUL$EOP<notebook-name>|<path>/<notebook-name>|notebook$EOPE" \
             "create <notebook-name>."
         return
     fi
