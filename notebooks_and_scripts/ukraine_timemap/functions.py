@@ -11,6 +11,7 @@ api_url = "https://bellingcat-embeds.ams3.cdn.digitaloceanspaces.com/production/
 
 def ingest(
     object_name: str,
+    sorted: bool = True,
     do_save: bool = True,
     verbose: bool = False,
 ) -> Tuple[bool, gpd.GeoDataFrame]:
@@ -60,6 +61,19 @@ def ingest(
 
         records.append(record)
     gdf = gpd.GeoDataFrame(records)
+
+    gdf["date"] = gdf["date"].apply(
+        lambda date: "/".join(
+            [
+                date.split("/")[2],
+                date.split("/")[0],
+                date.split("/")[1],
+            ]
+        )
+    )
+
+    if sorted:
+        gdf = gdf.sort_values(by="date", ascending=False)
 
     logger.info("{:,} event(s) ingested into the gdf.".format(len(gdf)))
     if failure_count:
