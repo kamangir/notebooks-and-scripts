@@ -77,6 +77,8 @@ def ingest(
         records.append(record)
     gdf = gpd.GeoDataFrame(records)
 
+    gdf.set_crs(epsg=4326, inplace=True)  # WGS 84
+
     gdf = gdf.sort_values(by="date_obj", ascending=False)
 
     logger.info("{:,} event(s) -ingested-> gdf.".format(len(gdf)))
@@ -134,10 +136,12 @@ def ingest(
                 log=log,
             )
 
+    gdf = gdf.drop(columns=["date_obj"])
+
     if do_save and not gdf.empty:
         if not file.save_geojson(
             objects.path_of("ukraine_timemap.geojson", object_name),
-            gdf.drop(columns=["date_obj"]),
+            gdf,
             log=log,
         ) or not file.save_yaml(
             objects.path_of("metadata.yaml", object_name),
