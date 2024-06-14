@@ -12,3 +12,5 @@ def test_notebooks_and_scripts_env():
     assert env.ABCLI_AWS_BATCH_JOB_STATUS_LIST_WATCH
 
     assert env.NBS_DEFAULT_WORKFLOW_PATTERN
+
+    assert env.UKRAINE_TIMEMAP_TEMPLATE

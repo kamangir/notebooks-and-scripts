@@ -9,6 +9,11 @@ function ukraine_timemap() {
         return
     fi
 
+    if [[ "$task" == "init" ]]; then
+        notebooks_and_scripts "$@"
+        return
+    fi
+
     local function_name=ukraine_timemap_$task
     if [[ $(type -t $function_name) == "function" ]]; then
         $function_name "${@:2}"
