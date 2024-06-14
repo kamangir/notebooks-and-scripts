@@ -5,7 +5,7 @@ function ukraine_timemap_ingest() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="${EOP}dryrun,~upload$EOPE"
-        local open_options="open,QGIS"
+        local open_options="open$EOP,~QGIS$EOPE"
         abcli_show_usage "ukraine_timemap ingest$ABCUL$options$ABCUL-$EOP|<object-name>$EOPE$ABCUL$open_options" \
             "ingest the latest dataset from https://github.com/bellingcat/ukraine-timemap."
         return
@@ -27,7 +27,7 @@ function ukraine_timemap_ingest() {
         python3 -m notebooks_and_scripts.ukraine_timemap \
         ingest \
         --object_name $object_name \
-        "${@:3}"
+        "${@:4}"
 
     abcli_tag set \
         $object_name \
@@ -40,7 +40,7 @@ function ukraine_timemap_ingest() {
     local do_open=$(abcli_option_int "$open_options" open 0)
     [[ "$do_open" == 1 ]] &&
         abcli_open $object_name \
-            $open_options
+            QGIS,$open_options
 
     return 0
 }
