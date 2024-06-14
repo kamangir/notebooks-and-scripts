@@ -15,11 +15,22 @@ function ukraine_timemap_ingest() {
 
     local object_name=$(abcli_clarify_object $2 ukraine-timemap-$(abcli_string_timestamp_short))
 
+    abcli_clone \
+        $UKRAINE_TIMEMAP_TEMPLATE \
+        $object_name \
+        ~meta
+    rm -v \
+        $abcli_object_root/$object_name/ukraine_timemap.*
+
     abcli_eval dryrun=$do_dryrun \
         python3 -m notebooks_and_scripts.ukraine_timemap \
         ingest \
         --object_name $object_name \
         "${@:3}"
+
+    abcli_tag set \
+        $object_name \
+        ukraine_timemap_ingest
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $object_name
