@@ -4,8 +4,9 @@ function ukraine_timemap_ingest() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        options="dryrun,~upload"
-        abcli_show_usage "ukraine_timemap ingest$ABCUL[$options]$ABCUL[-|<object-name>]" \
+        options="${EOP}dryrun,~upload$EOPE"
+        local open_options="open,QGIS"
+        abcli_show_usage "ukraine_timemap ingest$ABCUL$options$ABCUL-$EOP|<object-name>$EOPE$ABCUL$open_options" \
             "ingest the latest dataset from https://github.com/bellingcat/ukraine-timemap."
         return
     fi
@@ -34,6 +35,12 @@ function ukraine_timemap_ingest() {
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $object_name
+
+    local open_options=$3
+    local do_open=$(abcli_option_int "$open_options" open 0)
+    [[ "$do_open" == 1 ]] &&
+        abcli_open $object_name \
+            $open_options
 
     return 0
 }
