@@ -136,6 +136,8 @@ def ingest(
                 log=log,
             )
 
+    gdf["date"] = gdf["date_obj"].apply(lambda d: f"{d.year}/{d.month:02}/{d.day:02}")
+
     gdf = gdf.drop(columns=["date_obj"])
 
     if do_save and not gdf.empty:
