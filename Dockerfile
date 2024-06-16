@@ -36,7 +36,7 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-RUN pip install blueness
+RUN pip install --no-cache-dir blueness
 
 # Copy and install local packages
 RUN mkdir -p /root/git/awesome-bash-cli
