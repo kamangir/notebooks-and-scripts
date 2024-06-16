@@ -14,7 +14,7 @@ Open as many image terminals as you wish and paste the sagemaker seed 🌱
 @seed sagemaker plugin=<plugin-name>
 ```
 
-![image](./assets/sagemaker.jpg)
+![image](https://github.com/kamangir/assets/blob/main/nbs/sagemaker.jpg?raw=true)
 
 ---
 
