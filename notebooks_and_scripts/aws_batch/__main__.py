@@ -7,6 +7,7 @@ from notebooks_and_scripts.aws_batch.submission import (
     SubmissionType,
 )
 from notebooks_and_scripts.logger import logger
+from blueness.argparse.generic import ending
 
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
@@ -51,7 +52,6 @@ elif args.task == "submit":
         type=SubmissionType[args.type.upper()],
     )
 else:
-    logger.error(f"-{NAME}: {args.task}: command not found.")
+    success = None
 
-if not success:
-    logger.error(f"-{NAME}: {args.task}: failed.")
+ending(logger, NAME, args.task, success)

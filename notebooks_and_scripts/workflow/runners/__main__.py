@@ -4,6 +4,7 @@ from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow import VERSION, NAME
 from notebooks_and_scripts.workflow.runners.factory import runner_class
 from notebooks_and_scripts.logger import logger
+from blueness.argparse.generic import ending
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
@@ -91,7 +92,6 @@ elif args.task == "submit":
     if success:
         success = workflow.save()
 else:
-    logger.error(f"-{NAME}: {args.task}: command not found.")
+    success = None
 
-if not success:
-    logger.error(f"-{NAME}: {args.task}: failed.")
+ending(logger, NAME, args.task, success)
