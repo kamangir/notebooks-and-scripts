@@ -3,7 +3,7 @@ from notebooks_and_scripts import VERSION
 from notebooks_and_scripts.ukraine_timemap import NAME
 from notebooks_and_scripts.ukraine_timemap.functions import ingest
 from notebooks_and_scripts.logger import logger
-from blueness.argparse.generic import ending
+from blueness.argparse.generic import sys_exit
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
@@ -23,4 +23,4 @@ if args.task == "ingest":
 else:
     success = None
 
-ending(logger, NAME, args.task, success)
+sys_exit(logger, NAME, args.task, success)

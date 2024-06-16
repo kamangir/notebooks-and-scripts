@@ -7,7 +7,7 @@ from notebooks_and_scripts.aws_batch.submission import (
     SubmissionType,
 )
 from notebooks_and_scripts.logger import logger
-from blueness.argparse.generic import ending
+from blueness.argparse.generic import sys_exit
 
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
@@ -54,4 +54,4 @@ elif args.task == "submit":
 else:
     success = None
 
-ending(logger, NAME, args.task, success)
+sys_exit(logger, NAME, args.task, success)

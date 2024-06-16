@@ -5,7 +5,7 @@ from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.logger import logger
-from blueness.argparse.generic import ending
+from blueness.argparse.generic import sys_exit
 
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
@@ -39,4 +39,4 @@ if args.task == "create":
 else:
     success = None
 
-ending(logger, NAME, args.task, success)
+sys_exit(logger, NAME, args.task, success)
