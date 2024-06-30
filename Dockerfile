@@ -37,13 +37,9 @@ RUN pip install awscli
 RUN pip install setuptools
 
 RUN pip install --no-cache-dir blueness
+RUN pip install --no-cache-dir articraft
 
 # Copy and install local packages
-RUN mkdir -p /root/git/blueness
-ADD ./blueness /root/git/blueness
-WORKDIR /root/git/blueness
-RUN pip install -e .
-
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
