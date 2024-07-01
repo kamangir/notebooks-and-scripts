@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 function bashtest() {
-    # set -x # verbose-mode
+    set -x # verbose-mode
 
     local plugin_name=$1
 
