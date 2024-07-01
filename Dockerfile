@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     psmisc \
     python3-pip \
     python3-venv \
-    curl
+    curl \
+    git
 
 # Create a virtual environment to isolate our package installations
 RUN python3 -m venv /opt/venv
