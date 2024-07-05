@@ -6,7 +6,7 @@ function abcli_docker() {
 
     if [ "$task" == "help" ]; then
         abcli_docker_browse "$@"
-        abcli_docker_browse_build "$@"
+        abcli_docker_build "$@"
         abcli_docker_clear "$@"
         abcli_docker eval "$@"
         abcli_docker_push "$@"
@@ -21,6 +21,8 @@ function abcli_docker() {
         $function_name "${@:2}"
         return
     fi
+
+    local options=$2
 
     if [[ "|eval|source|" == *"|$task|"* ]]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
