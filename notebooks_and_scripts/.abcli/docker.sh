@@ -26,12 +26,13 @@ function abcli_docker() {
 
     if [[ "|eval|source|" == *"|$task|"* ]]; then
         if [ $(abcli_option_int "$options" help 0) == 1 ]; then
+            options="$EOP$abcli_scripts_options,verbose$EOPE"
             [[ "$task" == "eval" ]] &&
-                abcli_show_usage "@docker eval $EOP[$abcli_scripts_options,verbose]$EOPE$ABCUL<command-line>" \
+                abcli_show_usage "@docker eval$ABCUL$options$ABCUL<command-line>" \
                     "run <command-line> through the abcli docker image."
 
             [[ "$task" == "source" ]] &&
-                abcli_show_usage "@docker source $EOP[$abcli_scripts_options,verbose]$EOPE$ABCUL<script-name> [<args>]" \
+                abcli_show_usage "@docker source$ABCUL$options$ABCUL<script-name> [<args>]" \
                     "source <script-name> <args> through the abcli docker image."
 
             return

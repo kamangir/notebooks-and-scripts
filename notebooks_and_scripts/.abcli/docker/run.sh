@@ -4,8 +4,8 @@ function abcli_docker_run() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        options="${EOP}dryrun$EOPE}"
-        abcli_show_usage "@docker run $options" \
+        options="${EOP}dryrun$EOPE"
+        abcli_show_usage "@docker run$ABCUL$options" \
             "run abcli docker image."
         return
     fi

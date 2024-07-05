@@ -5,7 +5,7 @@ function abcli_docker_browse() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="$EOP~public$EOPE"
-        abcli_show_usage "@docker browse $options" \
+        abcli_show_usage "@docker browse$ABCUL$options" \
             "browse docker-hub."
         return
     fi

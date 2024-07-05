@@ -5,7 +5,7 @@ function abcli_docker_build() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="${EOP}dryrun,~push,run,verbose$EOPE"
-        abcli_show_usage "@docker build $options" \
+        abcli_show_usage "@docker build$ABCUL$options" \
             "build the abcli docker image."
         return
     fi
