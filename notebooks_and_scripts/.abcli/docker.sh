@@ -7,7 +7,7 @@ function abcli_docker() {
         abcli_show_usage "@docker browse [~public]" \
             "browse docker-hub"
 
-        abcli_show_usage "@docker build [dryrun,~push,run]" \
+        abcli_show_usage "@docker build [dryrun,~push,run,verbose]" \
             "build abcli docker image."
 
         abcli_show_usage "@docker clear" \
@@ -47,14 +47,20 @@ function abcli_docker() {
 
         local do_push=$(abcli_option_int "$options" push $(abcli_not $do_dryrun))
         local do_run=$(abcli_option_int "$options" run 0)
+        local verbose=$(abcli_option_int "$options" verbose 0)
 
         pushd $abcli_path_git >/dev/null
 
         mkdir -p temp
         cp -v ~/.kaggle/kaggle.json temp/
 
+        local extra_args=""
+        [[ "$verbose" == 1 ]] &&
+            extra_args="$extra_args --progress=plain"
+
         abcli_eval ,$options \
             docker build \
+            $extra_args \
             --build-arg HOME=$HOME \
             -t kamangir/abcli \
             -f notebooks-and-scripts/Dockerfile \
