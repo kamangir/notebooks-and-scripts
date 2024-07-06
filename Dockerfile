@@ -37,7 +37,7 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-RUN pip install --no-cache-dir blueness
+RUN pip install --upgrade --no-cache-dir blueness
 RUN pip install --no-cache-dir abadpour
 #RUN pip install --no-cache-dir blue_geo
 #RUN pip install --no-cache-dir blue_plugin
