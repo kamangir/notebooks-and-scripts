@@ -37,15 +37,6 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-RUN pip install --upgrade --no-cache-dir blueness
-RUN pip install --upgrade --no-cache-dir blue-options
-RUN pip install --no-cache-dir abadpour
-#RUN pip install --no-cache-dir blue_geo
-#RUN pip install --no-cache-dir blue_plugin
-RUN pip install --no-cache-dir hubblescope
-#RUN pip install --no-cache-dir openai_commands
-RUN pip install --no-cache-dir gizai
-
 # Copy and install local packages
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
@@ -61,3 +52,13 @@ RUN mkdir -p /root/git/vancouver-watching
 ADD ./vancouver-watching /root/git/vancouver-watching
 WORKDIR /root/git/vancouver-watching
 RUN pip install -e .
+
+# install blue packages
+RUN pip install --upgrade --no-cache-dir blueness
+RUN pip install --upgrade --no-cache-dir blue-options
+RUN pip install --no-cache-dir abadpour
+#RUN pip install --no-cache-dir blue_geo
+#RUN pip install --no-cache-dir blue_plugin
+RUN pip install --no-cache-dir hubblescope
+#RUN pip install --no-cache-dir openai_commands
+RUN pip install --no-cache-dir gizai
