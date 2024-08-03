@@ -53,6 +53,11 @@ ADD ./vancouver-watching /root/git/vancouver-watching
 WORKDIR /root/git/vancouver-watching
 RUN pip install -e .
 
+RUN mkdir -p /root/git/openai-commands
+ADD ./openai-commands /root/git/openai-commands
+WORKDIR /root/git/openai-commands
+RUN pip install -e .
+
 # install blue packages
 RUN pip install --upgrade --no-cache-dir blueness
 RUN pip install --upgrade --no-cache-dir blue-options
