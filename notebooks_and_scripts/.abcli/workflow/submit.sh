@@ -20,6 +20,8 @@ function notebooks_and_scripts_workflow_submit() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
+    abcli_log "workflow submit: $job_name -> $runner_type"
+
     python3 -m notebooks_and_scripts.workflow.runners \
         submit \
         --dryrun $do_dryrun \
