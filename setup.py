@@ -10,7 +10,11 @@ setup(
     description=DESCRIPTION,
     packages=[
         NAME,
+        f"{NAME}.aws_batch",
         f"{NAME}.sagemaker",
+        f"{NAME}.workflow",
+        f"{NAME}.workflow.patterns",
+        f"{NAME}.workflow.runners",
     ],
     include_package_data=True,
     package_data={
