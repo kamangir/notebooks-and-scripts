@@ -1,7 +1,12 @@
 from typing import Any, List, Tuple, Dict
+import boto3
+import glob
 from tqdm import tqdm
 from blueness import module
+from abcli import file
+from abcli import string
 from abcli.modules import objects
+from abcli.plugins.graphics.gif import generate_animated_gif
 from abcli.plugins.metadata import post, MetadataSourceType
 from notebooks_and_scripts import NAME
 from notebooks_and_scripts.logger import logger
@@ -22,9 +27,46 @@ class GenericRunner:
         workflow: Workflow,
         hot_node: str = "void",
     ) -> bool:
-        logger.info(f"{self.__class__.__name__}.monitor: {workflow.G} @ {hot_node}")
+        try:
+            workflow = self.monitor_function(workflow)
+        except Exception as e:
+            logger.info(e)
 
-        return True
+        summary: Dict[str, str] = {}
+        for node in workflow.G.nodes:
+            summary.setdefault(status[node], []).append(node)
+
+        for status, nodes in summary.items():
+            logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
+
+        if not dot_file.export_graph_as_image(
+            workflow.G,
+            objects.path_of(
+                "workflow-{}.png".format(
+                    string.pretty_date(as_filename=True, unique=True),
+                ),
+                workflow.job_name,
+            ),
+            colormap=dot_file.status_color_map,
+            hot_node=hot_node,
+        ):
+            return False
+
+        return generate_animated_gif(
+            [
+                filename
+                for filename in sorted(
+                    glob.glob(objects.path_of("workflow-*.png", workflow.job_name))
+                )
+                if len(file.name(filename)) > 15
+            ],
+            objects.path_of("workflow.gif", workflow.job_name),
+            frame_duration=333,
+        )
+
+    def monitor_function(self, workflow: Workflow) -> Workflow:
+        logger.info(f"{NAME}.{self.__class__.__name__}.monitor: {workflow}")
+        return workflow
 
     def submit(
         self,

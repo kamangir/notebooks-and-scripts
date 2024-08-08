@@ -78,6 +78,9 @@ class Workflow:
             {"pattern": pattern},
         )
 
+    def node_job_name(self, node: str) -> str:
+        return f"{self.job_name}-{node}"
+
     def post_metadata(
         self,
         key: str,

@@ -2,10 +2,6 @@ from typing import Dict, Any, Tuple, List
 import boto3
 import glob
 from tqdm import tqdm
-from abcli import file
-from abcli import string
-from abcli.modules import objects
-from abcli.plugins.graphics.gif import generate_animated_gif
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
@@ -19,18 +15,13 @@ class AWSBatchRunner(GenericRunner):
         super().__init__(**kw_args)
         self.type: RunnerType = RunnerType.AWS_BATCH
 
-    def monitor(
-        self,
-        workflow: Workflow,
-        hot_node: str = "void",
-    ) -> bool:
-        assert super().monitor(workflow)
+    def monitor_function(self, workflow: Workflow) -> Workflow:
+        workflow = super().monitor_function(workflow)
 
         client = boto3.client("batch")
 
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/describe_jobs.html
         page_size = 100
-        summary: Dict[str, str] = {}
         for index in tqdm(range(0, len(workflow.G.nodes), page_size)):
             nodes = list(workflow.G.nodes)[index : index + page_size]
 
@@ -47,35 +38,7 @@ class AWSBatchRunner(GenericRunner):
             for node, job_id in zip(nodes, jobs):
                 workflow.G.nodes[node]["status"] = status[job_id]
 
-                summary.setdefault(status[job_id], []).append(node)
-
-        for status, nodes in summary.items():
-            logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
-
-        if not dot_file.export_graph_as_image(
-            workflow.G,
-            objects.path_of(
-                "workflow-{}.png".format(
-                    string.pretty_date(as_filename=True, unique=True),
-                ),
-                workflow.job_name,
-            ),
-            colormap=dot_file.status_color_map,
-            hot_node=hot_node,
-        ):
-            return False
-
-        return generate_animated_gif(
-            [
-                filename
-                for filename in sorted(
-                    glob.glob(objects.path_of("workflow-*.png", workflow.job_name))
-                )
-                if len(file.name(filename)) > 15
-            ],
-            objects.path_of("workflow.gif", workflow.job_name),
-            frame_duration=333,
-        )
+        return workflow
 
     def submit_command(
         self,
