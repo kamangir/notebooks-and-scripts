@@ -37,11 +37,11 @@ class LocalRunner(GenericRunner):
     ) -> Tuple[bool, Any]:
         super().submit_command(command_line, job_name, dependencies, verbose)
 
-        filename = objects.path_of(f"{job_name}.sh", job_name)
+        filename = objects.path_of(f"{self.job_name}.sh", self.job_name)
         success, script = file.load_text(filename, civilized=True, log=True)
         if not success:
             script = ["#! /usr/bin/env bash", ""]
 
-        script += [command_line]
+        script += [f"abcli_eval - {command_line}"]
 
-        return file.save_text(filename, script), {"job_id": job_name}
+        return file.save_text(filename, script, log=True), {"job_id": job_name}

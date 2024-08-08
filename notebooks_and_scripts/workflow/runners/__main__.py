@@ -3,7 +3,7 @@ from blueness import module
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts import VERSION, NAME
-from notebooks_and_scripts.workflow.runners.factory import runner_class
+from notebooks_and_scripts.workflow.runners.factory import runner_class, GenericRunner
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
 
@@ -74,7 +74,7 @@ elif args.task == "monitor":
         load=True,
     )
 
-    runner = runner_class[RunnerType[workflow.runner_type.upper()]]()
+    runner: GenericRunner = runner_class[RunnerType[workflow.runner_type.upper()]]()
 
     success = runner.monitor(workflow, args.hot_node)
 

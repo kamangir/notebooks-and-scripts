@@ -21,12 +21,15 @@ NAME = module.name(__file__, NAME)
 class GenericRunner:
     def __init__(self):
         self.type: RunnerType = RunnerType.GENERIC
+        self.job_name: str = ""
 
     def monitor(
         self,
         workflow: Workflow,
         hot_node: str = "void",
     ) -> bool:
+        self.job_name = workflow.job_name
+
         try:
             workflow = self.monitor_function(workflow)
         except Exception as e:
@@ -73,6 +76,8 @@ class GenericRunner:
         workflow: Workflow,
         dryrun: bool = True,
     ) -> bool:
+        self.job_name = workflow.job_name
+
         logger.info(
             "{}.{}.submit({}, dryrun={})".format(
                 NAME,
