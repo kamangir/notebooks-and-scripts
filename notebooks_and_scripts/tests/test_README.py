@@ -1,4 +1,4 @@
-from notebooks_and_commands import README
+from notebooks_and_scripts import README
 
 
 def test_build_README():
