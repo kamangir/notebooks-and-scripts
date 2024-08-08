@@ -4,11 +4,15 @@ import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_pydot import read_dot
+from blueness import module
 from abcli import file, path
 from abcli.modules.host import signature as host_signature
 from abcli.logger import crash_report
-from notebooks_and_scripts.workflow import NAME, VERSION
+from notebooks_and_scripts import NAME, VERSION
 from notebooks_and_scripts.logger import logger
+
+NAME = module.name(__file__, NAME)
+
 
 layouts = {
     "spring": nx.spring_layout,

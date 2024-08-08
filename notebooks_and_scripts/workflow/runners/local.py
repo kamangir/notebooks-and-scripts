@@ -1,3 +1,4 @@
+from typing import Any, List, Tuple
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.runners.generic import GenericRunner
@@ -25,3 +26,13 @@ class LocalRunner(GenericRunner):
         assert super().submit(workflow, dryrun)
 
         return True
+
+    def submit_command(
+        self,
+        command_line: str,
+        job_name: str,
+        dependencies: List[str],
+        verbose: bool = False,
+    ) -> Tuple[bool, Any]:
+        logger.info(f"⏳ {job_name}: {command_line}")
+        return True, {"id": job_name}

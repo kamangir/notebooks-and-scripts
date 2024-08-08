@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, List
 import boto3
 import glob
 from tqdm import tqdm
@@ -118,11 +118,10 @@ class AWSBatchRunner(GenericRunner):
                     logger.info(f"{command_line} -> {job_name}")
                     continue
 
-                success, metadata[node] = submit(
-                    f"- {command_line}",
-                    job_name,
-                    SubmissionType.EVAL,
-                    dependency_job_id_list=[
+                success, metadata[node] = self.submit_command(
+                    command_line=command_line,
+                    job_name=job_name,
+                    dependencies=[
                         workflow.G.nodes[node_].get("job_id")
                         for node_ in workflow.G.successors(node)
                     ],
@@ -159,3 +158,18 @@ class AWSBatchRunner(GenericRunner):
             return False
 
         return failure_count == 0
+
+    def submit_command(
+        self,
+        command_line: str,
+        job_name: str,
+        dependencies: List[str],
+        verbose: bool = False,
+    ) -> Tuple[bool, Any]:
+        return submit(
+            f"- {command_line}",
+            job_name,
+            SubmissionType.EVAL,
+            dependency_job_id_list=dependencies,
+            verbose=verbose,
+        )

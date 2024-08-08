@@ -1,10 +1,14 @@
 import argparse
+from blueness import module
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.generic import Workflow
-from notebooks_and_scripts.workflow import VERSION, NAME
+from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.workflow.runners.factory import runner_class
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
+
+NAME = module.name(__file__, NAME)
+
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
