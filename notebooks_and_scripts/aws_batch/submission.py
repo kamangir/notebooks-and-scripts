@@ -79,4 +79,7 @@ def submit(
             )
         )
 
+    # for compatibility with other runners
+    response["job_id"] = job_id
+
     return True, response
