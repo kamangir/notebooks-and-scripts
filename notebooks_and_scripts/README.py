@@ -10,17 +10,17 @@ from notebooks_and_scripts.logger import logger
 NAME = module.name(__file__, NAME)
 
 features = {
-    "scripts": {
-        "description": "legacy mechanisms replaced with `@docker eval - <command>` and `@batch eval - <command>`.",
-        "icon": ICON,
-        "thumbnail": "https://github.com/kamangir/assets/blob/main/nbs/3x4.jpg?raw=true",
-        "url": "https://github.com/kamangir/notebooks-and-scripts/tree/main/scripts",
-    },
     "workflow": {
         "description": "an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of commands on [aws batch](https://aws.amazon.com/batch/).",
         "icon": ICON,
         "thumbnail": "https://kamangir-public.s3.ca-central-1.amazonaws.com/hourglass/workflow.gif?raw=true",
         "url": "https://github.com/kamangir/notebooks-and-scripts/tree/main/notebooks_and_scripts/workflow",
+    },
+    "scripts": {
+        "description": "legacy mechanisms replaced with `@docker eval - <command>` and `@batch eval - <command>`.",
+        "icon": ICON,
+        "thumbnail": "https://github.com/kamangir/assets/blob/main/nbs/3x4.jpg?raw=true",
+        "url": "https://github.com/kamangir/notebooks-and-scripts/tree/main/scripts",
     },
     "template": {
         "description": "",
