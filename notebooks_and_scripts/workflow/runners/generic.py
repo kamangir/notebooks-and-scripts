@@ -131,4 +131,4 @@ class GenericRunner:
                 ", ".join(dependencies),
             )
         )
-        return True, {"id": job_name}
+        return True, {"job_id": job_name}
