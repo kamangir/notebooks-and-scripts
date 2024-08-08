@@ -4,7 +4,7 @@ ICON = "📜"
 
 DESCRIPTION = f"{ICON} notebooks and scripts for ai experiments and aws batch jobs."
 
-VERSION = "4.608.1"
+VERSION = "4.609.1"
 
 REPO_NAME = "notebooks-and-scripts"
 

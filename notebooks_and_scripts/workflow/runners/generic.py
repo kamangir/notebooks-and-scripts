@@ -57,7 +57,7 @@ class GenericRunner:
                 ]
                 if pending_dependencies:
                     logger.info(
-                        "⏳ node {}: {} pending dependenci(es): {}".format(
+                        '⏳ node "{}": {} pending dependenci(es): {}'.format(
                             node,
                             len(pending_dependencies),
                             ", ".join(pending_dependencies),
