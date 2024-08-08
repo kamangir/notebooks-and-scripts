@@ -46,4 +46,4 @@ class LocalRunner(GenericRunner):
 
         script += [command_line]
 
-        return file.save_text(filename, script), {"id": job_name}
+        return file.save_text(filename, script), {"job_id": job_name}
