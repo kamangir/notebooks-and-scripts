@@ -37,8 +37,7 @@ class GenericRunner:
 
         summary: Dict[str, str] = {}
         for node in workflow.G.nodes:
-            summary.setdefault(status[node], []).append(node)
-
+            summary.setdefault(workflow.G.nodes[node]["status"], []).append(node)
         for status, nodes in summary.items():
             logger.info("{}: {}".format(status, ", ".join(sorted(nodes))))
 
