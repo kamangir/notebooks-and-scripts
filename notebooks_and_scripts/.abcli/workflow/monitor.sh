@@ -20,10 +20,6 @@ function notebooks_and_scripts_workflow_monitor() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
-    local pattern=$(abcli_metadata get \
-        key=load_pattern.pattern,object \
-        $job_name)
-
     python3 -m notebooks_and_scripts.workflow.runners \
         monitor \
         --hot_node $node \
