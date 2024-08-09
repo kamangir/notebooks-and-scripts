@@ -2,6 +2,14 @@
 
 [abcli 🚀](https://github.com/kamangir/awesome-bash-cli) [[meta](./meta/)] scripts for [aws batch](https://aws.amazon.com/batch/) jobs and [sagemaker](https://aws.amazon.com/sagemaker/) serving.
 
+> ℹ️ scripts are replaced with `@docker eval - <command>` and `@batch eval - <command>`.
+
+
+| ![image](https://github.com/kamangir/assets/blob/main/nbs/3x4.jpg?raw=true)                               | ![image](https://github.com/kamangir/assets/blob/main/nbs/mission-patch-00008.png?raw=true) | ![image](https://github.com/kamangir/assets/blob/main/nbs/train-summary.png?raw=true) ![image](https://github.com/kamangir/assets/blob/main/nbs/predict-00000.png?raw=true) |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [paint-a-sentence](./scripts/paint-a-sentence.sh)                                                         | [mission-patch](./scripts/mission-patch.sh)                                                 | [roofAI-train](./scripts/roofAI-train.sh)                                                                                                                                   |
+| https://medium.com/@arash-kamangir/a-cat-walking-under-apple-trees-style-by-stable-diffusion-ab60ece43e2a | https://medium.com/@arash-kamangir/private-mission-patch-%EF%B8%8F-1-0c2eddd79762           | https://arash-kamangir.medium.com/roofai-%EF%B8%8F-on-gpu-6-b02f8f67ed3f                                                                                                    |
+
 ```bash
  > scripts help
 abcli scripts cat \
@@ -75,3 +83,5 @@ abcli scripts source cat,dryrun \
 # meta scripts
 
 - [roofserver](./roofserver/): `create`s model, endpoint config, and config to serve a model on SageMaker. 🔥 `invoke`, `wipe`.
+
+also: [`sagesemseg`](./sagesemseg/).

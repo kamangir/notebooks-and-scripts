@@ -4,11 +4,15 @@ import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_pydot import read_dot
+from blueness import module
 from abcli import file, path
 from abcli.modules.host import signature as host_signature
 from abcli.logger import crash_report
-from notebooks_and_scripts.workflow import NAME, VERSION
+from notebooks_and_scripts import NAME, VERSION
 from notebooks_and_scripts.logger import logger
+
+NAME = module.name(__file__, NAME)
+
 
 layouts = {
     "spring": nx.spring_layout,
@@ -156,7 +160,7 @@ def save_to_file(
     export_as_image: str = ".png",
     log: bool = True,
     **kwargs,
-):
+) -> bool:
     if not file.prepare_for_saving(filename):
         return False
 
@@ -169,16 +173,16 @@ def save_to_file(
     if log:
         logger.info(f"{G} -> {filename}")
 
-    return (
-        not export_as_image
-        or export_graph_as_image(
-            G,
-            filename=(
-                file.set_extension(filename, export_as_image[1:])
-                if export_as_image.startswith(".")
-                else export_as_image
-            ),
-            log=log,
-            **kwargs,
-        )
-    ), G
+    if not export_as_image:
+        return True
+
+    return export_graph_as_image(
+        G,
+        filename=(
+            file.set_extension(filename, export_as_image[1:])
+            if export_as_image.startswith(".")
+            else export_as_image
+        ),
+        log=log,
+        **kwargs,
+    )

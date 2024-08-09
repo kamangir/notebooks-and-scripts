@@ -15,7 +15,7 @@ function notebooks_and_scripts_workflow_create() {
 
     local job_name=$(abcli_clarify_object $2 .)
 
-    abcli_log "creating workflow: $pattern -> $job_name"
+    abcli_log "📜 workflow.create: $pattern -> $job_name"
 
     python3 -m notebooks_and_scripts.workflow \
         create \

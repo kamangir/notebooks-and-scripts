@@ -20,7 +20,7 @@ function notebooks_and_scripts_workflow_submit() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
-    abcli_log "workflow submit: $job_name -> $runner_type"
+    abcli_log "📜 workflow.submit: $job_name -> $runner_type"
 
     python3 -m notebooks_and_scripts.workflow.runners \
         submit \
@@ -28,6 +28,12 @@ function notebooks_and_scripts_workflow_submit() {
         --job_name $job_name \
         --runner_type $runner_type
     local status="$?"
+
+    if [[ "$runner_type" == local ]]; then
+        abcli_eval dryrun=$do_dryrun \
+            source $abcli_object_root/$job_name/$job_name.sh
+        status="$?"
+    fi
 
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $job_name
