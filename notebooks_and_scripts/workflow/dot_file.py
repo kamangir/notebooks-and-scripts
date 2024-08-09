@@ -160,7 +160,7 @@ def save_to_file(
     export_as_image: str = ".png",
     log: bool = True,
     **kwargs,
-):
+) -> bool:
     if not file.prepare_for_saving(filename):
         return False
 
@@ -173,16 +173,16 @@ def save_to_file(
     if log:
         logger.info(f"{G} -> {filename}")
 
-    return (
-        not export_as_image
-        or export_graph_as_image(
-            G,
-            filename=(
-                file.set_extension(filename, export_as_image[1:])
-                if export_as_image.startswith(".")
-                else export_as_image
-            ),
-            log=log,
-            **kwargs,
-        )
-    ), G
+    if not export_as_image:
+        return True
+
+    return export_graph_as_image(
+        G,
+        filename=(
+            file.set_extension(filename, export_as_image[1:])
+            if export_as_image.startswith(".")
+            else export_as_image
+        ),
+        log=log,
+        **kwargs,
+    )

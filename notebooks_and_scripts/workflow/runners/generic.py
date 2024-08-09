@@ -7,7 +7,7 @@ from abcli import file
 from abcli import string
 from abcli.modules import objects
 from abcli.plugins.graphics.gif import generate_animated_gif
-from abcli.plugins.metadata import post, MetadataSourceType
+from abcli.plugins.metadata import post_to_object
 from notebooks_and_scripts import NAME
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
@@ -147,14 +147,14 @@ class GenericRunner:
         ):
             return False
 
-        if not post(
+        if not post_to_object(
+            workflow.job_name,
             "submission",
             {
                 "metadata": metadata,
                 "failure_count": failure_count,
+                "runner_type": self.type.name.lower(),
             },
-            source=workflow.job_name,
-            source_type=MetadataSourceType.OBJECT,
         ):
             return False
 

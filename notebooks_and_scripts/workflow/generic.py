@@ -1,7 +1,10 @@
 from typing import Any
 import networkx as nx
 from abcli.modules import objects
-from abcli.plugins.metadata import post, MetadataSourceType, get
+from abcli.plugins.metadata import (
+    post_to_object,
+    get_from_object,
+)
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow import patterns
@@ -15,8 +18,6 @@ class Workflow:
     ):
         self.job_name = job_name if job_name else objects.unique_object()
 
-        self.runner_type: str = "generic"
-
         self.G: nx.DiGraph = nx.DiGraph()
 
         if load:
@@ -28,25 +29,8 @@ class Workflow:
             )
             assert success
 
-            self.runner_type = self.get_metadata(
-                "runner",
-                {},
-            ).get(
-                "type",
-                "generic",
-            )
-
-    def get_metadata(
-        self,
-        key: str,
-        default: str = "",
-    ) -> str:
-        return get(
-            key,
-            default,
-            source=self.job_name,
-            source_type=MetadataSourceType.OBJECT,
-        )
+    def get_metadata(self, key: str, default: str = "") -> str:
+        return get_from_object(self.job_name, key, default)
 
     def load_pattern(
         self,
@@ -65,13 +49,9 @@ class Workflow:
                 self.G.add_edge("X", node)
 
         for node in self.G.nodes:
-            self.G.nodes[node]["command_line"] = (
-                "workflow monitor node={},publish_as={} {}".format(
-                    node,
-                    f"{self.runner_type}-{pattern}" if node == "X" else "",
-                    self.job_name,
-                )
-            )
+            self.G.nodes[node][
+                "command_line"
+            ] = f"workflow monitor node={node} {self.job_name}"
 
         return self.post_metadata(
             "load_pattern",
@@ -81,17 +61,8 @@ class Workflow:
     def node_job_name(self, node: str) -> str:
         return f"{self.job_name}-{node}"
 
-    def post_metadata(
-        self,
-        key: str,
-        value: Any,
-    ) -> bool:
-        return post(
-            key,
-            value,
-            source=self.job_name,
-            source_type=MetadataSourceType.OBJECT,
-        )
+    def post_metadata(self, key: str, value: Any) -> bool:
+        return post_to_object(self.job_name, key, value)
 
     def save(self) -> bool:
         return dot_file.save_to_file(
@@ -100,7 +71,4 @@ class Workflow:
                 object_name=self.job_name,
             ),
             self.G,
-        ) and self.post_metadata(
-            "runner",
-            {"type": self.runner_type},
         )

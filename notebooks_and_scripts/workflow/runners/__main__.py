@@ -1,5 +1,6 @@
 import argparse
 from blueness import module
+from abcli.plugins.metadata import get_from_object
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts import VERSION, NAME
@@ -74,7 +75,12 @@ elif args.task == "monitor":
         load=True,
     )
 
-    runner: GenericRunner = runner_class[RunnerType[workflow.runner_type.upper()]]()
+    runner_type: str = get_from_object(
+        args.job_name,
+        "submission.runner_type",
+    )
+
+    runner: GenericRunner = runner_class[RunnerType[runner_type.upper()]]()
 
     success = runner.monitor(workflow, args.hot_node)
 

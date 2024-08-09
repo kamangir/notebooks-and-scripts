@@ -17,6 +17,8 @@ function notebooks_and_scripts_workflow_monitor() {
 
     local job_name=$(abcli_clarify_object $2 .)
 
+    abcli_log "📜 workflow.monitor: $job_name @ $node ..."
+
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
