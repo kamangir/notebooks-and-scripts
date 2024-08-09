@@ -10,7 +10,7 @@ function test_notebooks_and_scripts_worflow_runner() {
         for pattern in $(echo $NBS_PATTRENS_LIST | tr \| " "); do
             abcli_log "testing pattern=$pattern"
 
-            local job_name=$pattern-$(abcli_string_timestamp)
+            local job_name=$pattern-$runner-$(abcli_string_timestamp)
 
             workflow create pattern=$pattern $job_name
             [[ $? -ne 0 ]] && return 1
