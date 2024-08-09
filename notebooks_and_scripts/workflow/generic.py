@@ -66,9 +66,9 @@ class Workflow:
 
         for node in self.G.nodes:
             self.G.nodes[node]["command_line"] = (
-                "workflow monitor node={},publish={} {}".format(
+                "workflow monitor node={},publish_as={} {}".format(
                     node,
-                    int(node == "X"),
+                    f"{self.runner_type}-{pattern}" if node == "X" else "",
                     self.job_name,
                 )
             )

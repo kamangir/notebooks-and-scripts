@@ -5,12 +5,11 @@
 ```bash
  > workflow help
 workflow create \
-	pattern=a-bc-d|hourglass,~upload \
-	-|<job-name> \
-	<command-line>
+	pattern=a-bc-d|hourglass|map-reduce,~upload \
+	.|<job-name>
  . create a <pattern> workflow.
 workflow monitor \
-	~download,~upload \
+	~download,node=<node>,publish_as=<public-object-name>,~upload \
 	.|<job-name>
  . monitor workflow.
 workflow submit \
