@@ -19,12 +19,12 @@ function test_notebooks_and_scripts_worflow_runner() {
             [[ $? -ne 0 ]] && return 1
 
             workflow submit \
-                ~download,to=$runner \
+                to=$runner \
                 $job_name
             [[ $? -ne 0 ]] && return 1
 
             workflow monitor \
-                ~download,publish_as=$runner-$pattern \
+                publish_as=$runner-$pattern \
                 $job_name
             [[ $? -ne 0 ]] && return 1
 
