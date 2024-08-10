@@ -33,4 +33,4 @@ related: [1](https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e
 ---
 
 ---
-built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.634.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.635.1`](https://github.com/kamangir/notebooks-and-scripts).

@@ -1,3 +1,4 @@
+import copy
 from typing import Tuple, Dict
 import numpy as np
 import networkx as nx
@@ -50,6 +51,11 @@ def export_graph_as_image(
     if layout_func is None:
         logger.error(f"unknown layout: {layout}")
         return False
+
+    G = copy.deepcopy(G)
+    for status in status_color_map.keys():
+        G.add_node(status)
+        G.nodes[status]["status"] = status
 
     pos = layout_func(G)
 
