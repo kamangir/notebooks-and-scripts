@@ -1,13 +1,15 @@
 import sys
 import argparse
-from notebooks_and_scripts import env
-from notebooks_and_scripts.aws_batch import VERSION, NAME
+from blueness import module
+from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
     SubmissionType,
 )
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
+
+NAME = module.name(__file__, NAME)
 
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")

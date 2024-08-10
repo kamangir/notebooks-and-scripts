@@ -1,14 +1,19 @@
-from typing import Tuple, Dict
+import copy
+from typing import Tuple, Dict, List
 import numpy as np
 import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_pydot import read_dot
+from blueness import module
 from abcli import file, path
 from abcli.modules.host import signature as host_signature
 from abcli.logger import crash_report
-from notebooks_and_scripts.workflow import NAME, VERSION
+from notebooks_and_scripts import NAME, VERSION
 from notebooks_and_scripts.logger import logger
+
+NAME = module.name(__file__, NAME)
+
 
 layouts = {
     "spring": nx.spring_layout,
@@ -41,11 +46,19 @@ def export_graph_as_image(
     log: bool = True,
     colormap: Dict[str, str] = {},
     hot_node: str = "void",
+    add_legend: bool = True,
+    caption: str = "",
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
         logger.error(f"unknown layout: {layout}")
         return False
+
+    if add_legend:
+        G = copy.deepcopy(G)
+        for status in status_color_map:
+            G.add_node(status)
+            G.nodes[status]["status"] = status
 
     pos = layout_func(G)
 
@@ -75,17 +88,23 @@ def export_graph_as_image(
         # arrowsize=5,
     )
 
+    caption_items: List[str] = [caption]
     if hot_node in G.nodes:
+        caption_items += [G.nodes[hot_node].get("command_line").replace('"', "")]
+    caption_items = [item for item in caption_items if item]
+
+    if caption_items:
         plt.text(
             0.5,
             0.5,
-            G.nodes[hot_node].get("command_line").replace('"', ""),
+            " | ".join(caption_items),
             horizontalalignment="center",
             verticalalignment="center",
             transform=plt.gca().transAxes,
             fontsize=12,
             color="green",
         )
+
     plt.title(
         " | ".join(
             [
@@ -156,7 +175,7 @@ def save_to_file(
     export_as_image: str = ".png",
     log: bool = True,
     **kwargs,
-):
+) -> bool:
     if not file.prepare_for_saving(filename):
         return False
 
@@ -169,16 +188,16 @@ def save_to_file(
     if log:
         logger.info(f"{G} -> {filename}")
 
-    return (
-        not export_as_image
-        or export_graph_as_image(
-            G,
-            filename=(
-                file.set_extension(filename, export_as_image[1:])
-                if export_as_image.startswith(".")
-                else export_as_image
-            ),
-            log=log,
-            **kwargs,
-        )
-    ), G
+    if not export_as_image:
+        return True
+
+    return export_graph_as_image(
+        G,
+        filename=(
+            file.set_extension(filename, export_as_image[1:])
+            if export_as_image.startswith(".")
+            else export_as_image
+        ),
+        log=log,
+        **kwargs,
+    )

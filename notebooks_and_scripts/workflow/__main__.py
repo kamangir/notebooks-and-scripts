@@ -1,11 +1,14 @@
 import argparse
-from notebooks_and_scripts import env
-from notebooks_and_scripts.aws_batch import VERSION, NAME
+from blueness import module
+from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
+
+
+NAME = module.name(__file__, NAME)
 
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
@@ -25,6 +28,12 @@ parser.add_argument(
     default=list_of_patterns()[0],
     help="|".join(list_of_patterns()),
 )
+parser.add_argument(
+    "--publish_as",
+    type=str,
+    default="",
+    help="<public-object-name>",
+)
 args = parser.parse_args()
 
 
@@ -32,7 +41,10 @@ success = False
 if args.task == "create":
     workflow = Workflow(job_name=args.job_name)
 
-    success = workflow.load_pattern(pattern=args.pattern)
+    success = workflow.load_pattern(
+        pattern=args.pattern,
+        publish_as=args.publish_as,
+    )
 
     if success:
         success = workflow.save()

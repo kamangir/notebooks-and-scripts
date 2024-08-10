@@ -1,10 +1,15 @@
 import argparse
-from notebooks_and_scripts.workflow.runners import RunnerType
+from blueness import module
+from abcli.plugins.metadata import get_from_object, post_to_object
+from notebooks_and_scripts.workflow.runners import RunnerType, list_of_runners
 from notebooks_and_scripts.workflow.generic import Workflow
-from notebooks_and_scripts.workflow import VERSION, NAME
-from notebooks_and_scripts.workflow.runners.factory import runner_class
+from notebooks_and_scripts import VERSION, NAME
+from notebooks_and_scripts.workflow.runners.factory import runner_class, GenericRunner
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
+
+NAME = module.name(__file__, NAME)
+
 
 parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
@@ -48,7 +53,7 @@ parser.add_argument(
     "--runner_type",
     type=str,
     default="local",
-    help="|".join([type.name.lower() for type in RunnerType]),
+    help="|".join(list_of_runners()),
 )
 args = parser.parse_args()
 
@@ -58,7 +63,7 @@ success = False
 if args.task == "list":
     success = True
 
-    output = sorted([type.name.lower() for type in RunnerType])[args.offset :]
+    output = list_of_runners()[args.offset :]
 
     if args.count != -1:
         output = output[: args.count]
@@ -70,12 +75,17 @@ elif args.task == "monitor":
         load=True,
     )
 
-    runner = runner_class[RunnerType[workflow.runner_type.upper()]]()
+    runner_type: str = get_from_object(
+        args.job_name,
+        "submission.runner_type",
+    )
+
+    runner: GenericRunner = runner_class[RunnerType[runner_type.upper()]]()
 
     success = runner.monitor(workflow, args.hot_node)
 
     if success:
-        success = workflow.save()
+        success = workflow.save(caption=f"@{runner_type}")
 elif args.task == "submit":
     workflow = Workflow(
         job_name=args.job_name,
@@ -91,6 +101,13 @@ elif args.task == "submit":
 
     if success:
         success = workflow.save()
+
+    if success:
+        success = post_to_object(
+            args.job_name,
+            "submission.runner_type",
+            args.runner_type,
+        )
 else:
     success = None
 
