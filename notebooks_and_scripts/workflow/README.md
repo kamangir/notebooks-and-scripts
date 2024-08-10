@@ -39,4 +39,4 @@ from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc6
 ---
 
 ---
-built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.629.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.630.1`](https://github.com/kamangir/notebooks-and-scripts).
