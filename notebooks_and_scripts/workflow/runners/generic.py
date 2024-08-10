@@ -31,7 +31,7 @@ class GenericRunner:
         self.job_name = workflow.job_name
 
         try:
-            workflow = self.monitor_function(workflow)
+            workflow = self.monitor_function(workflow, hot_node)
         except Exception as e:
             logger.warning(f"monitor failed: {e}")
 
@@ -66,8 +66,21 @@ class GenericRunner:
             frame_duration=333,
         )
 
-    def monitor_function(self, workflow: Workflow) -> Workflow:
-        logger.info(f"{NAME}.{self.__class__.__name__}.monitor: {workflow}")
+    def monitor_function(
+        self,
+        workflow: Workflow,
+        hot_node: str,
+    ) -> Workflow:
+        logger.info(
+            f"{NAME}.{self.__class__.__name__}.monitor: {workflow} @ {hot_node}"
+        )
+
+        post_to_object(
+            workflow.node_job_name(hot_node),
+            "monitor",
+            {"hot_node": hot_node},
+        )
+
         return workflow
 
     def submit(

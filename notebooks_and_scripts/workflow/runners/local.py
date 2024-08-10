@@ -14,8 +14,12 @@ class LocalRunner(GenericRunner):
         super().__init__(**kw_args)
         self.type: RunnerType = RunnerType.LOCAL
 
-    def monitor_function(self, workflow: Workflow) -> Workflow:
-        workflow = super().monitor_function(workflow)
+    def monitor_function(
+        self,
+        workflow: Workflow,
+        hot_node: str,
+    ) -> Workflow:
+        workflow = super().monitor_function(workflow, hot_node)
 
         for node in tqdm(workflow.G.nodes):
             if file.exist(

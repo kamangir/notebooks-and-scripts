@@ -15,8 +15,12 @@ class AWSBatchRunner(GenericRunner):
         super().__init__(**kw_args)
         self.type: RunnerType = RunnerType.AWS_BATCH
 
-    def monitor_function(self, workflow: Workflow) -> Workflow:
-        workflow = super().monitor_function(workflow)
+    def monitor_function(
+        self,
+        workflow: Workflow,
+        hot_node: str,
+    ) -> Workflow:
+        workflow = super().monitor_function(workflow, hot_node)
 
         client = boto3.client("batch")
 
