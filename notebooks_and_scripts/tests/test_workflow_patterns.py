@@ -6,7 +6,7 @@ from notebooks_and_scripts.workflow.patterns import (
 
 
 def test_list_of_patterns():
-    assert list_of_patterns
+    assert list_of_patterns()
 
 
 @pytest.mark.parametrize(

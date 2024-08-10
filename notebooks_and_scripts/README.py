@@ -2,6 +2,7 @@ import os
 from abcli import file
 from abcli.plugins.README import build as build_README
 from notebooks_and_scripts import NAME, VERSION, ICON, REPO_NAME
+from notebooks_and_scripts.workflow.README import items as workflow_items
 
 
 features = {
@@ -50,6 +51,20 @@ def build():
         filename=os.path.join(
             file.path(__file__),
             "../README.md",
+        ),
+        NAME=NAME,
+        VERSION=VERSION,
+        REPO_NAME=REPO_NAME,
+    ) and build_README(
+        items=workflow_items,
+        cols=3,
+        template_filename=os.path.join(
+            file.path(__file__),
+            "./assets/workflow.md",
+        ),
+        filename=os.path.join(
+            file.path(__file__),
+            "./workflow/README.md",
         ),
         NAME=NAME,
         VERSION=VERSION,

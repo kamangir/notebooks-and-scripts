@@ -1,7 +1,7 @@
 import argparse
 from blueness import module
 from abcli.plugins.metadata import get_from_object
-from notebooks_and_scripts.workflow.runners import RunnerType
+from notebooks_and_scripts.workflow.runners import RunnerType, list_of_runners
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.workflow.runners.factory import runner_class, GenericRunner
@@ -53,7 +53,7 @@ parser.add_argument(
     "--runner_type",
     type=str,
     default="local",
-    help="|".join([type.name.lower() for type in RunnerType]),
+    help="|".join(list_of_runners()),
 )
 args = parser.parse_args()
 
@@ -63,7 +63,7 @@ success = False
 if args.task == "list":
     success = True
 
-    output = sorted([type.name.lower() for type in RunnerType])[args.offset :]
+    output = list_of_runners()[args.offset :]
 
     if args.count != -1:
         output = output[: args.count]
