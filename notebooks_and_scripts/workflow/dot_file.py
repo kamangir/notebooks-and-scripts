@@ -46,16 +46,18 @@ def export_graph_as_image(
     log: bool = True,
     colormap: Dict[str, str] = {},
     hot_node: str = "void",
+    add_legend: bool = True,
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
         logger.error(f"unknown layout: {layout}")
         return False
 
-    G = copy.deepcopy(G)
-    for status in status_color_map.keys():
-        G.add_node(status)
-        G.nodes[status]["status"] = status
+    if add_legend:
+        G = copy.deepcopy(G)
+        for status in status_color_map:
+            G.add_node(status)
+            G.nodes[status]["status"] = status
 
     pos = layout_func(G)
 
