@@ -10,4 +10,10 @@ class RunnerType(Enum):
 
 
 def list_of_runners() -> List[str]:
-    return sorted([runner_type.name.lower() for runner_type in RunnerType])
+    return sorted(
+        [
+            item
+            for item in [runner_type.name.lower() for runner_type in RunnerType]
+            if item not in ["localflow"]
+        ]
+    )
