@@ -18,18 +18,12 @@ workflow submit \
  . submit workflow.
 ```
 
-## example use
-
-```bash
-@select - open
-workflow create pattern=hourglass .
-workflow submit to=aws_batch
-@watch - @download
-```
-
-from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef
+example use: [literature review using OpenAI API](https://github.com/kamangir/openai-commands/tree/main/openai_commands/literature_review).
 
 --table--
+
+
+related: [1](https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef)
 
 ---
 
