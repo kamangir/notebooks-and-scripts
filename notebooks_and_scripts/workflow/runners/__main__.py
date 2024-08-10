@@ -1,6 +1,6 @@
 import argparse
 from blueness import module
-from abcli.plugins.metadata import get_from_object
+from abcli.plugins.metadata import get_from_object, post_to_object
 from notebooks_and_scripts.workflow.runners import RunnerType, list_of_runners
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts import VERSION, NAME
@@ -101,6 +101,13 @@ elif args.task == "submit":
 
     if success:
         success = workflow.save()
+
+    if success:
+        success = post_to_object(
+            args.job_name,
+            "submission.runner_type",
+            args.runner_type,
+        )
 else:
     success = None
 
