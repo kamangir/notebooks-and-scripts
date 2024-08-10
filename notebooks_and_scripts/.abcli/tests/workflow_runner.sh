@@ -9,11 +9,10 @@ function test_notebooks_and_scripts_worflow_runner() {
     local pattern
     local runner
     for runner in $(echo $list_of_runners | tr \| " "); do
-        abcli_log "📜 testing runner=$runner"
         for pattern in $(echo $list_of_patterns | tr \| " "); do
-            abcli_log "📜 testing pattern=$pattern"
+            abcli_log "📜 testing runner=$runner, pattern=$pattern ..."
 
-            local job_name=$pattern-$runner-$(abcli_string_timestamp)
+            local job_name=$runner-$pattern-$(abcli_string_timestamp)
 
             workflow create \
                 pattern=$pattern $job_name
@@ -25,7 +24,7 @@ function test_notebooks_and_scripts_worflow_runner() {
             [[ $? -ne 0 ]] && return 1
 
             workflow monitor \
-                ~download,publish_as=$pattern-$runner \
+                ~download,publish_as=$runner-$pattern \
                 $job_name
             [[ $? -ne 0 ]] && return 1
 

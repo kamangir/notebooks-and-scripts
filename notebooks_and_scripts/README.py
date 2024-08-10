@@ -1,11 +1,8 @@
 import os
 from blueness import module
-import abcli
 from abcli import file
-from abcli.file.functions import build_from_template
-from abcli.plugins import markdown
-from notebooks_and_scripts import NAME, VERSION, ICON
-from notebooks_and_scripts.logger import logger
+from abcli.plugins.README import build as build_README
+from notebooks_and_scripts import NAME, VERSION, ICON, REPO_NAME
 
 NAME = module.name(__file__, NAME)
 
@@ -30,44 +27,33 @@ features = {
     },
 }
 
+items = [
+    "{}[`{}`]({}) [![image]({})]({}) {}".format(
+        details["icon"],
+        feature,
+        details["url"],
+        details["thumbnail"],
+        details["url"],
+        details["description"],
+    )
+    for feature, details in features.items()
+    if feature != "template"
+]
 
-def build(filename: str = ""):
-    if not filename:
-        filename = os.path.join(file.path(__file__), "../README.md")
 
-    logger.info(f"{NAME}.build: {filename}")
-
-    items = [
-        "{}[`{}`]({}) [![image]({})]({}) {}".format(
-            details["icon"],
-            feature,
-            details["url"],
-            details["thumbnail"],
-            details["url"],
-            details["description"],
-        )
-        for feature, details in features.items()
-        if feature != "template"
-    ]
-
-    table = markdown.generate_table(items, cols=2)
-
-    signature = [
-        "---",
-        "built by [`{}`]({}), based on [`{}-{}`]({}).".format(
-            abcli.fullname(),
-            "https://github.com/kamangir/awesome-bash-cli",
-            NAME,
-            VERSION,
-            "https://github.com/kamangir/openai-commands",
+def build():
+    return build_README(
+        items=items,
+        cols=2,
+        template_filename=os.path.join(
+            file.path(__file__),
+            "./assets/README.md",
         ),
-    ]
-
-    return file.build_from_template(
-        os.path.join(file.path(__file__), "./assets/README.md"),
-        {
-            "--table--": table,
-            "--signature": signature,
-        },
-        filename,
+        filename=os.path.join(
+            file.path(__file__),
+            "../README.md",
+        ),
+        NAME=NAME,
+        VERSION=VERSION,
+        REPO_NAME=REPO_NAME,
     )
