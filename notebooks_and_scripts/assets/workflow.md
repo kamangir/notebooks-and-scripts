@@ -25,6 +25,4 @@ example use: [literature review using OpenAI API](https://github.com/kamangir/op
 
 related: [1](https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef)
 
----
-
 --signature--
