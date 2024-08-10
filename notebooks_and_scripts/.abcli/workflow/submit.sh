@@ -29,14 +29,16 @@ function notebooks_and_scripts_workflow_submit() {
         --runner_type $runner_type
     local status="$?"
 
+    [[ "$do_upload" == 1 ]] &&
+        abcli_upload - $job_name
+
+    [[ "$status" -ne 0 ]] && return $status
+
     if [[ "$runner_type" == local ]]; then
         abcli_eval dryrun=$do_dryrun \
             source $abcli_object_root/$job_name/$job_name.sh
         status="$?"
     fi
-
-    [[ "$do_upload" == 1 ]] &&
-        abcli_upload - $job_name
 
     return $status
 }
