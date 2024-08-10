@@ -18,7 +18,7 @@ class LocalRunner(GenericRunner):
         workflow = super().monitor_function(workflow)
 
         for node in tqdm(workflow.G.nodes):
-            if file.exists(
+            if file.exist(
                 objects.path_of(
                     "metadata.yaml",
                     workflow.node_job_name(node),

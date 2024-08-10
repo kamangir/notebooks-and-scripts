@@ -33,7 +33,7 @@ class GenericRunner:
         try:
             workflow = self.monitor_function(workflow)
         except Exception as e:
-            logger.info(e)
+            logger.warning(f"monitor failed: {e}")
 
         summary: Dict[str, str] = {}
         for node in workflow.G.nodes:
