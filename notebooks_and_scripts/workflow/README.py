@@ -2,30 +2,27 @@ from functools import reduce
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.runners import list_of_runners
 
+prefix = "https://kamangir-public.s3.ca-central-1.amazonaws.com"
+
 items = [
-    "[`{}`](./patterns/{}.dot) {}".format(
+    "[`{}`](./patterns/{}.dot)".format(
         pattern,
         pattern,
-        " ".join(
-            [
-                "[🔗](https://kamangir-public.s3.ca-central-1.amazonaws.com/{}-{}/workflow.gif?raw=true)".format(
-                    runner_type,
-                    pattern,
-                )
-                for runner_type in list_of_runners()
-            ]
-        ),
     )
     for pattern in list_of_patterns()
 ] + reduce(
     lambda x, y: x + y,
     [
         [
-            "![image](https://kamangir-public.s3.ca-central-1.amazonaws.com/{}-{}/workflow.gif?raw=true)".format(
-                runner_type,
-                pattern,
-            )
-            for pattern in list_of_patterns()
+            f"[![image]({url})]({url})"
+            for url in [
+                "{}/{}-{}/workflow.gif?raw=true".format(
+                    prefix,
+                    runner_type,
+                    pattern,
+                )
+                for pattern in list_of_patterns()
+            ]
         ]
         for runner_type in list_of_runners()
     ],
