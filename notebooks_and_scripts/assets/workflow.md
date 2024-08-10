@@ -6,14 +6,15 @@ an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/docume
  > workflow help
 workflow create \
 	pattern=a-bc-d|hourglass|map-reduce,~upload \
-	.|<job-name>
+	.|<job-name> \
+	[--publish_as <public-object-name>]
  . create a <pattern> workflow.
 workflow monitor \
 	~download,node=<node>,publish_as=<public-object-name>,~upload \
 	.|<job-name>
  . monitor workflow.
 workflow submit \
-	~download,dryrun,to=aws_batch|generic|local|localflow,~upload \
+	~download,dryrun,to=aws_batch|generic|local,~upload \
 	.|<job-name>
  . submit workflow.
 ```
