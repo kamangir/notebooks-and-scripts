@@ -57,7 +57,7 @@ def build():
         REPO_NAME=REPO_NAME,
     ) and build_README(
         items=workflow_items,
-        cols=3,
+        cols=4,
         template_filename=os.path.join(
             file.path(__file__),
             "./assets/workflow.md",
