@@ -31,4 +31,4 @@ example use: [literature review using OpenAI API](https://github.com/kamangir/op
 related: [1](https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc69ef)
 
 ---
-built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.639.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.640.1`](https://github.com/kamangir/notebooks-and-scripts).

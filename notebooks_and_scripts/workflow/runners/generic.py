@@ -51,6 +51,7 @@ class GenericRunner:
             ),
             colormap=dot_file.status_color_map,
             hot_node=hot_node,
+            caption=f"@{self.type.name.lower()}",
         ):
             return False
 

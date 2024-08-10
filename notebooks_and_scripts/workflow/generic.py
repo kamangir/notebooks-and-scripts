@@ -67,11 +67,15 @@ class Workflow:
     def post_metadata(self, key: str, value: Any) -> bool:
         return post_to_object(self.job_name, key, value)
 
-    def save(self) -> bool:
+    def save(
+        self,
+        caption: str = "",
+    ) -> bool:
         return dot_file.save_to_file(
             objects.path_of(
                 filename="workflow.dot",
                 object_name=self.job_name,
             ),
             self.G,
+            caption=caption,
         )

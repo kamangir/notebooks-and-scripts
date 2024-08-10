@@ -1,5 +1,5 @@
 import copy
-from typing import Tuple, Dict
+from typing import Tuple, Dict, List
 import numpy as np
 import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
@@ -47,6 +47,7 @@ def export_graph_as_image(
     colormap: Dict[str, str] = {},
     hot_node: str = "void",
     add_legend: bool = True,
+    caption: str = "",
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -87,17 +88,23 @@ def export_graph_as_image(
         # arrowsize=5,
     )
 
+    caption_items: List[str] = [caption]
     if hot_node in G.nodes:
+        caption_items += [G.nodes[hot_node].get("command_line").replace('"', "")]
+    caption_items = [item for item in caption_items if item]
+
+    if caption_items:
         plt.text(
             0.5,
             0.5,
-            G.nodes[hot_node].get("command_line").replace('"', ""),
+            " | ".join(caption_items),
             horizontalalignment="center",
             verticalalignment="center",
             transform=plt.gca().transAxes,
             fontsize=12,
             color="green",
         )
+
     plt.title(
         " | ".join(
             [

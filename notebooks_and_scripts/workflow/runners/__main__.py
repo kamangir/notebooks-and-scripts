@@ -85,7 +85,7 @@ elif args.task == "monitor":
     success = runner.monitor(workflow, args.hot_node)
 
     if success:
-        success = workflow.save()
+        success = workflow.save(caption=f"@{runner_type}")
 elif args.task == "submit":
     workflow = Workflow(
         job_name=args.job_name,
