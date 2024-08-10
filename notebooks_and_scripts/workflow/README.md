@@ -1,6 +1,6 @@
 # 📜 workflow
 
-[`workflow`](./notebooks_and_scripts/workflow/generic.py), an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of commands on [aws batch](https://aws.amazon.com/batch/).
+an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of commands with dependencies on [aws batch](https://aws.amazon.com/batch/), and a few other compute resources.
 
 ```bash
  > workflow help
@@ -39,4 +39,4 @@ from https://arash-kamangir.medium.com/%EF%B8%8F-openai-experiments-54-e49117dc6
 ---
 
 ---
-built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.625.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by [`abcli-9.192.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.626.1`](https://github.com/kamangir/notebooks-and-scripts).
