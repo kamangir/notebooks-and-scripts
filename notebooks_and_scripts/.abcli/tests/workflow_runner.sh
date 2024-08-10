@@ -15,7 +15,9 @@ function test_notebooks_and_scripts_worflow_runner() {
             local job_name=$runner-$pattern-$(abcli_string_timestamp)
 
             workflow create \
-                pattern=$pattern $job_name
+                pattern=$pattern \
+                $job_name \
+                --publish_as $runner-$pattern
             [[ $? -ne 0 ]] && return 1
 
             workflow submit \

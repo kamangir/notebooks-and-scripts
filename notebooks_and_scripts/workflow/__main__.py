@@ -28,6 +28,12 @@ parser.add_argument(
     default=list_of_patterns()[0],
     help="|".join(list_of_patterns()),
 )
+parser.add_argument(
+    "--publish_as",
+    type=str,
+    default="",
+    help="<public-object-name>",
+)
 args = parser.parse_args()
 
 
@@ -35,7 +41,10 @@ success = False
 if args.task == "create":
     workflow = Workflow(job_name=args.job_name)
 
-    success = workflow.load_pattern(pattern=args.pattern)
+    success = workflow.load_pattern(
+        pattern=args.pattern,
+        publish_as=args.publish_as,
+    )
 
     if success:
         success = workflow.save()
