@@ -1,10 +1,8 @@
 import os
-from blueness import module
 from abcli import file
 from abcli.plugins.README import build as build_README
 from notebooks_and_scripts import NAME, VERSION, ICON, REPO_NAME
 
-NAME = module.name(__file__, NAME)
 
 features = {
     "workflow": {
