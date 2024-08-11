@@ -6,7 +6,7 @@ function notebooks_and_scripts_workflow_monitor() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="~download,node=<node>,publish_as=<public-object-name>,~upload"
         abcli_show_usage "workflow monitor$ABCUL$EOP[$options]$ABCUL[.|<job-name>]$ABCUL[<command-line>]$EOPE" \
-            "monitor workflow."
+            "monitor <job-name>/workflow and run <command-line>."
         return
     fi
 
