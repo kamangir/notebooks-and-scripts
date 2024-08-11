@@ -1,4 +1,5 @@
 import copy
+import textwrap
 from typing import Tuple, Dict, List
 import numpy as np
 import networkx as nx
@@ -48,6 +49,7 @@ def export_graph_as_image(
     hot_node: str = "void",
     add_legend: bool = True,
     caption: str = "",
+    text_width: int = 80,
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -93,11 +95,16 @@ def export_graph_as_image(
         caption_items += [G.nodes[hot_node].get("command_line").replace('"', "")]
     caption_items = [item for item in caption_items if item]
 
+    caption_wrapped = textwrap.fill(
+        " | ".join(caption_items),
+        width=text_width,
+    )
+
     if caption_items:
         plt.text(
             0.5,
             0.5,
-            " | ".join(caption_items),
+            caption_wrapped,
             horizontalalignment="center",
             verticalalignment="center",
             transform=plt.gca().transAxes,
