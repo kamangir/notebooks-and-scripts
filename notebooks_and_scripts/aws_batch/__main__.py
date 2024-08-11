@@ -1,6 +1,7 @@
 import sys
 import argparse
 from blueness import module
+from abcli import file
 from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
@@ -16,7 +17,7 @@ parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
 parser.add_argument(
     "task",
     type=str,
-    help="show_count|submit",
+    help="cat_log|get_log_stream_name|show_count|submit",
 )
 parser.add_argument(
     "--command_line",
@@ -34,10 +35,32 @@ parser.add_argument(
     default="source",
     help="eval|source|submit",
 )
+parser.add_argument(
+    "--filename",
+    type=str,
+)
 args = parser.parse_args()
 
 success = False
-if args.task == "show_count":
+if args.task == "cat_log":
+    success, content = file.load_json(args.filename)
+
+    if success:
+        count = 0
+        for line in content.get("events", []):
+            print(line.get("message", ""))
+            count = count + 1
+
+        print(f"📜 {count} line(s).")
+elif args.task == "get_log_stream_name":
+    success, metadata = file.load_json(args.filename)
+    if success:
+        print(
+            metadata["jobs"][0].get("container", {}).get("logStreamName", "")
+            if metadata["jobs"]
+            else ""
+        )
+elif args.task == "show_count":
     success = True
     input_string = sys.stdin.read().strip()
 

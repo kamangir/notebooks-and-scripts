@@ -4,7 +4,7 @@ function abcli_aws_batch_browse() {
     local options=$1
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        options="id=<job-id>"
+        options="cat,id=<job-id>,log"
         abcli_show_usage "@batch browse $options" \
             "browse <job-id>."
 
@@ -34,7 +34,38 @@ function abcli_aws_batch_browse() {
             url="$base_url#jobs/$queue/$status"
         fi
     else
-        url="$base_url#jobs/detail/$job_id"
+        local do_log=$(abcli_option "$options" log 0)
+        local cat_log=$(abcli_option "$options" cat 0)
+
+        if [[ "$do_log" == 0 ]]; then
+            url="$base_url#jobs/detail/$job_id"
+        else
+            local filename=$abcli_path_temp/$(abcli_string_random).json
+            aws batch describe-jobs --jobs $job_id >>$filename
+
+            local log_stream_name=$(python3 -m notebooks_and_scripts.aws_batch \
+                get_log_stream_name \
+                --filename $filename)
+            if [[ -z "$log_stream_name" ]]; then
+                abcli_log_error "-@batch: browse: $job_id: log-stream-name not found."
+                return 1
+            fi
+            abcli_log "log stream name: $log_stream_name"
+
+            if [[ "$cat_log" == 0 ]]; then
+                log_stream_name=$(python3 -c "from urllib.parse import quote; print(quote('$log_stream_name',safe=''))")
+                url="https://ca-central-1.console.aws.amazon.com/cloudwatch/home?region=ca-central-1#logsV2:log-groups/log-group/%2Faws%2Fbatch%2Fjob/log-events/$log_stream_name"
+            else
+                filename=$abcli_path_temp/$(abcli_string_random).json
+                aws logs get-log-events \
+                    --log-group-name /aws/batch/job \
+                    --log-stream-name $log_stream_name >>$filename
+                python3 -m notebooks_and_scripts.aws_batch \
+                    cat_log \
+                    --filename $filename
+                return
+            fi
+        fi
     fi
 
     abcli_browse $url
