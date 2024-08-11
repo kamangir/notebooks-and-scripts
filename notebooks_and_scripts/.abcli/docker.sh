@@ -35,7 +35,7 @@ function abcli_docker() {
                 abcli_show_usage "@docker source$ABCUL$options$ABCUL<script-name> [<args>]" \
                     "source <script-name> <args> through the abcli docker image."
 
-            return
+            return 0
         fi
 
         local abcli_options=install,mono
