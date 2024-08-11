@@ -1,4 +1,5 @@
 from functools import reduce
+from abcli import string
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.runners import list_of_runners
 
@@ -21,10 +22,11 @@ items = (
                 + [
                     f"[![image]({url})]({url})"
                     for url in [
-                        "{}/{}-{}/workflow.gif?raw=true".format(
+                        "{}/{}-{}/workflow.gif?raw=true&random={}".format(
                             prefix,
                             runner_type,
                             pattern,
+                            string.random_(),
                         )
                         for pattern in list_of_patterns()
                     ]
