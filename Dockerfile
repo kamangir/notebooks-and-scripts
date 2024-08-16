@@ -54,7 +54,6 @@ RUN pip install -e .
 #
 # RUN pip install <module-name>
 
-RUN pip install vancouver-watching
 
 RUN mkdir -p /root/git/openai-commands
 ADD ./openai-commands /root/git/openai-commands
@@ -72,6 +71,7 @@ RUN pip install --upgrade --no-cache-dir blue-options
 RUN pip install --no-cache-dir abadpour
 #RUN pip install --no-cache-dir blue_geo
 RUN pip install --no-cache-dir blue_plugin
+RUN pip install --no-cache-dir gizai
 RUN pip install --no-cache-dir hubblescope
 #RUN pip install --no-cache-dir openai_commands
-RUN pip install --no-cache-dir gizai
+RUN pip install --no-cache-dir vancouver-watching
