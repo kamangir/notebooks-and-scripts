@@ -37,25 +37,33 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-# Copy and install local packages
+# copy and install abcli 🚀
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
 RUN pip install -e .
 
-RUN mkdir -p /root/git/notebooks-and-scripts
-ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
-WORKDIR /root/git/notebooks-and-scripts
-RUN pip install -e .
+# to use the build version of <repo-name>,
+#
+# RUN mkdir -p /root/git/<repo-name>
+# ADD ./<repo-name> /root/git/<repo-name>
+# WORKDIR /root/git/<repo-name>
+# RUN pip install -e .
+#
+# to use the latest built version of <module-name>,
+#
+# RUN pip install <module-name>
 
-RUN mkdir -p /root/git/vancouver-watching
-ADD ./vancouver-watching /root/git/vancouver-watching
-WORKDIR /root/git/vancouver-watching
-RUN pip install -e .
+RUN pip install vancouver-watching
 
 RUN mkdir -p /root/git/openai-commands
 ADD ./openai-commands /root/git/openai-commands
 WORKDIR /root/git/openai-commands
+RUN pip install -e .
+
+RUN mkdir -p /root/git/notebooks-and-scripts
+ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
+WORKDIR /root/git/notebooks-and-scripts
 RUN pip install -e .
 
 # install blue packages
