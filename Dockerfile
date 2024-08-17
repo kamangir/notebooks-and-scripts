@@ -37,7 +37,7 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-# copy and install abcli 🚀
+# copy and install abcli 🪄
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli

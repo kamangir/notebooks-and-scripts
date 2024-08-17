@@ -1,6 +1,6 @@
 # scripts
 
-[abcli 🚀](https://github.com/kamangir/awesome-bash-cli) [[meta](./meta/)] scripts for [aws batch](https://aws.amazon.com/batch/) jobs and [sagemaker](https://aws.amazon.com/sagemaker/) serving.
+[abcli 🪄](https://github.com/kamangir/awesome-bash-cli) [[meta](./meta/)] scripts for [aws batch](https://aws.amazon.com/batch/) jobs and [sagemaker](https://aws.amazon.com/sagemaker/) serving.
 
 > ℹ️ scripts are replaced with `@docker eval - <command>` and `@batch eval - <command>`.
 
