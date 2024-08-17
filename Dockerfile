@@ -41,6 +41,7 @@ RUN pip install setuptools
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
+RUN rm -v .env
 RUN pip install -e .
 
 # to use the build version of <repo-name>,
