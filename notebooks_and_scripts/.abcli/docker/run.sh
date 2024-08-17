@@ -11,7 +11,6 @@ function abcli_docker_run() {
     fi
 
     abcli_log "@docker: run $options ..."
-    abcli_badge "🌠"
 
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
