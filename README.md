@@ -17,4 +17,4 @@ pip install notebooks-and-scripts
 To use on [AWS SageMaker](https://aws.amazon.com/sagemaker/) replace `<plugin-name>` with `nbs` and follow [these instructions](https://github.com/kamangir/notebooks-and-scripts/blob/main/SageMaker.md).
 
 ---
-built by 🪄 [`abcli-9.231.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.670.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by 🪄 [`abcli-9.232.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.671.1`](https://github.com/kamangir/notebooks-and-scripts).
