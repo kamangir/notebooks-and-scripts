@@ -5,6 +5,7 @@ function abcli_aws_batch() {
 
     if [ "$task" == "help" ]; then
         abcli_aws_batch_browse "$@"
+        abcli_aws_batch_cat "$@"
         abcli_aws_batch_eval "$@"
         abcli_aws_batch_list "$@"
         abcli_aws_batch_submit "$@"
