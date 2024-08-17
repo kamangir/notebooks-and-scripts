@@ -44,28 +44,14 @@ def build():
     return build_README(
         items=items,
         cols=2,
-        template_filename=os.path.join(
-            file.path(__file__),
-            "./assets/README.md",
-        ),
-        filename=os.path.join(
-            file.path(__file__),
-            "../README.md",
-        ),
+        path=file.path(__file__),
         NAME=NAME,
         VERSION=VERSION,
         REPO_NAME=REPO_NAME,
     ) and build_README(
         items=workflow_items,
         cols=4,
-        template_filename=os.path.join(
-            file.path(__file__),
-            "./assets/workflow.md",
-        ),
-        filename=os.path.join(
-            file.path(__file__),
-            "./workflow/README.md",
-        ),
+        path=os.path.join(file.path(__file__), "workflow/runners"),
         NAME=NAME,
         VERSION=VERSION,
         REPO_NAME=REPO_NAME,
