@@ -71,8 +71,9 @@ def submit(
 
     job_id = response["jobId"]
     if verbose:
+        logger.info(f"job_id: {job_id}")
         logger.info(
-            "https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
+            "🔗 https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
                 env.abcli_aws_region,
                 env.abcli_aws_region,
                 job_id,

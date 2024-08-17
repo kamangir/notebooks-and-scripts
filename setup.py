@@ -20,6 +20,7 @@ setup(
     package_data={
         NAME: [
             "config.env",
+            "sample.env",
             ".abcli/**/*.sh",
         ],
     },

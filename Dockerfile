@@ -37,33 +37,31 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-# Copy and install local packages
+# copy and install abcli 🚀
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
 RUN pip install -e .
 
-RUN mkdir -p /root/git/notebooks-and-scripts
-ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
-WORKDIR /root/git/notebooks-and-scripts
-RUN pip install -e .
-
-RUN mkdir -p /root/git/vancouver-watching
-ADD ./vancouver-watching /root/git/vancouver-watching
-WORKDIR /root/git/vancouver-watching
-RUN pip install -e .
-
-RUN mkdir -p /root/git/openai-commands
-ADD ./openai-commands /root/git/openai-commands
-WORKDIR /root/git/openai-commands
-RUN pip install -e .
+# to use the build version of <repo-name>,
+#
+# RUN mkdir -p /root/git/<repo-name>
+# ADD ./<repo-name> /root/git/<repo-name>
+# WORKDIR /root/git/<repo-name>
+# RUN pip install -e .
+#
+# to use the latest built version of <module-name>,
+#
+# RUN pip install <module-name>
 
 # install blue packages
 RUN pip install --upgrade --no-cache-dir blueness
 RUN pip install --upgrade --no-cache-dir blue-options
 RUN pip install --no-cache-dir abadpour
 #RUN pip install --no-cache-dir blue_geo
-#RUN pip install --no-cache-dir blue_plugin
-RUN pip install --no-cache-dir hubblescope
-#RUN pip install --no-cache-dir openai_commands
+RUN pip install --no-cache-dir blue_plugin
 RUN pip install --no-cache-dir gizai
+RUN pip install --no-cache-dir hubblescope
+RUN pip install --no-cache-dir notebooks_and_scripts
+RUN pip install --no-cache-dir openai_commands
+RUN pip install --no-cache-dir vancouver-watching

@@ -21,11 +21,13 @@ function notebooks_and_scripts() {
         "${@:2}"
 }
 
-abcli_source_path - caller,suffix=/tests
+abcli_source_path - \
+    caller,suffix=/tests
 
-abcli_env dot load \
-    plugin=notebooks-and-scripts
-abcli_env dot load \
-    filename=notebooks_and_scripts/config.env,plugin=notebooks-and-scripts
+abcli_env_dot_load \
+    caller,ssm,plugin=notebooks_and_scripts,suffix=/../..
+
+abcli_env_dot_load \
+    caller,filename=config.env,suffix=/..
 
 abcli_log $(notebooks_and_scripts version --show_icon 1)

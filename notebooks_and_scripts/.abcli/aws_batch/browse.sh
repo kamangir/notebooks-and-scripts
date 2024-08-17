@@ -5,7 +5,7 @@ function abcli_aws_batch_browse() {
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         options="cat,id=<job-id>,log"
-        abcli_show_usage "@batch browse $options" \
+        abcli_show_usage "@batch browse$ABCUL$options" \
             "browse <job-id>."
 
         options="queue=<queue-name>,status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST | tr , \|)"
@@ -13,7 +13,7 @@ function abcli_aws_batch_browse() {
             "browse <queue-name>."
 
         options="queue=list"
-        abcli_show_usage "@batch browse $options" \
+        abcli_show_usage "@batch browse$ABCUL$options" \
             "browse list of queues."
         return
     fi
