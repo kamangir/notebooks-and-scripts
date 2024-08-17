@@ -37,13 +37,6 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-# copy and install abcli 🪄
-RUN mkdir -p /root/git/awesome-bash-cli
-ADD ./awesome-bash-cli /root/git/awesome-bash-cli
-WORKDIR /root/git/awesome-bash-cli
-RUN rm -v .env
-RUN pip install -e .
-
 # to use the build version of <repo-name>,
 #
 # RUN mkdir -p /root/git/<repo-name>
@@ -66,3 +59,11 @@ RUN pip install --no-cache-dir hubblescope
 RUN pip install --no-cache-dir notebooks_and_scripts
 RUN pip install --no-cache-dir openai_commands
 RUN pip install --no-cache-dir vancouver-watching
+
+# copy and install abcli 🪄
+RUN pip uninstall -y abcli
+RUN mkdir -p /root/git/awesome-bash-cli
+ADD ./awesome-bash-cli /root/git/awesome-bash-cli
+WORKDIR /root/git/awesome-bash-cli
+RUN rm -v .env
+RUN pip install -e .
