@@ -51,7 +51,7 @@ def build():
     ) and build_README(
         items=workflow_items,
         cols=4,
-        path=os.path.join(file.path(__file__), "workflow/runners"),
+        path=os.path.join(file.path(__file__), "workflow"),
         NAME=NAME,
         VERSION=VERSION,
         REPO_NAME=REPO_NAME,
