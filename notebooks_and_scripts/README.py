@@ -44,7 +44,7 @@ def build():
     return build_README(
         items=items,
         cols=2,
-        path=file.path(__file__),
+        path=os.path.join(file.path(__file__), ".."),
         NAME=NAME,
         VERSION=VERSION,
         REPO_NAME=REPO_NAME,
