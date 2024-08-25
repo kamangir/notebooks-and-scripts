@@ -1,5 +1,6 @@
 from typing import Any, List, Tuple
 from tqdm import tqdm
+from functools import reduce
 from abcli.modules import objects
 from abcli import file
 from abcli.modules import objects
@@ -13,6 +14,8 @@ class LocalRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
         self.type: RunnerType = RunnerType.LOCAL
+
+        self.command_line_list: List[str] = []
 
     def monitor_function(
         self,
@@ -41,11 +44,37 @@ class LocalRunner(GenericRunner):
     ) -> Tuple[bool, Any]:
         super().submit_command(command_line, job_name, dependencies, verbose)
 
-        filename = objects.path_of(f"{self.job_name}.sh", self.job_name)
-        success, script = file.load_text(filename, civilized=True, log=True)
-        if not success:
-            script = ["#! /usr/bin/env bash", ""]
+        self.command_line_list += [command_line]
 
-        script += [f"abcli_eval - {command_line}"]
+        filename = objects.path_of(f"{self.job_name}.sh", self.job_name)
+
+        script = (
+            [
+                "#! /usr/bin/env bash",
+                "",
+                "function runme() {",
+                '    echo "⏳ {} started: {} command(s)."'.format(
+                    self.job_name,
+                    len(self.command_line_list),
+                ),
+            ]
+            + reduce(
+                lambda x, y: x + y,
+                [
+                    [
+                        "",
+                        f"    abcli_eval - {command_line}",
+                        "    [[ $? -ne 0 ]] && return 1",
+                    ]
+                    for command_line in self.command_line_list
+                ],
+            )
+            + [
+                f'    echo "⏳ / {self.job_name}"',
+                "}",
+                "",
+                'runme "$@"',
+            ]
+        )
 
         return file.save_text(filename, script, log=True), {"job_id": job_name}
