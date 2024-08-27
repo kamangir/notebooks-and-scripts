@@ -14,4 +14,7 @@ function abcli_docker_clear() {
 
     abcli_eval ,$options \
         "docker system prune"
+
+    abcli_eval ,$options \
+        "docker-compose down --remove-orphans"
 }
