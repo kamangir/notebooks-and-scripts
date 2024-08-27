@@ -51,14 +51,14 @@ RUN pip install setuptools
 # install blue packages
 RUN pip install --upgrade --no-cache-dir blueness
 RUN pip install --upgrade --no-cache-dir blue-options
-RUN pip install --no-cache-dir abadpour
-RUN pip install --no-cache-dir blue_geo
-RUN pip install --no-cache-dir blue_plugin
-RUN pip install --no-cache-dir gizai
-RUN pip install --no-cache-dir hubblescope
-RUN pip install --no-cache-dir notebooks_and_scripts
-RUN pip install --no-cache-dir openai_commands
-RUN pip install --no-cache-dir vancouver-watching
+RUN pip install --upgrade --no-cache-dir abadpour
+RUN pip install --upgrade --no-cache-dir blue_geo
+RUN pip install --upgrade --no-cache-dir blue_plugin
+RUN pip install --upgrade --no-cache-dir gizai
+RUN pip install --upgrade --no-cache-dir hubblescope
+RUN pip install --upgrade --no-cache-dir notebooks_and_scripts
+RUN pip install --upgrade --no-cache-dir openai_commands
+RUN pip install --upgrade --no-cache-dir vancouver-watching
 
 # copy and install abcli 🪄
 RUN pip uninstall -y abcli
