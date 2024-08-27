@@ -49,20 +49,17 @@ RUN pip install setuptools
 # RUN pip install <module-name>
 
 # install blue packages
-RUN pip install --upgrade --no-cache-dir blueness
-RUN pip install --upgrade --no-cache-dir blue-options
-RUN pip install --upgrade --no-cache-dir abadpour
-RUN pip install --upgrade --no-cache-dir blue_geo
-RUN pip install --upgrade --no-cache-dir blue_plugin
-RUN pip install --upgrade --no-cache-dir gizai
-RUN pip install --upgrade --no-cache-dir hubblescope
-RUN pip install --upgrade --no-cache-dir notebooks_and_scripts
-RUN pip install --upgrade --no-cache-dir openai_commands
-RUN pip install --upgrade --no-cache-dir vancouver-watching
-
 # https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
-RUN pip install --upgrade --upgrade-strategy eager --no-cache-dir blueness
-RUN pip install --upgrade --upgrade-strategy eager --no-cache-dir blue_options
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueness
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_geo
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager notebooks_and_scripts
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager openai_commands
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
 
 # copy and install abcli 🪄
 RUN pip uninstall -y abcli
