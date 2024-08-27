@@ -60,6 +60,10 @@ RUN pip install --upgrade --no-cache-dir notebooks_and_scripts
 RUN pip install --upgrade --no-cache-dir openai_commands
 RUN pip install --upgrade --no-cache-dir vancouver-watching
 
+# https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
+RUN pip install --upgrade --upgrade-strategy eager --no-cache-dir blueness
+RUN pip install --upgrade --upgrade-strategy eager --no-cache-dir blue_options
+
 # copy and install abcli 🪄
 RUN pip uninstall -y abcli
 RUN mkdir -p /root/git/awesome-bash-cli
