@@ -50,6 +50,7 @@ RUN pip install setuptools
 
 # install blue packages
 # https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
+RUN pip cache purge
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueness
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
