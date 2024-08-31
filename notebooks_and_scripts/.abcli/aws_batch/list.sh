@@ -32,6 +32,8 @@ function abcli_aws_batch_list() {
 
     [[ -z "$status" ]] && status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST_WATCH | tr , " ")
 
+    abcli_badge "🌀"
+
     abcli_log "queue: $queue"
     local status_
     for status_ in $status; do

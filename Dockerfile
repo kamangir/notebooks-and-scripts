@@ -20,7 +20,7 @@ RUN pip install geojson
 RUN pip install beautifulsoup4
 RUN pip install geopandas
 RUN pip install tqdm
-RUN pip install pymysql==0.10.1
+RUN pip install pymysql
 RUN pip install boto3
 RUN pip install python-dotenv[cli]
 RUN pip install matplotlib
@@ -48,6 +48,14 @@ RUN pip install setuptools
 # to use the latest built version of <module-name>,
 #
 # RUN pip install <module-name>
+
+# blue-geo in dev mode
+# TODO: remove this section and enable the pip install below.
+# RUN mkdir -p /root/git/blue-geo
+# ADD ./blue-geo /root/git/blue-geo
+# WORKDIR /root/git/blue-geo
+# RUN rm -v ./.env
+# RUN pip install -e .
 
 # install blue packages
 # https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c

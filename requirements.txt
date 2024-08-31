@@ -10,7 +10,7 @@ networkx
 opencv-python
 pydot
 pylint
-pymysql==0.10.1
+pymysql
 pytest
 python-dotenv[cli]
 pyyaml
