@@ -38,16 +38,17 @@ RUN pip install opencv-python
 RUN pip install awscli
 RUN pip install setuptools
 
-# to use the build version of <repo-name>,
-#
-# RUN mkdir -p /root/git/<repo-name>
-# ADD ./<repo-name> /root/git/<repo-name>
-# WORKDIR /root/git/<repo-name>
-# RUN pip install -e .
-#
-# to use the latest built version of <module-name>,
-#
-# RUN pip install <module-name>
+# install blue packages
+# https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
+RUN pip cache purge
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueness
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager openai_commands
+RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
 
 #- 🌐 blue-geo ----------------------------------------------------------------#
 # dev mode
@@ -61,23 +62,24 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_geo
 #-----------------------------------------------------------------------------#
 
-# install blue packages
-# https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
-RUN pip cache purge
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueness
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager notebooks_and_scripts
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager openai_commands
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
+#- 🌐 notebooks-and-scripts --------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/notebooks-and-scripts
+ADD ./notebooks-and-scripts /root/git/notebooks-and-scripts
+WORKDIR /root/git/notebooks-and-scripts
+RUN rm -v ./.env
+RUN pip install -e .
 
-# copy and install abcli 🪄
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager notebooks_and_scripts
+#-----------------------------------------------------------------------------#
+
+#- 🪄 abcli -------------------------------------------------------------------#
+# dev mode
 RUN pip uninstall -y abcli
 RUN mkdir -p /root/git/awesome-bash-cli
 ADD ./awesome-bash-cli /root/git/awesome-bash-cli
 WORKDIR /root/git/awesome-bash-cli
 RUN rm -v .env
 RUN pip install -e .
+#-----------------------------------------------------------------------------#
