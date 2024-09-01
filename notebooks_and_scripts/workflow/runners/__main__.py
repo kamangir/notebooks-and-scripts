@@ -4,7 +4,8 @@ from abcli.plugins.metadata import get_from_object, post_to_object
 from notebooks_and_scripts.workflow.runners import RunnerType, list_of_runners
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts import VERSION, NAME
-from notebooks_and_scripts.workflow.runners.factory import runner_class, GenericRunner
+from notebooks_and_scripts.workflow.runners.factory import runner_class
+from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 from notebooks_and_scripts.logger import logger
 from blueness.argparse.generic import sys_exit
 

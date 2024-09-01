@@ -12,7 +12,7 @@ from notebooks_and_scripts import NAME
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.generic import Workflow
-from notebooks_and_scripts.workflow.runners.factory import RunnerType
+from notebooks_and_scripts.workflow.runners import RunnerType
 
 
 NAME = module.name(__file__, NAME)
