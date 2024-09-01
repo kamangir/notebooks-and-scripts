@@ -1,7 +1,8 @@
 from typing import Dict, Any, Tuple, List
 import boto3
-import glob
+import math
 from tqdm import tqdm
+from abcli import string
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
@@ -43,6 +44,72 @@ class AWSBatchRunner(GenericRunner):
                 workflow.G.nodes[node]["status"] = status[job_id]
 
         return workflow
+
+    def submit(
+        self,
+        workflow: Workflow,
+        dryrun: bool = True,
+        max_dependency: int = 20,
+    ) -> bool:
+        list_of_nodes = list(workflow.G.nodes.keys())
+        for node in list_of_nodes:
+            dependency_list = list(workflow.G.successors(node))
+            if len(dependency_list) <= max_dependency:
+                continue
+
+            proxy_count = math.ceil(len(dependency_list) / (max_dependency - 1)) - 1
+            suffix = string.random_(length=3, alphabet="0123456789")
+            logger.info(
+                "@ {}: {} dependencies > {} - adding {} proxy(s) @ {}.".format(
+                    node,
+                    len(dependency_list),
+                    max_dependency,
+                    proxy_count,
+                    suffix,
+                )
+            )
+
+            proxy_list = [
+                "{}-{}-{:03d}".format(node, suffix, index + 1)
+                for index in range(proxy_count)
+            ]
+            for proxy in proxy_list:
+                workflow.G.add_node(proxy)
+                workflow.G.nodes[proxy]["command_line"] = " ".join(
+                    [
+                        "workflow monitor",
+                        f"node={proxy}",
+                        self.job_name,
+                    ]
+                )
+
+            previous_proxy = node
+            for index, node_ in enumerate(dependency_list):
+                proxy_index = int(index / (max_dependency - 1))
+                if proxy_index < 1:
+                    continue
+
+                proxy = proxy_list[proxy_index - 1]
+
+                workflow.G.remove_edge(node, node_)
+
+                if proxy != previous_proxy:
+                    workflow.G.add_edge(previous_proxy, proxy)
+                    previous_proxy = proxy
+
+                workflow.G.add_edge(proxy, node_)
+
+                logger.info(
+                    "{}->{} -> {}->{}->{}".format(
+                        node,
+                        node_,
+                        node,
+                        proxy,
+                        node_,
+                    )
+                )
+
+        return workflow.save() and super().submit(workflow, dryrun)
 
     def submit_command(
         self,
