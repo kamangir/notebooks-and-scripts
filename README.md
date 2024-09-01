@@ -16,4 +16,4 @@ to use on [AWS SageMaker](https://aws.amazon.com/sagemaker/) replace `<plugin-na
 
 [![pylint](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml) [![pytest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml) [![bashtest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml) [![PyPI version](https://img.shields.io/pypi/v/notebooks-and-scripts.svg)](https://pypi.org/project/notebooks-and-scripts/)
 
-built by 🪄 [`abcli-9.264.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.692.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by 🪄 [`abcli-9.267.1-current`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.693.1`](https://github.com/kamangir/notebooks-and-scripts).
