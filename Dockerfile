@@ -49,13 +49,17 @@ RUN pip install setuptools
 #
 # RUN pip install <module-name>
 
-# blue-geo in dev mode
-# TODO: remove this section and enable the pip install below.
+#- 🌐 blue-geo ----------------------------------------------------------------#
+# dev mode
 RUN mkdir -p /root/git/blue-geo
 ADD ./blue-geo /root/git/blue-geo
 WORKDIR /root/git/blue-geo
 RUN rm -v ./.env
 RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_geo
+#-----------------------------------------------------------------------------#
 
 # install blue packages
 # https://chatgpt.com/share/f58db1ce-b2ee-4460-b0c8-24077113736c
@@ -63,7 +67,6 @@ RUN pip cache purge
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueness
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
-# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_geo
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
