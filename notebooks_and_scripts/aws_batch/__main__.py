@@ -43,7 +43,7 @@ args = parser.parse_args()
 
 success = False
 if args.task == "cat_log":
-    success, content = file.load_json(args.filename)
+    success, content = file.load_json(args.filename, civilized=True)
 
     if success:
         count = 0
