@@ -74,6 +74,18 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager notebooks_and_scripts
 #-----------------------------------------------------------------------------#
 
+#- 🌀 blue-objects -----------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/blue-objects
+ADD ./blue-objects /root/git/blue-objects
+WORKDIR /root/git/blue-objects
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_objects
+#-----------------------------------------------------------------------------#
+
 #- 🪄 abcli -------------------------------------------------------------------#
 # dev mode
 RUN pip uninstall -y abcli
