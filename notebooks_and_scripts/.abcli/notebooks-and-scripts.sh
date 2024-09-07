@@ -8,6 +8,7 @@ function notebooks_and_scripts() {
     if [ "$task" == "help" ]; then
         abcli_aws_batch "$@"
         abcli_docker "$@"
+        abcli_huggingface "$@"
         notebooks_and_scripts_localflow "$@"
         abcli_notebooks "$@"
         abcli_sagemaker "$@"
