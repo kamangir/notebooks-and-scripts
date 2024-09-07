@@ -1,9 +1,9 @@
 from functools import reduce
 from abcli import string
+from blue_objects.env import ABCLI_PUBLIC_PREFIX
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.runners import list_of_runners
 
-prefix = "https://kamangir-public.s3.ca-central-1.amazonaws.com"
 
 items = (
     ["📜"]
@@ -23,7 +23,7 @@ items = (
                     f"[![image]({url})]({url})"
                     for url in [
                         "{}/{}-{}/workflow.gif?raw=true&random={}".format(
-                            prefix,
+                            ABCLI_PUBLIC_PREFIX,
                             runner_type,
                             pattern,
                             string.random_(),

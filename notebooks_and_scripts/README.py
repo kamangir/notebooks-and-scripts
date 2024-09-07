@@ -1,5 +1,6 @@
 import os
 from abcli import file
+from blue_objects.env import ABCLI_PUBLIC_PREFIX
 from abcli.plugins.README import build as build_README
 from notebooks_and_scripts import NAME, VERSION, ICON, REPO_NAME
 from notebooks_and_scripts.workflow.README import items as workflow_items
@@ -9,7 +10,7 @@ features = {
     "workflow": {
         "description": "an abstraction to run mixed-type (cpu/gpu/...) [DAG](https://networkx.org/documentation/stable/reference/classes/digraph.html)s of commands on [aws batch](https://aws.amazon.com/batch/), and a few other compute resources.",
         "icon": ICON,
-        "thumbnail": "https://kamangir-public.s3.ca-central-1.amazonaws.com/hourglass/workflow.gif?raw=true",
+        "thumbnail": f"{ABCLI_PUBLIC_PREFIX}/hourglass/workflow.gif?raw=true",
         "url": "https://github.com/kamangir/notebooks-and-scripts/tree/main/notebooks_and_scripts/workflow",
     },
     "scripts": {
