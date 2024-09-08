@@ -1,13 +1,14 @@
 from typing import Any, List, Tuple, Dict
-import boto3
 import glob
 from tqdm import tqdm
+
 from blueness import module
-from abcli import file
-from abcli import string
+from blue_options import string
+from blue_objects import file
 from abcli.modules import objects
 from abcli.plugins.graphics.gif import generate_animated_gif
 from abcli.plugins.metadata import post_to_object
+
 from notebooks_and_scripts import NAME
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file

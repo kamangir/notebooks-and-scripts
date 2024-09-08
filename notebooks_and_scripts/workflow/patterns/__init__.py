@@ -2,7 +2,9 @@ from typing import Tuple, List
 import os
 import glob
 import networkx as nx
-from abcli import file
+
+from blue_objects import file
+
 from notebooks_and_scripts.workflow import dot_file
 
 

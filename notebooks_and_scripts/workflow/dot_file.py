@@ -6,10 +6,12 @@ import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_pydot import read_dot
+
 from blueness import module
-from abcli import file, path
+from blue_options.logger import crash_report
+from blue_objects import file, path
 from abcli.modules.host import signature as host_signature
-from abcli.logger import crash_report
+
 from notebooks_and_scripts import NAME, VERSION
 from notebooks_and_scripts.logger import logger
 
@@ -166,7 +168,7 @@ def load_from_file(
         or export_graph_as_image(
             G,
             filename=(
-                file.set_extension(filename, export_as_image[1:])
+                file.add_extension(filename, export_as_image[1:])
                 if export_as_image.startswith(".")
                 else export_as_image
             ),
@@ -201,7 +203,7 @@ def save_to_file(
     return export_graph_as_image(
         G,
         filename=(
-            file.set_extension(filename, export_as_image[1:])
+            file.add_extension(filename, export_as_image[1:])
             if export_as_image.startswith(".")
             else export_as_image
         ),

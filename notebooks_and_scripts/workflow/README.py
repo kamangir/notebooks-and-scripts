@@ -1,5 +1,5 @@
 from functools import reduce
-from abcli import string
+from blue_options import string
 from blue_objects.env import ABCLI_PUBLIC_PREFIX
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
 from notebooks_and_scripts.workflow.runners import list_of_runners
@@ -26,7 +26,7 @@ items = (
                             ABCLI_PUBLIC_PREFIX,
                             runner_type,
                             pattern,
-                            string.random_(),
+                            string.random(),
                         )
                         for pattern in list_of_patterns()
                     ]
