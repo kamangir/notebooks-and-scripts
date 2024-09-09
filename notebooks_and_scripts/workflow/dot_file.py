@@ -9,8 +9,8 @@ from networkx.drawing.nx_pydot import read_dot
 
 from blueness import module
 from blue_options.logger import crash_report
+from blue_options.host import signature as host_signature
 from blue_objects import file, path
-from abcli.modules.host import signature as host_signature
 
 from notebooks_and_scripts import NAME, VERSION
 from notebooks_and_scripts.logger import logger
