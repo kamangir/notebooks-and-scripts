@@ -21,7 +21,7 @@ function runme() {
 
     local dataset_object_name=$dataset_name-$suffix
 
-    local dataset_object_path=$abcli_object_root/$dataset_object_name
+    local dataset_object_path=$ABCLI_OBJECT_ROOT/$dataset_object_name
     mkdir -pv $dataset_object_path
 
     if [[ -d "$dataset_object_path/$dataset_name" ]]; then

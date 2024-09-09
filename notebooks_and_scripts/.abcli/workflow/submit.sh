@@ -35,10 +35,10 @@ function notebooks_and_scripts_workflow_submit() {
     [[ "$status" -ne 0 ]] && return $status
 
     if [[ "$runner_type" == local ]]; then
-        abcli_cat $abcli_object_root/$job_name/$job_name.sh
+        abcli_cat $ABCLI_OBJECT_ROOT/$job_name/$job_name.sh
 
         abcli_eval dryrun=$do_dryrun \
-            source $abcli_object_root/$job_name/$job_name.sh
+            source $ABCLI_OBJECT_ROOT/$job_name/$job_name.sh
         status="$?"
     fi
 

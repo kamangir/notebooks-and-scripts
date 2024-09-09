@@ -6,7 +6,7 @@ from blueness import module
 from blue_options import string
 from blue_objects import file
 from abcli.modules import objects
-from abcli.plugins.graphics.gif import generate_animated_gif
+from blue_objects.graphics.gif import generate_animated_gif
 from abcli.plugins.metadata import post_to_object
 
 from notebooks_and_scripts import NAME

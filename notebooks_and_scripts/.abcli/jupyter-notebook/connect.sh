@@ -20,7 +20,7 @@ function abcli_notebooks_connect() {
         ssh \
             -i $pem_filename \
             -N -f -L 8888:localhost:8888 \
-            ubuntu@ec2-$ip_address.$abcli_aws_region.compute.amazonaws.com
+            ubuntu@ec2-$ip_address.$ABCLI_AWS_REGION.compute.amazonaws.com
     fi
 
     open https://localhost:8888
