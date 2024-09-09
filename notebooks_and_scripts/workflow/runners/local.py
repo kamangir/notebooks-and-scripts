@@ -2,8 +2,7 @@ from typing import Any, List, Tuple
 from tqdm import tqdm
 from functools import reduce
 
-from blue_objects import file
-from abcli.modules import objects
+from blue_objects import file, objects
 
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.runners import RunnerType

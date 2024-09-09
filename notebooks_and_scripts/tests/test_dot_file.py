@@ -1,7 +1,6 @@
 import pytest
 
-from blue_objects import file
-from abcli.modules import objects
+from blue_objects import file, objects
 
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
