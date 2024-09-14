@@ -1,5 +1,7 @@
 import pytest
-from abcli.modules.objects import unique_object
+
+from blue_objects.objects import unique_object
+
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.patterns import list_of_patterns
