@@ -1,10 +1,9 @@
 from typing import Any
 import networkx as nx
-from abcli.modules import objects
-from abcli.plugins.metadata import (
-    post_to_object,
-    get_from_object,
-)
+
+from blue_objects import objects
+from abcli.plugins import metadata
+
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow import patterns
@@ -30,7 +29,7 @@ class Workflow:
             assert success
 
     def get_metadata(self, key: str, default: str = "") -> str:
-        return get_from_object(self.job_name, key, default)
+        return metadata.get_from_object(self.job_name, key, default)
 
     def load_pattern(
         self,
@@ -65,7 +64,7 @@ class Workflow:
         return f"{self.job_name}-{node}"
 
     def post_metadata(self, key: str, value: Any) -> bool:
-        return post_to_object(self.job_name, key, value)
+        return metadata.post_to_object(self.job_name, key, value)
 
     def save(
         self,

@@ -1,7 +1,9 @@
 from typing import Tuple, Any, List
 from enum import Enum
 import boto3
-from abcli import env
+
+from blue_objects.env import ABCLI_AWS_REGION
+
 from notebooks_and_scripts.logger import logger
 
 
@@ -74,8 +76,8 @@ def submit(
         logger.info(f"job_id: {job_id}")
         logger.info(
             "🔗 https://{}.console.aws.amazon.com/batch/home?region={}#jobs/detail/{}".format(
-                env.abcli_aws_region,
-                env.abcli_aws_region,
+                ABCLI_AWS_REGION,
+                ABCLI_AWS_REGION,
                 job_id,
             )
         )

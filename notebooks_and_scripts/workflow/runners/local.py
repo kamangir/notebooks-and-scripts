@@ -1,13 +1,12 @@
 from typing import Any, List, Tuple
 from tqdm import tqdm
 from functools import reduce
-from abcli.modules import objects
-from abcli import file
-from abcli.modules import objects
+
+from blue_objects import file, objects
+
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.runners.generic import GenericRunner
-from notebooks_and_scripts.logger import logger
 
 
 class LocalRunner(GenericRunner):
@@ -25,7 +24,7 @@ class LocalRunner(GenericRunner):
         workflow = super().monitor_function(workflow, hot_node)
 
         for node in tqdm(workflow.G.nodes):
-            if file.exist(
+            if file.exists(
                 objects.path_of(
                     "metadata.yaml",
                     workflow.node_job_name(node),

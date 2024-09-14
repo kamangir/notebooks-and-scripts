@@ -1,14 +1,16 @@
 import sys
 import argparse
+
 from blueness import module
-from abcli import file
+from blueness.argparse.generic import sys_exit
+from blue_objects import file
+
 from notebooks_and_scripts import VERSION, NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
     SubmissionType,
 )
 from notebooks_and_scripts.logger import logger
-from blueness.argparse.generic import sys_exit
 
 NAME = module.name(__file__, NAME)
 
@@ -43,7 +45,7 @@ args = parser.parse_args()
 
 success = False
 if args.task == "cat_log":
-    success, content = file.load_json(args.filename, civilized=True)
+    success, content = file.load_json(args.filename, ignore_error=True)
 
     if success:
         count = 0

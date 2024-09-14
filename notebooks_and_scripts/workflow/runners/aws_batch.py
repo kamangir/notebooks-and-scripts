@@ -2,7 +2,7 @@ from typing import Dict, Any, Tuple, List
 import boto3
 import math
 from tqdm import tqdm
-from abcli import string
+from blue_options import string
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
@@ -58,7 +58,7 @@ class AWSBatchRunner(GenericRunner):
                 continue
 
             proxy_count = math.ceil(len(dependency_list) / (max_dependency - 1)) - 1
-            suffix = string.random_(length=3, alphabet="0123456789")
+            suffix = string.random(length=3, alphabet="0123456789")
             logger.info(
                 "@ {}: {} dependencies > {} - adding {} proxy(s) @ {}.".format(
                     node,

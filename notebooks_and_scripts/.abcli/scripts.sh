@@ -71,7 +71,7 @@ function abcli_scripts() {
     fi
 
     if [ "$task" == cat ]; then
-        abcli_log_file $script_path
+        abcli_cat $script_path
         return
     fi
 
@@ -121,7 +121,7 @@ function abcli_scripts() {
         fi
 
         if [[ -f "$script_path" ]]; then
-            abcli_log_file $script_path
+            abcli_cat $script_path
         else
             abcli_log "🔗 $script_path"
             ls -1lh $script_path \
@@ -161,7 +161,7 @@ function abcli_scripts() {
         do_cat=$(abcli_option_int "$options" cat 0)
         do_dryrun=$(abcli_option_int "$options" dryrun 0)
 
-        [[ "$do_cat" == 1 ]] && abcli_log_file $script_path
+        [[ "$do_cat" == 1 ]] && abcli_cat $script_path
 
         local args="${@:4}"
         [[ -z "$args" ]] && args="-"

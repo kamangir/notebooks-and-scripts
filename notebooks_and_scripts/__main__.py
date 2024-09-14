@@ -1,7 +1,7 @@
-from notebooks_and_scripts import NAME, VERSION, DESCRIPTION, ICON
-from notebooks_and_scripts.logger import logger
-from notebooks_and_scripts import README
 from blueness.argparse.generic import main
+
+from notebooks_and_scripts import NAME, VERSION, DESCRIPTION, ICON, README
+from notebooks_and_scripts.logger import logger
 
 main(
     ICON=ICON,
