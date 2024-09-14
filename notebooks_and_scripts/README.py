@@ -1,8 +1,7 @@
 import os
 
-from blue_objects import file
+from blue_objects import file, README
 from blue_objects.env import ABCLI_PUBLIC_PREFIX
-from abcli.plugins.README import build as build_README
 
 from notebooks_and_scripts import NAME, VERSION, ICON, REPO_NAME
 from notebooks_and_scripts.workflow.README import items as workflow_items
@@ -44,14 +43,14 @@ items = [
 
 
 def build():
-    return build_README(
+    return README.build(
         items=items,
         cols=2,
         path=os.path.join(file.path(__file__), ".."),
         NAME=NAME,
         VERSION=VERSION,
         REPO_NAME=REPO_NAME,
-    ) and build_README(
+    ) and README.build(
         items=workflow_items,
         cols=4,
         path=os.path.join(file.path(__file__), "workflow"),
