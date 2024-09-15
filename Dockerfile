@@ -95,3 +95,12 @@ WORKDIR /root/git/awesome-bash-cli
 RUN rm -v .env
 RUN pip install -e .
 #-----------------------------------------------------------------------------#
+
+# remove when all modules are rebuilt with:
+# - blueness >= 3.69.1
+# - blue-options >= 3.69.1
+RUN pip uninstall -y blueness
+RUN pip install blueness
+
+RUN pip uninstall -y blue-options
+RUN pip install blue-options
