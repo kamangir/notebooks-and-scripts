@@ -19,7 +19,7 @@ function localflow_eval() {
 
     abcli_upload - $job_name
 
-    abcli_tag set \
+    abcli_tags set \
         $job_name \
         localflow,SUBMITTED \
         validate

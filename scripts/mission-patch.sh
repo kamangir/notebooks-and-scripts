@@ -52,7 +52,7 @@ function mission_patch() {
     [[ "$do_upload" == 1 ]] &&
         abcli_upload - $object_name
 
-    abcli_tag set \
+    abcli_tags set \
         $object_name mission-patch
 }
 

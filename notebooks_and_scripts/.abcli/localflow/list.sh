@@ -13,7 +13,7 @@ function localflow_list() {
 
     local status=$(abcli_option "$options" status SUBMITTED)
 
-    abcli_tag search \
+    abcli_tags search \
         localflow,$status \
         --item_name job \
         "${@:2}"

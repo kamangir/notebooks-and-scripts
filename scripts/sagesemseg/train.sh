@@ -31,7 +31,7 @@ function runme() {
 
     abcli_log "$script_name: $dataset_object_name -> $model_object_name"
 
-    abcli_relation set \
+    abcli_relations set \
         $dataset_object_name \
         $model_object_name \
         trained

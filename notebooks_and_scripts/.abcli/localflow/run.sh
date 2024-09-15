@@ -30,7 +30,7 @@ function localflow_run() {
         fi
         abcli_log "⚙️  $job_name"
 
-        abcli_tag set \
+        abcli_tags set \
             $job_name \
             ~SUBMITTED,RUNNING \
             validate
@@ -42,7 +42,7 @@ function localflow_run() {
             $job_name)
         if [[ -z "$command_line" ]]; then
             abcli_log_error "-localflow: $job_name: command not found."
-            abcli_tag set \
+            abcli_tags set \
                 $job_name \
                 ~RUNNING,FAILED \
                 validate
@@ -52,7 +52,7 @@ function localflow_run() {
         abcli_eval ,$options \
             "$command_line"
 
-        abcli_tag set \
+        abcli_tags set \
             $job_name \
             ~RUNNING,SUCCEEDED \
             validate
