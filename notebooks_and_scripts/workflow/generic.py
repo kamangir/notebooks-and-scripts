@@ -1,8 +1,7 @@
 from typing import Any
 import networkx as nx
 
-from blue_objects import objects
-from abcli.plugins import metadata
+from blue_objects import objects, metadata
 
 from notebooks_and_scripts import env
 from notebooks_and_scripts.workflow import dot_file
