@@ -5,7 +5,7 @@ from blueness import module
 from blueness.argparse.generic import sys_exit
 from blue_objects import file
 
-from notebooks_and_scripts import VERSION, NAME
+from notebooks_and_scripts import NAME
 from notebooks_and_scripts.aws_batch.submission import (
     submit,
     SubmissionType,
@@ -15,7 +15,7 @@ from notebooks_and_scripts.logger import logger
 NAME = module.name(__file__, NAME)
 
 
-parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
+parser = argparse.ArgumentParser(NAME)
 parser.add_argument(
     "task",
     type=str,
