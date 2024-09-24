@@ -31,10 +31,9 @@ function runme() {
 
     abcli_log "$script_name: $dataset_object_name -> $model_object_name"
 
-    abcli_relations set \
-        $dataset_object_name \
+    abcli_tags set \
         $model_object_name \
-        trained
+        trained_on.$dataset_object_name
 
     abcli_eval dryrun=$do_dryrun \
         python3 -m roofAI.semseg.sagemaker train_model \
