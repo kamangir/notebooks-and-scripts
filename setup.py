@@ -22,6 +22,7 @@ setup(
             "config.env",
             "sample.env",
             ".abcli/**/*.sh",
+            "assets/*.ipynb",
         ],
     },
 )
