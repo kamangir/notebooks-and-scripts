@@ -41,11 +41,15 @@ function abcli_docker_build() {
 
     rm -rfv temp
 
-    [[ "$do_push" == "1" ]] &&
+    if [[ "$do_push" == "1" ]]; then
         abcli_docker_push $options
+        [[ $? -ne 0 ]] && return 1
+    fi
 
-    [[ "$do_run" == "1" ]] &&
+    if [[ "$do_run" == "1" ]]; then
         abcli_docker_run $options
+        [[ $? -ne 0 ]] && return 1
+    fi
 
     popd >/dev/null
 }
