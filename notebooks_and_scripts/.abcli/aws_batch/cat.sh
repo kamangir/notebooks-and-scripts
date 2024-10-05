@@ -17,7 +17,7 @@ function abcli_aws_batch_cat() {
     local command_line"=abcli_aws_batch_browse cat,id=$job_id,log"
 
     if [[ "$do_watch" == 1 ]]; then
-        abcli_watch ,$options \
+        abcli_watch seconds=20,$options \
             "$command_line"
     else
         abcli_eval ,$options \
