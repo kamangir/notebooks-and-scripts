@@ -9,8 +9,6 @@ alias @docker=abcli_docker
 alias @notebook=abcli_notebooks
 alias @notebooks=abcli_notebooks
 
-alias @code="abcli_scripts code"
-
 alias @mv="abcli_scripts move"
 
 alias @sagemaker=abcli_sagemaker
