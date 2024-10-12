@@ -24,4 +24,4 @@ function localflow() {
     return 1
 }
 
-abcli_source_path - caller,suffix=/localflow
+abcli_source_caller_suffix_path /localflow

@@ -24,4 +24,4 @@ function notebooks_and_scripts_workflow() {
     return 1
 }
 
-abcli_source_path - caller,suffix=/workflow
+abcli_source_caller_suffix_path /workflow

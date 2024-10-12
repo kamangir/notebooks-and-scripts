@@ -29,4 +29,4 @@ function abcli_notebooks() {
     return 1
 }
 
-abcli_source_path - caller,suffix=/jupyter-notebook
+abcli_source_caller_suffix_path /jupyter-notebook

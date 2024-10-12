@@ -22,4 +22,4 @@ function abcli_aws_batch() {
     return 1
 }
 
-abcli_source_path - caller,suffix=/aws_batch
+abcli_source_caller_suffix_path /aws_batch
