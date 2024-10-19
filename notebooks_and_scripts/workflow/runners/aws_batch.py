@@ -117,9 +117,17 @@ class AWSBatchRunner(GenericRunner):
         job_name: str,
         dependencies: List[str],
         verbose: bool = False,
+        type: str = "cpu",
     ) -> Tuple[bool, Any]:
-        super().submit_command(command_line, job_name, dependencies, verbose)
+        assert super().submit_command(
+            command_line,
+            job_name,
+            dependencies,
+            verbose,
+            type,
+        )[0]
 
+        # ignore type - all jobs are cpu.
         return submit(
             f"- {command_line}",
             job_name,

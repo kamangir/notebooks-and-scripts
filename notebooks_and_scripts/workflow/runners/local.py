@@ -40,8 +40,15 @@ class LocalRunner(GenericRunner):
         job_name: str,
         dependencies: List[str],
         verbose: bool = False,
+        type: str = "cpu",
     ) -> Tuple[bool, Any]:
-        super().submit_command(command_line, job_name, dependencies, verbose)
+        assert super().submit_command(
+            command_line,
+            job_name,
+            dependencies,
+            verbose,
+            type,
+        )[0]
 
         self.command_line_list += [command_line]
 

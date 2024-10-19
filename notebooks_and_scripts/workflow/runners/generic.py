@@ -141,6 +141,7 @@ class GenericRunner:
                         for node_ in workflow.G.successors(node)
                     ],
                     verbose=False,
+                    type=workflow.G.nodes[node].get("type", "cpu"),
                 )
                 if not success:
                     failure_count += 1
@@ -180,12 +181,14 @@ class GenericRunner:
         job_name: str,
         dependencies: List[str],
         verbose: bool = False,
+        type: str = "cpu",
     ) -> Tuple[bool, Any]:
         logger.info(
-            "⏳ {}.{}: {} @ {} X {}: {}".format(
+            "⏳ {}.{}: {}[{}]: {} X {}: {}".format(
                 NAME,
                 self.__class__.__name__,
                 job_name,
+                type,
                 command_line,
                 len(dependencies),
                 ", ".join(dependencies),
