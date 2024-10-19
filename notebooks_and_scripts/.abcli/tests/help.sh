@@ -21,12 +21,6 @@ function test_notebooks_and_scripts_help() {
         "abcli_docker seed" \
         "abcli_docker source" \
         \
-        "localflow" \
-        "localflow eval" \
-        "localflow submit" \
-        "localflow list" \
-        "localflow run" \
-        \
         "abcli_notebooks" \
         "abcli_notebooks open" \
         "abcli_notebooks build" \

@@ -9,7 +9,6 @@ function notebooks_and_scripts() {
         abcli_aws_batch "$@"
         abcli_docker "$@"
         abcli_huggingface "$@"
-        notebooks_and_scripts_localflow "$@"
         abcli_notebooks "$@"
         abcli_sagemaker "$@"
         abcli_scripts "$@"
