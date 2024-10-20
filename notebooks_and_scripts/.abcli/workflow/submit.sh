@@ -20,9 +20,22 @@ function notebooks_and_scripts_workflow_submit() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
-    abcli_log "📜 workflow.submit: $job_name -> $runner_type"
+    local runner_module="notebooks_and_scripts.workflow.runners"
+    if [[ "|$NBS_RUNNERS_LIST|" != *"|$runner_type|"* ]]; then
+        abcli_log "external runner: $runner_type"
 
-    python3 -m notebooks_and_scripts.workflow.runners \
+        local var_name=${runner_type}_runner_module_name
+        local runner_module=${!var_name}
+
+        if [[ -z "$runner_module" ]]; then
+            abcli_log_error "$runner_type: module not found, try exporting $var_name first."
+            return 1
+        fi
+    fi
+
+    abcli_log "📜 workflow.submit: $job_name -$runner_module-> $runner_type"
+
+    python3 -m $runner_module \
         submit \
         --dryrun $do_dryrun \
         --job_name $job_name \
