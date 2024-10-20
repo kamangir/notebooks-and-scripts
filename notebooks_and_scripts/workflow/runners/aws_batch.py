@@ -5,8 +5,6 @@ from tqdm import tqdm
 from blue_options import string
 from notebooks_and_scripts.workflow.generic import Workflow
 from notebooks_and_scripts.logger import logger
-from notebooks_and_scripts.workflow import dot_file
-from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 
@@ -14,7 +12,7 @@ from notebooks_and_scripts.aws_batch.submission import submit, SubmissionType
 class AWSBatchRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
-        self.type: RunnerType = RunnerType.AWS_BATCH
+        self.type_name: str = "aws_batch"
 
     def monitor_function(
         self,

@@ -5,14 +5,13 @@ from functools import reduce
 from blue_objects import file, objects
 
 from notebooks_and_scripts.workflow.generic import Workflow
-from notebooks_and_scripts.workflow.runners import RunnerType
 from notebooks_and_scripts.workflow.runners.generic import GenericRunner
 
 
 class LocalRunner(GenericRunner):
     def __init__(self, **kw_args):
         super().__init__(**kw_args)
-        self.type: RunnerType = RunnerType.LOCAL
+        self.type_name: str = "local"
 
         self.command_line_list: List[str] = []
 

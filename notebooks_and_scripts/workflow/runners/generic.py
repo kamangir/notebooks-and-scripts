@@ -12,7 +12,6 @@ from notebooks_and_scripts import NAME
 from notebooks_and_scripts.logger import logger
 from notebooks_and_scripts.workflow import dot_file
 from notebooks_and_scripts.workflow.generic import Workflow
-from notebooks_and_scripts.workflow.runners import RunnerType
 
 
 NAME = module.name(__file__, NAME)
@@ -20,7 +19,7 @@ NAME = module.name(__file__, NAME)
 
 class GenericRunner:
     def __init__(self):
-        self.type: RunnerType = RunnerType.GENERIC
+        self.type_name: str = "generic"
         self.job_name: str = ""
 
     def monitor(
@@ -51,7 +50,7 @@ class GenericRunner:
             ),
             colormap=dot_file.status_color_map,
             hot_node=hot_node,
-            caption=f"@{self.type.name.lower()}",
+            caption=f"@{self.type_name}",
         ):
             return False
 
@@ -168,7 +167,7 @@ class GenericRunner:
             {
                 "metadata": metadata,
                 "failure_count": failure_count,
-                "runner_type": self.type.name.lower(),
+                "runner_type": self.type_name,
             },
         ):
             return False
