@@ -83,7 +83,11 @@ elif args.task == "monitor":
         "submission.runner_type",
     )
 
-    runner: GenericRunner = runner_class[RunnerType[runner_type.upper()]]()
+    runner: GenericRunner = (
+        runner_class[RunnerType[runner_type.upper()]]()
+        if runner_type.upper() in RunnerType.__members__
+        else GenericRunner()
+    )
 
     success = runner.monitor(workflow, args.hot_node)
 
