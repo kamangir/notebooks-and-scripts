@@ -32,6 +32,7 @@ function abcli_docker_build() {
 
     abcli_eval ,$options \
         docker build \
+        --platform=linux/amd64 \
         $extra_args \
         --build-arg HOME=$HOME \
         -t kamangir/abcli \
