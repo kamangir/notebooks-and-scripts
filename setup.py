@@ -11,6 +11,7 @@ setup(
     packages=[
         NAME,
         f"{NAME}.aws_batch",
+        f"{NAME}.assets",
         f"{NAME}.sagemaker",
         f"{NAME}.workflow",
         f"{NAME}.workflow.patterns",
