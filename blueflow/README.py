@@ -47,6 +47,7 @@ def build():
         items=items,
         cols=2,
         path=os.path.join(file.path(__file__), ".."),
+        ICON=ICON,
         NAME=NAME,
         VERSION=VERSION,
         MODULE_NAME="blueflow",
