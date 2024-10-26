@@ -1,13 +1,9 @@
-⚠️ `notesbooks_and_scripts` is renamed to [`blueflow`](https://github.com/kamangir/notebooks-and-scripts) ⚠️
+# 📜 notebooks & scripts (`blueflow`)
 
----
-
-# 📜 notebooks & scripts
-
-📜 [notebooks](./notebooks) and [scripts](./scripts) for ai experiments and aws batch jobs.
+📜 [`blueflow`](./blueflow/) for workflow management on aws batch and more.
 
 ```bash
-pip install notebooks-and-scripts
+pip install blueflow
 ```
 
 --table--

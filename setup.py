@@ -1,4 +1,4 @@
-from notebooks_and_scripts import NAME, VERSION, DESCRIPTION, REPO_NAME
+from blueflow import NAME, VERSION, DESCRIPTION, REPO_NAME
 from blueness.pypi import setup
 
 

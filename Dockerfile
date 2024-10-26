@@ -80,7 +80,7 @@ RUN rm -v ./.env
 RUN pip install -e .
 
 # release mode
-# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager notebooks_and_scripts
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blueflow
 #-----------------------------------------------------------------------------#
 
 #- 🌐 blue-geo ----------------------------------------------------------------#
