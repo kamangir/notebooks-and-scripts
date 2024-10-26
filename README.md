@@ -1,4 +1,4 @@
-⚠️ `notesbooks_and_scripts` is renamed to [blueflow](https://github.com/kamangir/notebooks-and-scripts) ⚠️
+⚠️ `notesbooks_and_scripts` is renamed to [`blueflow`](https://github.com/kamangir/notebooks-and-scripts) ⚠️
 
 ---
 
@@ -19,4 +19,4 @@ pip install notebooks-and-scripts
 
 [![pylint](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml) [![pytest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml) [![bashtest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml) [![PyPI version](https://img.shields.io/pypi/v/notebooks-and-scripts.svg)](https://pypi.org/project/notebooks-and-scripts/) [![PyPI - Downloads](https://img.shields.io/pypi/dd/notebooks-and-scripts)](https://pypistats.org/packages/notebooks-and-scripts)
 
-built by 🌀 [`blue_options-4.126.1`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.758.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by 🌀 [`blue_options-4.126.1`](https://github.com/kamangir/awesome-bash-cli), based on [`notebooks_and_scripts-4.759.1`](https://github.com/kamangir/notebooks-and-scripts).

@@ -1,4 +1,4 @@
-⚠️ `notesbooks_and_scripts` is renamed to [blueflow](https://github.com/kamangir/notebooks-and-scripts) ⚠️
+⚠️ `notesbooks_and_scripts` is renamed to [`blueflow`](https://github.com/kamangir/notebooks-and-scripts) ⚠️
 
 ---
 
