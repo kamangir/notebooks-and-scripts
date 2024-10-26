@@ -11,3 +11,7 @@ pip install blueflow
 ---
 
 --signature--
+
+---
+
+used to be [`notebooks-and-scripts`](https://pypi.org/project/notebooks-and-scripts/).
