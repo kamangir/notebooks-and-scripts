@@ -1,4 +1,4 @@
-# 📜 notebooks & scripts (`blueflow`)
+# 📜 `blueflow`
 
 📜 [`blueflow`](./blueflow/) for workflow management on aws batch and more.
 
