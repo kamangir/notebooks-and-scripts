@@ -49,6 +49,7 @@ def build():
         path=os.path.join(file.path(__file__), ".."),
         NAME=NAME,
         VERSION=VERSION,
+        MODULE_NAME="blueflow",
         REPO_NAME=REPO_NAME,
     ) and README.build(
         items=workflow_items,
