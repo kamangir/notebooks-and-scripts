@@ -28,7 +28,7 @@ function abcli_aws_batch_list() {
 
     local pipes=""
     [[ ! -z "$prefix" ]] && pipes="| grep $prefix"
-    [[ "$show_count" == 1 ]] && pipes="$pipes | wc -l | python3 -m notebooks_and_scripts.aws_batch show_count"
+    [[ "$show_count" == 1 ]] && pipes="$pipes | wc -l | python3 -m blueflow.aws_batch show_count"
 
     [[ -z "$status" ]] && status=$(echo $ABCLI_AWS_BATCH_JOB_STATUS_LIST_WATCH | tr , " ")
 

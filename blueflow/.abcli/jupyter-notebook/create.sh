@@ -19,7 +19,7 @@ function abcli_notebooks_create() {
         mkdir -pv $path
 
         cp -v \
-            $(python3 -m notebooks_and_scripts locate)/assets/template.ipynb \
+            $(python3 -m blueflow locate)/assets/template.ipynb \
             "$notebook_name.ipynb"
     fi
 }

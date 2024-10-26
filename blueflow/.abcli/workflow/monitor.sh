@@ -22,7 +22,7 @@ function notebooks_and_scripts_workflow_monitor() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
-    python3 -m notebooks_and_scripts.workflow.runners \
+    python3 -m blueflow.workflow.runners \
         monitor \
         --hot_node $node \
         --job_name $job_name

@@ -18,7 +18,7 @@ function notebooks_and_scripts_workflow_create() {
 
     abcli_log "📜 workflow.create: $pattern -> $job_name"
 
-    python3 -m notebooks_and_scripts.workflow \
+    python3 -m blueflow.workflow \
         create \
         --job_name $job_name \
         --pattern "$pattern" \

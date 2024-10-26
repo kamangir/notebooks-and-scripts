@@ -43,7 +43,7 @@ function abcli_aws_batch_browse() {
             local filename=$abcli_path_temp/$(abcli_string_random).json
             aws batch describe-jobs --jobs $job_id >>$filename
 
-            local log_stream_name=$(python3 -m notebooks_and_scripts.aws_batch \
+            local log_stream_name=$(python3 -m blueflow.aws_batch \
                 get_log_stream_name \
                 --filename $filename)
             if [[ -z "$log_stream_name" ]]; then
@@ -60,7 +60,7 @@ function abcli_aws_batch_browse() {
                 aws logs get-log-events \
                     --log-group-name /aws/batch/job \
                     --log-stream-name $log_stream_name >>$filename
-                python3 -m notebooks_and_scripts.aws_batch \
+                python3 -m blueflow.aws_batch \
                     cat_log \
                     --filename $filename
                 return

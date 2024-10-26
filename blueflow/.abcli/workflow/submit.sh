@@ -20,7 +20,7 @@ function notebooks_and_scripts_workflow_submit() {
     [[ "$do_download" == 1 ]] &&
         abcli_download - $job_name
 
-    local runner_module="notebooks_and_scripts.workflow.runners"
+    local runner_module="blueflow.workflow.runners"
     if [[ "|$NBS_RUNNERS_LIST|" != *"|$runner_type|"* ]]; then
         abcli_log "external runner: $runner_type"
 
