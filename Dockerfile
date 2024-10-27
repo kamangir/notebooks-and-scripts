@@ -62,7 +62,6 @@ RUN rm -v .env
 RUN mkdir -p /root/git/blue-options
 ADD ./blue-options /root/git/blue-options
 WORKDIR /root/git/blue-options
-RUN rm -v ./.env
 RUN pip install -e .
 
 # release mode
