@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     git \
     rsync \
     gdal-bin \
-    libgdal-dev
+    libgdal-dev \
+    nano
 
 # Create a virtual environment to isolate our package installations
 RUN python3 -m venv /opt/venv
