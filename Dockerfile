@@ -57,7 +57,17 @@ RUN rm -v .env
 # RUN pip install -e .
 #-----------------------------------------------------------------------------#
 
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-options
+#- 🌀 blue-options -----------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/blue-options
+ADD ./blue-options /root/git/blue-options
+WORKDIR /root/git/blue-options
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_options
+#-----------------------------------------------------------------------------#
 
 #- 🌀 blue-objects -----------------------------------------------------------#
 # dev mode
