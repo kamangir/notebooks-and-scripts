@@ -1,23 +1,7 @@
 #! /usr/bin/env bash
 
-function abcli_huggingface() {
+function blueflow_huggingface() {
     local task=$(abcli_unpack_keyword $1 help)
-
-    if [ "$task" == "help" ]; then
-        abcli_show_usage "abcli huggingface clone <repo_name>" \
-            "clone huggingface/repo_name."
-        abcli_show_usage "abcli huggingface install" \
-            "install huggingface."
-        abcli_show_usage "abcli huggingface get_model_path <repo_name> [<model-name>] [model=object/*saved]" \
-            "return model_path for saved/object model repo_name/<model-name>."
-        abcli_show_usage "abcli huggingface save <repo-name> <model-name> <object-name> [force]" \
-            "[force] save <object-name> as huggingface/<repo-name>/<model-name>."
-
-        if [ "$(abcli_keyword_is $2 verbose)" == true ]; then
-            python3 -m abcli.plugins.huggingface --help
-        fi
-        return
-    fi
 
     if [ $task == "clone" ]; then
         pushd $abcli_path_git >/dev/null
@@ -79,6 +63,6 @@ function abcli_huggingface() {
         return
     fi
 
-    abcli_log_error "-abcli: huggingface: $task: command not found."
+    abcli_log_error "@huggingface: $task: command not found."
     return 1
 }

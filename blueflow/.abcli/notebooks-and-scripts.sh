@@ -10,7 +10,6 @@ function notebooks_and_scripts() {
     if [ "$task" == "help" ]; then
         abcli_aws_batch "$@"
         abcli_docker "$@"
-        abcli_huggingface "$@"
         abcli_notebooks "$@"
         abcli_sagemaker "$@"
         abcli_scripts "$@"

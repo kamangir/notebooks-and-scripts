@@ -35,6 +35,12 @@ function test_notebooks_and_scripts_help() {
         "abcli_sagemaker" \
         "abcli_sagemaker browse" \
         \
+        "blueflow huggingface" \
+        "blueflow huggingface clone" \
+        "blueflow huggingface install" \
+        "blueflow huggingface get_model_path" \
+        "blueflow huggingface save" \
+        \
         "blueflow workflow" \
         "blueflow workflow create" \
         "blueflow workflow monitor" \
