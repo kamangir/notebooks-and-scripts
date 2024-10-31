@@ -2,14 +2,6 @@
 
 function notebooks_and_scripts_workflow_monitor() {
     local options=$1
-
-    if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        local options="~download,node=<node>,publish_as=<public-object-name>,~upload"
-        abcli_show_usage "workflow monitor$ABCUL$EOP[$options]$ABCUL[.|<job-name>]$ABCUL[<command-line>]$EOPE" \
-            "monitor <job-name>/workflow and run <command-line>."
-        return
-    fi
-
     local do_download=$(abcli_option_int "$options" download 1)
     local publish_as=$(abcli_option "$options" publish_as)
     local do_upload=$(abcli_option_int "$options" upload 1)
@@ -34,10 +26,8 @@ function notebooks_and_scripts_workflow_monitor() {
         abcli_publish as=$publish_as,~download,suffix=.gif $job_name
 
     local command_line="${@:3}"
-    if [[ ! -z "$command_line" ]]; then
-        abcli_eval - \
-            "$command_line"
-    else
-        return 0
-    fi
+    [[ -z "$command_line" ]] && return 0
+
+    abcli_eval - \
+        "$command_line"
 }
