@@ -48,10 +48,12 @@ class Workflow:
                 self.G.add_edge("X", node)
 
         for node in self.G.nodes:
-            self.G.nodes[node]["command_line"] = "workflow monitor node={}{} {}".format(
-                node,
-                f",publish_as={publish_as}" if publish_as and node == "X" else "",
-                self.job_name,
+            self.G.nodes[node]["command_line"] = (
+                "blueflow_workflow monitor node={}{} {}".format(
+                    node,
+                    f",publish_as={publish_as}" if publish_as and node == "X" else "",
+                    self.job_name,
+                )
             )
 
         return self.post_metadata(

@@ -76,7 +76,7 @@ class AWSBatchRunner(GenericRunner):
                 workflow.G.add_node(proxy)
                 workflow.G.nodes[proxy]["command_line"] = " ".join(
                     [
-                        "workflow monitor",
+                        "blueflow_workflow monitor",
                         f"node={proxy}",
                         self.job_name,
                     ]

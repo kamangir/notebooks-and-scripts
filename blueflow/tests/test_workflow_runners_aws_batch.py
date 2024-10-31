@@ -11,7 +11,7 @@ def test_workflow_runners_aws_batch():
     workflow.G.add_node("root")
     workflow.G.nodes["root"]["command_line"] = " ".join(
         [
-            "workflow monitor",
+            "blueflow_workflow monitor",
             "node=root",
             job_name,
         ]
@@ -22,7 +22,7 @@ def test_workflow_runners_aws_batch():
         workflow.G.add_edge("root", node)
         workflow.G.nodes[node]["command_line"] = " ".join(
             [
-                "workflow monitor",
+                "blueflow_workflow monitor",
                 f"node={node}",
                 job_name,
             ]
