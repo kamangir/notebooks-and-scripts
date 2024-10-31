@@ -1,9 +1,5 @@
 #! /usr/bin/env bash
 
-function workflow() {
-    notebooks_and_scripts_workflow "$@"
-}
-
 function notebooks_and_scripts_workflow() {
     local task=$(abcli_unpack_keyword $1)
 

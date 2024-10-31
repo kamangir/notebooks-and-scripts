@@ -16,6 +16,8 @@ alias @sagemaker=abcli_sagemaker
 alias @scripts=abcli_scripts
 alias @source="abcli_scripts source"
 
+alias workflow="notebooks_and_scripts_workflow"
+
 # meta scripts
 alias roofserver="abcli_meta_scripts roofserver"
 alias sagesemseg="abcli_meta_scripts sagesemseg"
