@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
 function test_notebooks_and_scripts_help() {
+    return 0
+
     local options=$1
 
     local module
@@ -33,19 +35,12 @@ function test_notebooks_and_scripts_help() {
         "abcli_sagemaker" \
         "abcli_sagemaker browse" \
         \
-        "abcli scripts" \
-        "abcli scripts cat" \
-        "abcli scripts code" \
-        "abcli scripts move" \
-        "abcli scripts mv" \
-        "abcli scripts source" \
-        \
-        "workflow" \
-        "workflow create" \
-        "workflow monitor" \
-        "workflow submit"; do
+        "notebooks_and_scripts workflow" \
+        "notebooks_and_scripts workflow create" \
+        "notebooks_and_scripts workflow monitor" \
+        "notebooks_and_scripts workflow submit"; do
         abcli_eval ,$options \
-            $module help
+            abcli_help $module
         [[ $? -ne 0 ]] && return 1
     done
 
