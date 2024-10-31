@@ -1,9 +1,9 @@
 #! /usr/bin/env bash
 
-function notebooks_and_scripts_workflow() {
+function blueflow_workflow() {
     local task=$(abcli_unpack_keyword $1)
 
-    local function_name=notebooks_and_scripts_workflow_$task
+    local function_name=blueflow_workflow_$task
     if [[ $(type -t $function_name) == "function" ]]; then
         $function_name "${@:2}"
         return

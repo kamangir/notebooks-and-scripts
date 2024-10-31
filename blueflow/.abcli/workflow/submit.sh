@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function notebooks_and_scripts_workflow_submit() {
+function blueflow_workflow_submit() {
     local options=$1
     local do_download=$(abcli_option_int "$options" download 1)
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)

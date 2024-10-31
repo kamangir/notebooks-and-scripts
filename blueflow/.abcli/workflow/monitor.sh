@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function notebooks_and_scripts_workflow_monitor() {
+function blueflow_workflow_monitor() {
     local options=$1
     local do_download=$(abcli_option_int "$options" download 1)
     local publish_as=$(abcli_option "$options" publish_as)

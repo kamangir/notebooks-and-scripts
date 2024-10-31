@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function notebooks_and_scripts_workflow_create() {
+function blueflow_workflow_create() {
     local options=$1
     local do_upload=$(abcli_option_int "$options" upload 1)
     local pattern=$(abcli_option "$options" pattern $NBS_PATTREN_DEFAULT)

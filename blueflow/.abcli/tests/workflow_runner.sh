@@ -14,18 +14,18 @@ function test_notebooks_and_scripts_worflow_runner() {
 
             local job_name=$runner-$pattern-$(abcli_string_timestamp)
 
-            notebooks_and_scripts_workflow_create \
+            blueflow_workflow_create \
                 pattern=$pattern \
                 $job_name \
                 --publish_as $runner-$pattern
             [[ $? -ne 0 ]] && return 1
 
-            notebooks_and_scripts_workflow_submit \
+            blueflow_workflow_submit \
                 to=$runner \
                 $job_name
             [[ $? -ne 0 ]] && return 1
 
-            notebooks_and_scripts_workflow_monitor \
+            blueflow_workflow_monitor \
                 publish_as=$runner-$pattern \
                 $job_name
             [[ $? -ne 0 ]] && return 1

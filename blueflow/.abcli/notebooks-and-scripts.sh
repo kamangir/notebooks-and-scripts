@@ -14,7 +14,7 @@ function notebooks_and_scripts() {
         abcli_notebooks "$@"
         abcli_sagemaker "$@"
         abcli_scripts "$@"
-        notebooks_and_scripts_workflow "$@"
+        blueflow_workflow "$@"
         return
     fi
 
