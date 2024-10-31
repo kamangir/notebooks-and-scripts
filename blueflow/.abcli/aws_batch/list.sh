@@ -1,9 +1,5 @@
 #! /usr/bin/env bash
 
-function abcli_aws_batch_ls() {
-    abcli_aws_batch_list "$@"
-}
-
 function abcli_aws_batch_list() {
     local options=$1
 
