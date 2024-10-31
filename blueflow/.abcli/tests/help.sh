@@ -35,10 +35,10 @@ function test_notebooks_and_scripts_help() {
         "abcli_sagemaker" \
         "abcli_sagemaker browse" \
         \
-        "notebooks_and_scripts workflow" \
-        "notebooks_and_scripts workflow create" \
-        "notebooks_and_scripts workflow monitor" \
-        "notebooks_and_scripts workflow submit"; do
+        "blueflow workflow" \
+        "blueflow workflow create" \
+        "blueflow workflow monitor" \
+        "blueflow workflow submit"; do
         abcli_eval ,$options \
             abcli_help $module
         [[ $? -ne 0 ]] && return 1
