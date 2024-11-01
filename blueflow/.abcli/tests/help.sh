@@ -1,8 +1,6 @@
 #! /usr/bin/env bash
 
 function test_notebooks_and_scripts_help() {
-    return 0
-
     local options=$1
 
     local module
