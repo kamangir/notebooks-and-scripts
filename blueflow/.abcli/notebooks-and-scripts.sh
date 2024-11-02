@@ -5,17 +5,7 @@ export abcli_path_nbs=$abcli_path_git/notebooks-and-scripts
 export notebooks_and_scripts_module_name=blueflow
 
 function notebooks_and_scripts() {
-    local task=$(abcli_unpack_keyword $1 help)
-
-    if [ "$task" == "help" ]; then
-        abcli_aws_batch "$@"
-        abcli_docker "$@"
-        abcli_notebooks "$@"
-        abcli_sagemaker "$@"
-        abcli_scripts "$@"
-        blueflow_workflow "$@"
-        return
-    fi
+    local task=$(abcli_unpack_keyword $1 version)
 
     abcli_generic_task \
         plugin=notebooks_and_scripts,task=$task \
