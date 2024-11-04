@@ -4,8 +4,6 @@ alias today="date +%Y-%m-%d"
 
 alias @batch=abcli_aws_batch
 
-alias @docker=abcli_docker
-
 alias @huggingface=blueflow_huggingface
 
 alias @notebook=abcli_notebooks
