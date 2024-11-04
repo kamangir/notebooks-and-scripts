@@ -2,22 +2,14 @@
 
 function abcli_docker_build() {
     local options=$1
-
-    if [ $(abcli_option_int "$options" help 0) == 1 ]; then
-        options="${EOP}dryrun,no_cache,~push,run,verbose$EOPE"
-        abcli_show_usage "@docker build$ABCUL$options" \
-            "build the abcli docker image."
-        return
-    fi
-
-    abcli_log "@docker: build $options ..."
-    abcli_badge "🪄🌠"
-
     local do_dryrun=$(abcli_option_int "$options" dryrun 0)
     local do_push=$(abcli_option_int "$options" push $(abcli_not $do_dryrun))
     local do_run=$(abcli_option_int "$options" run 0)
     local no_cache=$(abcli_option_int "$options" no_cache 0)
     local verbose=$(abcli_option_int "$options" verbose 0)
+
+    abcli_badge "🪄🌠"
+    abcli_log "@docker: build $options ..."
 
     pushd $abcli_path_git >/dev/null
 

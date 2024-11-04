@@ -10,7 +10,6 @@ def test_required_env():
 
 
 def test_blueflow_env():
-    assert env.ABCLI_AWS_BATCH_JOB_STATUS_LIST
     assert env.ABCLI_AWS_BATCH_JOB_STATUS_LIST_WATCH
 
     assert env.NBS_DEFAULT_WORKFLOW_PATTERN
