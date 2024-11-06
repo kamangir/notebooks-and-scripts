@@ -18,8 +18,8 @@ function abcli_aws_batch_browse() {
             url="$base_url#jobs/$queue/$status"
         fi
     else
-        local do_log=$(abcli_option "$options" log 0)
-        local cat_log=$(abcli_option "$options" cat 0)
+        local do_log=$(abcli_option_int "$options" log 0)
+        local cat_log=$(abcli_option_int "$options" cat 0)
 
         if [[ "$do_log" == 0 ]]; then
             url="$base_url#jobs/detail/$job_id"
