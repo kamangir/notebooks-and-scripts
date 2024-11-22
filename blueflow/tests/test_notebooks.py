@@ -24,27 +24,32 @@ def test_imshow(
         filename=filename,
     )
 
+    full_filename = objects.path_of(
+        filename=filename,
+        object_name=object_name,
+    )
+
     assert imshow(
-        filename,
+        full_filename,
         dryrun=True,
     )
 
     assert imshow(
-        [filename],
+        [full_filename],
         dryrun=True,
     )
 
     assert imshow(
-        [filename for _ in range(3)],
+        [full_filename for _ in range(3)],
         dryrun=True,
     )
 
     assert imshow(
-        [[filename for _ in range(3)]],
+        [[full_filename for _ in range(3)]],
         dryrun=True,
     )
 
     assert imshow(
-        [[filename for _ in range(3)] for _ in range(4)],
+        [[full_filename for _ in range(3)] for _ in range(4)],
         dryrun=True,
     )
