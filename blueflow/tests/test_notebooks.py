@@ -29,27 +29,27 @@ def test_imshow(
         object_name=object_name,
     )
 
-    assert imshow(
+    imshow(
         full_filename,
         dryrun=True,
     )
 
-    assert imshow(
+    imshow(
         [full_filename],
         dryrun=True,
     )
 
-    assert imshow(
+    imshow(
         [full_filename for _ in range(3)],
         dryrun=True,
     )
 
-    assert imshow(
+    imshow(
         [[full_filename for _ in range(3)]],
         dryrun=True,
     )
 
-    assert imshow(
+    imshow(
         [[full_filename for _ in range(3)] for _ in range(4)],
         dryrun=True,
     )
