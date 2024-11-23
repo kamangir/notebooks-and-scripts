@@ -50,7 +50,7 @@ class GenericRunner:
             ),
             colormap=dot_file.status_color_map,
             hot_node=hot_node,
-            caption=f"@{self.type_name}",
+            caption=f"{workflow.name} @ {self.type_name}",
         ):
             return False
 
@@ -155,10 +155,7 @@ class GenericRunner:
         if failure_count:
             logger.error(f"{failure_count} failure(s).")
 
-        if not dot_file.save_to_file(
-            objects.path_of("workflow.dot", workflow.job_name),
-            workflow.G,
-        ):
+        if not workflow.save(caption=f"{self.__class__.__name__}.submit"):
             return False
 
         if not post_to_object(

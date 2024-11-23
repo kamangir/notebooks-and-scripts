@@ -9,6 +9,8 @@ alias @notebooks=abcli_notebooks
 
 alias @mv="abcli_scripts move"
 
+alias nbs="notebooks_and_scripts"
+
 alias @sagemaker=abcli_sagemaker
 
 alias @scripts=abcli_scripts
