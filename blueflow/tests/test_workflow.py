@@ -17,3 +17,12 @@ def test_workflow(pattern: str):
     workflow = Workflow(job_name)
 
     assert workflow.load_pattern(pattern)
+
+    assert workflow.name
+    assert workflow.args
+
+    assert workflow.save()
+
+    workflow_reloaded = Workflow(job_name, load=True)
+    assert workflow_reloaded.name == workflow.name
+    assert workflow_reloaded.args == workflow_reloaded.args

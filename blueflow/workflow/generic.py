@@ -1,7 +1,8 @@
-from typing import Any
+from typing import Any, Dict, Any
 import networkx as nx
+from copy import deepcopy
 
-from blue_objects import objects, metadata
+from blue_objects import objects, metadata, file
 
 from blueflow import env
 from blueflow.workflow import dot_file
@@ -13,8 +14,14 @@ class Workflow:
         self,
         job_name: str = "",
         load: bool = False,
+        name: str = "",
+        args: Dict[str, Any] = {},
     ):
         self.job_name = job_name if job_name else objects.unique_object()
+
+        self.name = name
+
+        self.args = deepcopy(args)
 
         self.G: nx.DiGraph = nx.DiGraph()
 
@@ -27,6 +34,18 @@ class Workflow:
             )
             assert success
 
+            workflow_metadata = metadata.get_from_object(
+                object_name=self.job_name,
+                key="workflow",
+                value={},
+            )
+            assert isinstance(workflow_metadata, dict)
+            self.name = workflow_metadata.get("name", "not-found")
+            self.args = workflow_metadata.get(
+                "args",
+                {"warning": "not-found"},
+            )
+
     def get_metadata(self, key: str, default: str = "") -> str:
         return metadata.get_from_object(self.job_name, key, default)
 
@@ -35,6 +54,12 @@ class Workflow:
         pattern: str = env.NBS_DEFAULT_WORKFLOW_PATTERN,
         publish_as: str = "",
     ) -> bool:
+        self.name = pattern
+        self.args = {
+            "pattern": pattern,
+            "publish_as": publish_as,
+        }
+
         success, self.G = patterns.load_pattern(
             pattern=pattern,
             export_as_image=objects.path_of(f"{pattern}.png", self.job_name),
@@ -71,11 +96,21 @@ class Workflow:
         self,
         caption: str = "",
     ) -> bool:
-        return dot_file.save_to_file(
+        if not dot_file.save_to_file(
             objects.path_of(
                 filename="workflow.dot",
                 object_name=self.job_name,
             ),
             self.G,
-            caption=caption,
+            caption=" | ".join([item for item in [self.name, caption] if item]),
+        ):
+            return False
+
+        return metadata.post_to_object(
+            object_name=self.job_name,
+            key="workflow",
+            value={
+                "name": self.name,
+                "args": self.args,
+            },
         )
