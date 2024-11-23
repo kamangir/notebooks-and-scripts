@@ -50,7 +50,7 @@ class GenericRunner:
             ),
             colormap=dot_file.status_color_map,
             hot_node=hot_node,
-            caption=f"@{self.type_name}",
+            caption=f"{workflow.name} @ {self.type_name}",
         ):
             return False
 
