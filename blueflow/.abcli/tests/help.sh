@@ -45,7 +45,10 @@ function test_notebooks_and_scripts_help() {
         "blueflow workflow" \
         "blueflow workflow create" \
         "blueflow workflow monitor" \
-        "blueflow workflow submit"; do
+        "blueflow workflow submit" \
+        \
+        "notebooks_and_scripts" \
+        "notebooks_and_scripts pytest"; do
         abcli_eval ,$options \
             abcli_help $module
         [[ $? -ne 0 ]] && return 1
