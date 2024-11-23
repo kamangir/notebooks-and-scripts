@@ -37,7 +37,7 @@ class Workflow:
             workflow_metadata = metadata.get_from_object(
                 object_name=self.job_name,
                 key="workflow",
-                value={},
+                default={},
             )
             assert isinstance(workflow_metadata, dict)
             self.name = workflow_metadata.get("name", "not-found")
