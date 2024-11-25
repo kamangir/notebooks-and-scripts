@@ -24,7 +24,7 @@ function runme() {
         abcli_download - $object_name
 
     abcli_eval dryrun=$do_dryrun \
-        abcli_list cloud \
+        abcli_ls cloud \
         "$object_name" \
         "${@:3}"
 
