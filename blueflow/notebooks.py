@@ -4,6 +4,8 @@ from IPython.display import display, HTML
 import os
 from functools import reduce
 
+from blue_objects import objects, mlflow
+
 
 def get_image_base64(filename):
     with open(filename, "rb") as f:
@@ -43,6 +45,10 @@ def imshow(
 
     if not dryrun:
         display(HTML(html))
+
+
+def upload(object_name: str) -> bool:
+    return objects.upload(object_name) and mlflow.log_run(object_name)
 
 
 for var, value in {

@@ -1,6 +1,7 @@
 blueness
 abcli
 beautifulsoup4
+blue_objects
 boto3
 geojson
 geopandas
