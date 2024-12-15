@@ -44,14 +44,16 @@ status_color_map = {
 def export_graph_as_image(
     G: nx.DiGraph,
     filename: str,
-    layout: str = "shell",
-    figsize: int = 5,
+    layout: str = "spring",
+    figsize: int = 10,
     log: bool = True,
     colormap: Dict[str, str] = {},
     hot_node: str = "void",
     add_legend: bool = True,
     caption: str = "",
     text_width: int = 80,
+    node_size: int = 50,
+    font_size: int = 10,
 ) -> bool:
     layout_func = layouts.get(layout, None)
     if layout_func is None:
@@ -85,8 +87,8 @@ def export_graph_as_image(
         with_labels=True,
         node_color=node_color,
         edge_color="gray",
-        node_size=500,
-        font_size=10,
+        node_size=node_size,
+        font_size=font_size,
         font_color="darkred",
         # arrowstyle="-|>",
         # arrowsize=5,
