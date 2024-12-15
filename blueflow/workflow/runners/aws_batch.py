@@ -44,59 +44,55 @@ class AWSBatchRunner(GenericRunner):
 
         return workflow
 
-    def submit(
+    def set_max_dependency(
         self,
         workflow: Workflow,
-        dryrun: bool = True,
+        node: str,
         max_dependency: int = 20,
-    ) -> bool:
-        list_of_nodes = list(workflow.G.nodes.keys())
-        for node in list_of_nodes:
-            dependency_list = list(workflow.G.successors(node))
-            if len(dependency_list) <= max_dependency:
-                continue
+    ):
+        dependency_list = list(workflow.G.successors(node))
+        if len(dependency_list) <= max_dependency:
+            return
 
-            proxy_count = math.ceil(len(dependency_list) / (max_dependency - 1)) - 1
-            suffix = string.random(length=3, alphabet="0123456789")
-            logger.info(
-                "@ {}: {} dependencies > {} - adding {} proxy(s) @ {}.".format(
-                    node,
-                    len(dependency_list),
-                    max_dependency,
-                    proxy_count,
-                    suffix,
-                )
+        proxy_count = math.ceil(len(dependency_list) / max_dependency)
+        suffix = string.random(length=5)
+        logger.info(
+            "@ {}: {} dependencies > {} - adding {} proxy(s) @ {}.".format(
+                node,
+                len(dependency_list),
+                max_dependency,
+                proxy_count,
+                suffix,
             )
+        )
 
-            proxy_list = [
-                "{}-{}-{:03d}".format(node, suffix, index + 1)
-                for index in range(proxy_count)
-            ]
-            for proxy in proxy_list:
-                workflow.G.add_node(proxy)
-                workflow.G.nodes[proxy]["command_line"] = " ".join(
-                    [
-                        "blueflow_workflow monitor",
-                        f"node={proxy}",
-                        self.job_name,
-                    ]
-                )
+        proxy_list = [
+            "{}-{}-{:03d}".format(node, suffix, index + 1)
+            for index in range(proxy_count)
+        ]
+        node_index: int = 0
+        for proxy in proxy_list:
+            workflow.G.add_node(proxy)
+            workflow.G.nodes[proxy]["command_line"] = " ".join(
+                [
+                    "blueflow_workflow monitor",
+                    f"node={proxy}",
+                    self.job_name,
+                    "abcli_log ✅",
+                ]
+            )
+            workflow.G.add_edge(node, proxy)
 
-            previous_proxy = node
-            for index, node_ in enumerate(dependency_list):
-                proxy_index = int(index / (max_dependency - 1))
-                if proxy_index < 1:
-                    continue
+            for _ in range(max_dependency):
+                if node_index >= len(dependency_list):
+                    break
 
-                proxy = proxy_list[proxy_index - 1]
-
-                workflow.G.remove_edge(node, node_)
-
-                if proxy != previous_proxy:
-                    workflow.G.add_edge(previous_proxy, proxy)
-                    previous_proxy = proxy
+                node_ = dependency_list[node_index]
 
                 workflow.G.add_edge(proxy, node_)
+                workflow.G.remove_edge(node, node_)
+
+                node_index += 1
 
                 logger.info(
                     "{}->{} => {}->{}->{}".format(
@@ -107,6 +103,26 @@ class AWSBatchRunner(GenericRunner):
                         node_,
                     )
                 )
+
+        return self.set_max_dependency(
+            workflow,
+            node,
+            max_dependency,
+        )
+
+    def submit(
+        self,
+        workflow: Workflow,
+        dryrun: bool = True,
+        max_dependency: int = 20,
+    ) -> bool:
+        list_of_nodes = list(workflow.G.nodes.keys())
+        for node in list_of_nodes:
+            self.set_max_dependency(
+                workflow,
+                node,
+                max_dependency,
+            )
 
         return workflow.save() and super().submit(workflow, dryrun)
 
