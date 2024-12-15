@@ -4,7 +4,7 @@ ICON = "📜"
 
 DESCRIPTION = f"{ICON} workflow management on aws batch and more."
 
-VERSION = "4.815.1"
+VERSION = "4.816.1"
 
 REPO_NAME = "notebooks-and-scripts"
 

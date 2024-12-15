@@ -52,7 +52,7 @@ def export_graph_as_image(
     add_legend: bool = True,
     caption: str = "",
     text_width: int = 80,
-    node_size: int = 50,
+    node_size: int = 200,
     font_size: int = 10,
 ) -> bool:
     layout_func = layouts.get(layout, None)
