@@ -104,7 +104,7 @@ class AWSBatchRunner(GenericRunner):
                     )
                 )
 
-        return self.set_max_dependency(
+        self.set_max_dependency(
             workflow,
             node,
             max_dependency,
