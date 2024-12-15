@@ -44,7 +44,7 @@ status_color_map = {
 def export_graph_as_image(
     G: nx.DiGraph,
     filename: str,
-    layout: str = "spring",
+    layout: str = "shell",
     figsize: int = 10,
     log: bool = True,
     colormap: Dict[str, str] = {},
