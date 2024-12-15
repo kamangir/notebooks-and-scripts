@@ -116,6 +116,8 @@ class AWSBatchRunner(GenericRunner):
         dryrun: bool = True,
         max_dependency: int = 20,
     ) -> bool:
+        self.job_name = workflow.job_name
+
         list_of_nodes = list(workflow.G.nodes.keys())
         for node in list_of_nodes:
             self.set_max_dependency(
