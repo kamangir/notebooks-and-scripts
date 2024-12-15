@@ -99,7 +99,7 @@ class AWSBatchRunner(GenericRunner):
                 workflow.G.add_edge(proxy, node_)
 
                 logger.info(
-                    "{}->{} -> {}->{}->{}".format(
+                    "{}->{} => {}->{}->{}".format(
                         node,
                         node_,
                         node,
