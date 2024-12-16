@@ -5,6 +5,7 @@ from blue_objects.env import ABCLI_PUBLIC_PREFIX
 
 from blueflow import NAME, VERSION, ICON, REPO_NAME
 from blueflow.workflow.README import items as workflow_items
+from blueflow.workflow.patterns import list_of_patterns
 
 
 features = {
@@ -54,7 +55,7 @@ def build():
         REPO_NAME=REPO_NAME,
     ) and README.build(
         items=workflow_items,
-        cols=4,
+        cols=len(list_of_patterns()) + 1,
         path=os.path.join(file.path(__file__), "workflow"),
         NAME=NAME,
         VERSION=VERSION,
