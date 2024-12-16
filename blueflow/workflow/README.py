@@ -22,7 +22,7 @@ items = (
             (
                 [f"[{runner_type}](./runners/{runner_type}.py)"]
                 + [
-                    f"[![image]({url})]({url})"
+                    f"[![image]({url})]({url}) [🔗]({url})"
                     for url in [
                         "{}/{}-{}/workflow.gif?raw=true&random={}".format(
                             ABCLI_PUBLIC_PREFIX,
