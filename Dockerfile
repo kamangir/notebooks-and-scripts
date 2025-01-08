@@ -105,11 +105,22 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_geo
 #-----------------------------------------------------------------------------#
 
+#- 🌈 vancouver-watching ------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/vancouver-watching
+ADD ./vancouver-watching /root/git/vancouver-watching
+WORKDIR /root/git/vancouver-watching
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
+#-----------------------------------------------------------------------------#
+
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager openai_commands
-RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
 
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager abadpour
 

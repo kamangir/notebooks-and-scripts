@@ -15,7 +15,7 @@ pip install blueflow
 
 [![pylint](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pylint.yml) [![pytest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/pytest.yml) [![bashtest](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml/badge.svg)](https://github.com/kamangir/notebooks-and-scripts/actions/workflows/bashtest.yml) [![PyPI version](https://img.shields.io/pypi/v/blueflow.svg)](https://pypi.org/project/blueflow/) [![PyPI - Downloads](https://img.shields.io/pypi/dd/blueflow)](https://pypistats.org/packages/blueflow)
 
-built by 🌀 [`blue_options-4.173.1`](https://github.com/kamangir/awesome-bash-cli), based on 📜 [`blueflow-4.828.1`](https://github.com/kamangir/notebooks-and-scripts).
+built by 🌀 [`blue_options-4.175.1`](https://github.com/kamangir/awesome-bash-cli), based on 📜 [`blueflow-4.830.1`](https://github.com/kamangir/notebooks-and-scripts).
 
 ---
 
