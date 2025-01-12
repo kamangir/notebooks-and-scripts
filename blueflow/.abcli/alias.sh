@@ -20,4 +20,3 @@ alias workflow="blueflow_workflow"
 
 # meta scripts
 alias roofserver="abcli_meta_scripts roofserver"
-alias sagesemseg="abcli_meta_scripts sagesemseg"

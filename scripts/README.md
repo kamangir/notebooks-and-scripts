@@ -32,10 +32,6 @@ abcli scripts source [cat,dryrun] \
  . source <script-name>.
 ```
 
-## [sagesemseg](./sagesemseg/)
-
-[Semantic Segmentation on AWS Sagemaker](https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb).
-
 ## [paint-a-sentence](./paint-a-sentence.sh)
 
 uses [blue stability](https://github.com/kamangir/blue-stability).
@@ -83,5 +79,3 @@ abcli scripts source cat,dryrun \
 # meta scripts
 
 - [roofserver](./roofserver/): `create`s model, endpoint config, and config to serve a model on SageMaker. 🔥 `invoke`, `wipe`.
-
-also: [`sagesemseg`](./sagesemseg/).

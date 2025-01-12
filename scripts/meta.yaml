@@ -1,6 +1,3 @@
-sagesemseg:
-  description: based on Amazon SageMaker Semantic Segmentation Algorithm, https://github.com/aws/amazon-sagemaker-examples/blob/main/introduction_to_amazon_algorithms/semantic_segmentation_pascalvoc/semantic_segmentation_pascalvoc.ipynb
-  prefix: sagesemseg
 roofserver:
   description: creates sagemaker infrastructure to serve a roofAI model.
   prefix: roofserver
