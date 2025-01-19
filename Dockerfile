@@ -117,7 +117,7 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
 #-----------------------------------------------------------------------------#
 
-#- 🏛️ roofAI ------------------------------------------------------#
+#- 🏛️ roofai ------------------------------------------------------#
 # dev mode
 RUN mkdir -p /root/git/roofAI
 ADD ./roofAI /root/git/roofAI
