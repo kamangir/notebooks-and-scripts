@@ -117,6 +117,30 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager vancouver-watching
 #-----------------------------------------------------------------------------#
 
+#- 🏛️ roofai ------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/roofai
+ADD ./roofai /root/git/roofai
+WORKDIR /root/git/roofai
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager roofai
+#-----------------------------------------------------------------------------#
+
+#- 🌀 blue-sandbox ------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/blue-sandbox
+ADD ./blue-sandbox /root/git/blue-sandbox
+WORKDIR /root/git/blue-sandbox
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-sandbox
+#-----------------------------------------------------------------------------#
+
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope

@@ -19,11 +19,11 @@ function runme() {
     abcli_log "🔗 endpoint: $endpoint_name"
 
     [[ $(abcli_option_int "$options" cloudwatch 0) == 1 ]] &&
-        roofAI_cloudwatch browse \
+        roofai_cloudwatch browse \
             endpoint $endpoint_name
 
     [[ $(abcli_option_int "$options" describe 1) == 1 ]] &&
-        roofAI_inference describe \
+        roofai_inference describe \
             endpoint $endpoint_name
 
     if [ $(abcli_option_int "$options" invoke 0) == 1 ]; then

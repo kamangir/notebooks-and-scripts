@@ -5,7 +5,7 @@ function runme() {
 
     local script_full_name="${BASH_SOURCE[0]}"
 
-    local default_object_name=$(abcli_cache read roofAI_semseg_model_AIRS_o2)
+    local default_object_name=$(abcli_cache read roofai_semseg_model_AIRS_o2)
 
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="suffix=<suffix>"
@@ -20,14 +20,14 @@ function runme() {
 
     local object_name=$(abcli_clarify_object $2 $default_object_name)
 
-    roofAI_inference create \
+    roofai_inference create \
         model $object_name
 
-    roofAI_inference create \
+    roofai_inference create \
         endpoint_config,suffix=$suffix \
         $object_name
 
-    roofAI_inference create \
+    roofai_inference create \
         endpoint,config_suffix=$suffix,suffix=$suffix \
         $object_name
 
@@ -36,7 +36,7 @@ function runme() {
         roofserver-endpoint-$suffix.endpoint_name \
         $endpoint_name
 
-    roofAI_inference describe \
+    roofai_inference describe \
         endpoint $endpoint_name
 }
 
