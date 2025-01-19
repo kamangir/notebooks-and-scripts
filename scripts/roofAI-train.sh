@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function roofAI_train() {
+function roofai_train() {
     local options=$1
 
     local version="2.11.1"
@@ -11,17 +11,17 @@ function roofAI_train() {
     if [ $(abcli_option_int "$options" help 0) == 1 ]; then
         local options="order=<2>$EOP,profile=$semseg_profiles,~register,suffix=<suffix>$EOPE"
         abcli_script_show_usage "$script_name$ABCUL[$options]$EARGS" \
-            "train a roofAI semseg model at the <order>."
+            "train a roofai semseg model at the <order>."
         return
     fi
 
-    roofAI init
+    roofai init
 
     local model_order=$(abcli_option_int "$options" order 0)
 
     local dataset_object_name=dataset-$(@timestamp)
     local model_order_zeros=$(python3 -c "print(''.join($model_order*['0']))")
-    roofAI_dataset_ingest \
+    roofai_dataset_ingest \
         source=AIRS \
         $dataset_object_name \
         --test_count 25$model_order_zeros \
@@ -29,7 +29,7 @@ function roofAI_train() {
         --val_count 10$model_order_zeros
 
     local model_object_name=model-$(@timestamp)
-    roofAI_semseg train \
+    roofai_semseg_train \
         $(
             abcli_option_subset \
                 "$options" \
@@ -44,4 +44,4 @@ function roofAI_train() {
         $model_object_name.order $model_order
 }
 
-roofAI_train "$@"
+roofai_train "$@"

@@ -62,17 +62,17 @@ abcli scripts source cat,dryrun \
  . generate mission patches for <url>.
 ```
 
-## [roofAI-train](./roofAI-train.sh)
+## [roofai-train](./roofai-train.sh)
 
-uses 🏛️ [roofAI](https://github.com/kamangir/roofAI)
+uses 🏛️ [roofai](https://github.com/kamangir/roofai)
 
 ```bash
- > scripts help roofAI-train
+ > scripts help roofai-train
 abcli scripts source cat,dryrun \
-	roofAI-train \
+	roofai-train \
 	[order=<2>,*] \
 	[<args>]
- . train a roofAI semseg model at the <order>
+ . train a roofai semseg model at the <order>
  * [profile=FULL|DECENT|QUICK|DEBUG|VALIDATION,~register,suffix=<suffix>]
 ```
 

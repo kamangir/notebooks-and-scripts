@@ -119,9 +119,9 @@ RUN pip install -e .
 
 #- 🏛️ roofai ------------------------------------------------------#
 # dev mode
-RUN mkdir -p /root/git/roofAI
-ADD ./roofAI /root/git/roofAI
-WORKDIR /root/git/roofAI
+RUN mkdir -p /root/git/roofai
+ADD ./roofai /root/git/roofai
+WORKDIR /root/git/roofai
 RUN rm -v ./.env
 RUN pip install -e .
 
