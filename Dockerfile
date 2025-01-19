@@ -126,7 +126,7 @@ RUN rm -v ./.env
 RUN pip install -e .
 
 # release mode
-# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager roofAI
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager roofai
 #-----------------------------------------------------------------------------#
 
 #- 🌀 blue-sandbox ------------------------------------------------------#
