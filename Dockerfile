@@ -146,7 +146,6 @@ RUN pip install -e .
 RUN mkdir -p /root/git/palisades
 ADD ./palisades /root/git/palisades
 WORKDIR /root/git/palisades
-RUN rm -v ./.env
 RUN pip install -e .
 
 # release mode
