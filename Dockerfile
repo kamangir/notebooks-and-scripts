@@ -141,6 +141,18 @@ RUN pip install -e .
 # RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue-sandbox
 #-----------------------------------------------------------------------------#
 
+#- 🧑🏽‍🚒 palisades ------------------------------------------------------#
+# dev mode
+RUN mkdir -p /root/git/palisades
+ADD ./palisades /root/git/palisades
+WORKDIR /root/git/palisades
+RUN rm -v ./.env
+RUN pip install -e .
+
+# release mode
+# RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager palisades
+#-----------------------------------------------------------------------------#
+
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager blue_plugin
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager gizai
 RUN pip install --upgrade --no-cache-dir --upgrade-strategy eager hubblescope
