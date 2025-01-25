@@ -54,29 +54,50 @@ def help_monitor(
     )
 
 
+def submit_options(
+    mono: bool,
+    cascade: bool = False,
+):
+    return "".join(
+        (
+            [
+                xtra("~download,", mono=mono),
+            ]
+            if not cascade
+            else []
+        )
+        + [
+            xtra("dryrun,", mono=mono),
+            "to=<runner>",
+        ]
+        + (
+            [
+                xtra(",~upload", mono=mono),
+            ]
+            if not cascade
+            else []
+        )
+    )
+
+
+runner_details = {
+    "runner: {}".format(" | ".join(list_of_runners())): "",
+}
+
+
 def help_submit(
     tokens: List[str],
     mono: bool,
 ) -> str:
-    options = "".join(
-        [
-            xtra("~download,dryrun,", mono=mono),
-            "to=<runner>",
-            xtra(",~upload", mono=mono),
-        ]
-    )
-
     return show_usage(
         [
             "workflow",
             "submit",
-            f"[{options}]",
+            f"[{submit_options(mono=mono)}]",
             "[.|<job-name>]",
         ],
         "submit workflow.",
-        {
-            "runner: {}".format(" | ".join(list_of_runners())): "",
-        },
+        runner_details,
         mono=mono,
     )
 

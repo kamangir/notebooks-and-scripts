@@ -1,9 +1,6 @@
 #! /usr/bin/env bash
 
 function test_notebooks_and_scripts_help() {
-    # TODO: enable
-    return 0
-
     local options=$1
 
     local module
@@ -12,7 +9,7 @@ function test_notebooks_and_scripts_help() {
         "abcli_aws_batch browse" \
         "abcli_aws_batch eval" \
         "abcli_aws_batch list" \
-        "abcli_aws_batch source" \
+        "abcli_aws_batch submit" \
         \
         "abcli_docker" \
         "abcli_docker browse" \
@@ -30,7 +27,6 @@ function test_notebooks_and_scripts_help() {
         "abcli_notebooks code" \
         "abcli_notebooks connect" \
         "abcli_notebooks create" \
-        "abcli_notebooks touch" \
         "abcli_notebooks host" \
         \
         "abcli_sagemaker" \
