@@ -80,6 +80,11 @@ def submit_options(
     )
 
 
+runner_details = {
+    "runner: {}".format(" | ".join(list_of_runners())): "",
+}
+
+
 def help_submit(
     tokens: List[str],
     mono: bool,
@@ -92,9 +97,7 @@ def help_submit(
             "[.|<job-name>]",
         ],
         "submit workflow.",
-        {
-            "runner: {}".format(" | ".join(list_of_runners())): "",
-        },
+        runner_details,
         mono=mono,
     )
 
