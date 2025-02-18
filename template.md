@@ -1,6 +1,6 @@
 # 📜 blueflow
 
-📜 [`blueflow`](./blueflow/) for workflow management on [aws batch](https://aws.amazon.com/batch/) and more.
+📜 `blueflow` for workflow management on [aws batch](https://aws.amazon.com/batch/) and more.
 
 ```bash
 pip install blueflow
