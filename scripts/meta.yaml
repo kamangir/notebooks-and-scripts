@@ -1,3 +1,0 @@
-roofserver:
-  description: creates sagemaker infrastructure to serve a roofai model.
-  prefix: roofserver
