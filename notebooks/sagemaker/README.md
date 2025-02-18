@@ -1,2 +1,0 @@
-- [PyTorch CNN CIFAR10](./pytorch_cnn_cifar10/)
-- [Introduction to JumpStart - Semantic Segmentation](./jumpstart_semantic_segmentation/), from [introduction_to_amazon_algorithms/jumpstart_semantic_segmentation](https://github.com/aws/amazon-sagemaker-examples/tree/main/introduction_to_amazon_algorithms/jumpstart_semantic_segmentation).
